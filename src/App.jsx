@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import data from "./utils/data.js"
 
 import {
   Tab,
@@ -19,8 +20,8 @@ function App() {
         <AppHeader className="app-header" />
       </div>
       <div className="container">
-        <BurgerIngredients></BurgerIngredients>
-        <BurgerConstructor></BurgerConstructor>
+        <BurgerIngredients data={data}></BurgerIngredients>
+        <BurgerConstructor data={data.filter(val=> val.type!=="bun")} bun={data[14]}></BurgerConstructor>
       </div>
     </div>
   );

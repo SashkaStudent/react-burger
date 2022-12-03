@@ -9,9 +9,11 @@ import Price from "../price/price";
 import "./burger-constructor.css";
 
 class BurgerConstructor extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
-    this.data = data;
+    this.data = props.data;
+    this.bun = props.bun;
+
   }
 
   componentDidMount() {}
@@ -23,9 +25,9 @@ class BurgerConstructor extends React.Component {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={data[0].name}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            text={this.bun.name}
+            price={this.bun.price}
+            thumbnail={this.bun.image}
           />
         </div>
         <ul className="constructor-container">
@@ -51,9 +53,9 @@ class BurgerConstructor extends React.Component {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={data[0].name}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            text={this.bun.name}
+            price={this.bun.price}
+            thumbnail={this.bun.image}
           />
         </div>
         <div

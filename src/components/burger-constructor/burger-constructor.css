@@ -1,0 +1,37 @@
+.burger-constructor {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 600px;
+    padding-bottom: 52px;
+}
+
+.constructor-container{
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 464px;
+}
+
+.constructor-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .constructor-container::-webkit-scrollbar-track {
+    background: #2F2F37; 
+  }
+
+  .constructor-container::-webkit-scrollbar-thumb {
+    background: #8585AD; 
+  }
+  
+  /* Handle on hover */
+  .constructor-container::-webkit-scrollbar-thumb:hover {
+    background: #a2a2d3; 
+  }

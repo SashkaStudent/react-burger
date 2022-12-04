@@ -1,4 +1,4 @@
-.burger-constructor {
+.constructor {
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
     padding-bottom: 52px;
 }
 
-.constructor-container{
+.list{
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -19,19 +19,32 @@
     height: 464px;
 }
 
-.constructor-container::-webkit-scrollbar {
+.list::-webkit-scrollbar {
     width: 8px;
   }
 
-  .constructor-container::-webkit-scrollbar-track {
+  .list::-webkit-scrollbar-track {
     background: #2F2F37; 
   }
 
-  .constructor-container::-webkit-scrollbar-thumb {
+  .list::-webkit-scrollbar-thumb {
     background: #8585AD; 
   }
   
   /* Handle on hover */
-  .constructor-container::-webkit-scrollbar-thumb:hover {
+  .list::-webkit-scrollbar-thumb:hover {
     background: #a2a2d3; 
   }
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}

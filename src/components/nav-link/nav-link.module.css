@@ -1,7 +1,4 @@
-.nav-menu {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.link{
     display: flex;
     flex-direction: row;
     column-gap: 8px;

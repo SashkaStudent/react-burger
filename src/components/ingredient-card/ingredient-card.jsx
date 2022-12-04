@@ -3,8 +3,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import Price from "../price/price";
-import "./ingredient-card.css";
+import cardStyles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
+import ingredientPropTypes from "../../utils/types";
 
 class IngredientCard extends React.Component {
   constructor({
@@ -21,8 +22,8 @@ class IngredientCard extends React.Component {
 
   render() {
     return (
-      <div className="ingredient-card" key={this._id}>
-        <img className="ingredient-image" src={this.image} alt={this.name} />
+      <div className={`${cardStyles.card}`}>
+        <img className={`${cardStyles.image}`} src={this.image} alt={this.name} />
 
         {
           this.counter > 0 ? < Counter count={
@@ -38,28 +39,12 @@ class IngredientCard extends React.Component {
     );
   }
 }
-const ingredientPropTypes = PropTypes.shape({
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image: PropTypes.string.isRequired,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  proteins: PropTypes.number,
-  type: PropTypes.string,
-  __v: PropTypes.number,
-  _id: PropTypes.string
-});
 
 IngredientCard.propTypes = {
-  ingredient: ingredientPropTypes.isRequired
+  ingredient: ingredientPropTypes.isRequired,
+  counter: PropTypes.number.isRequired
 };
 
 
 
-export {
-  IngredientCard,
-  ingredientPropTypes
-};
+export default IngredientCard;

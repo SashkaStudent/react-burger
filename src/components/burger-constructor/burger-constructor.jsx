@@ -4,39 +4,34 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
-import data from "../../utils/data";
 import Price from "../price/price";
-import "./burger-constructor.css";
+import constructorStyles from "./burger-constructor.module.css";
 
 class BurgerConstructor extends React.Component {
   constructor(props) {
     super();
     this.data = props.data;
     this.bun = props.bun;
-
   }
 
   componentDidMount() {}
 
   render() {
     return (
-      <div className="burger-constructor pt-25 pl-4">
+      <div className={`${constructorStyles.constructor} pt-25 pl-4`}>
         <div className="pl-8 pb-4">
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={this.bun.name}
+            text={`${this.bun.name} (верх)`}
             price={this.bun.price}
             thumbnail={this.bun.image}
           />
         </div>
-        <ul className="constructor-container">
+        <ul className={constructorStyles.list}>
           {this.data.map((value) => {
             return (
-              <li
-                style={{ display: "flex", alignItems: "center", gap: 8 }}
-                key={value._id}
-              >
+              <li className={constructorStyles.item} key={value._id}>
                 <DragIcon type="primary" />
 
                 <ConstructorElement
@@ -53,20 +48,12 @@ class BurgerConstructor extends React.Component {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={this.bun.name}
+            text={`${this.bun.name} (низ)`}
             price={this.bun.price}
             thumbnail={this.bun.image}
           />
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-          className="pt-10 pr-4"
-        >
+        <div className={`${constructorStyles.container} pt-10 pr-4`}>
           <Price price={610} size="large" extraClass="pr-10" />
           <Button htmlType="button" type="primary" size="large">
             Оформить заказ

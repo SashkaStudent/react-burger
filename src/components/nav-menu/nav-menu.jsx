@@ -1,8 +1,8 @@
-import './nav-menu.css'
+import menuStyles from './nav-menu.module.css'
 
 function NavMenu(props){
     return (
-        <ul className="nav-menu">
+        <ul className={menuStyles.menu}>
             {props.children}
         </ul>
     )

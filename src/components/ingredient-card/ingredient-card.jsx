@@ -15,7 +15,7 @@ function IngredientCard({ ingredient, counter }) {
       />
 
       {counter > 0 ? (
-        <Counter count={ingredient.counter} size="default" />
+        <Counter count={counter} size="default" />
       ) : null}
 
       <Price price={ingredient.price} extraClass="pt-2 pb-2" />

@@ -13,7 +13,6 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 function App() {
-  console.log(styles);
   return (
     <div className={styles.app}>
       <div className={styles.wrapper}>

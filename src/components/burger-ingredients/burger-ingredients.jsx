@@ -1,8 +1,3 @@
-import {
-  Counter,
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import ingredientsStyle from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
@@ -21,9 +16,29 @@ function BurgerIngredients(props) {
     <div className={ingredientsStyle.ingredients}>
       <h2 className="pt-10 text text_type_main-large">Соберите бургер</h2>
 
-      <IngredientsTab tabs={categories} defaultState={categories[0].value}/>
+      <IngredientsTab tabs={categories} defaultState={categories[0].value} />
 
       <div className={ingredientsStyle.container}>
+        {categories.map((category) => (
+          <>
+            <h2 id="bun" className="text text_type_main-medium">
+              Булки
+            </h2>
+            <div className={`${ingredientsStyle.category} pt-6 pl-4`}>
+              {props.data
+                .filter((value) => value.type === "bun")
+                .map((element) => {
+                  return (
+                    <IngredientCard
+                      ingredient={element}
+                      key={element._id}
+                      counter={1}
+                    />
+                  );
+                })}
+            </div>
+          </>
+        ))}
         <h2 id="bun" className="text text_type_main-medium">
           Булки
         </h2>

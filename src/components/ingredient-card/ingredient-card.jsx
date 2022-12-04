@@ -1,5 +1,4 @@
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
 import Price from "../price/price";
 import cardStyles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";

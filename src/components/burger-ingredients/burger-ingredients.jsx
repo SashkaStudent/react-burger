@@ -3,6 +3,7 @@ import ingredientsStyle from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
+import React from "react";
 
 function BurgerIngredients(props) {
   // let categories = [...new Set(data.reduce((prev, curr)=>[...prev, curr.type],[]))];
@@ -20,7 +21,7 @@ function BurgerIngredients(props) {
 
       <div className={ingredientsStyle.container}>
         {categories.map((category) => (
-          <>
+          <React.Fragment key={category.value}>
             <h2 id={category.value} className="text text_type_main-medium">
               {category.text}
             </h2>
@@ -37,7 +38,7 @@ function BurgerIngredients(props) {
                   );
                 })}
             </div>
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>

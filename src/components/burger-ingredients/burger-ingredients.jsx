@@ -11,16 +11,20 @@ import PropTypes from "prop-types";
 
 
 const IngredientsTab = () => {
-  const [current, setCurrent] = React.useState("one");
+  const [current, setCurrent] = React.useState("bun");
+  const scrollToCurrent = (value) =>{
+    setCurrent(value);
+    document.getElementById(value).scrollIntoView({behavior: "smooth"})
+  }
   return (
     <div style={{ display: "flex" }} className="pt-5 pb-10">
-      <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+      <Tab value="bun" active={current === "bun"} onClick={scrollToCurrent}>
         Булки
       </Tab>
-      <Tab value="main" active={current === "main"} onClick={setCurrent}>
+      <Tab value="sauce" active={current === "sauce"} onClick={scrollToCurrent}>
         Соусы
       </Tab>
-      <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
+      <Tab value="main" active={current === "main"} onClick={scrollToCurrent}>
         Начинки
       </Tab>
     </div>
@@ -36,12 +40,12 @@ function BurgerIngredients(props) {
       {IngredientsTab()}
 
       <div className="ingredients-container" >
-        <h2 className="text text_type_main-medium">Булки</h2>
+        <h2 id="bun" className="text text_type_main-medium">Булки</h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "flex-start" }} className="pt-6 pl-4">
           <IngredientCard ingredient={{ ...props.data[0] }} key={props.data[0]._id} counter={0} />
           <IngredientCard ingredient={{ ...props.data[14] }} key={props.data[14]._id} counter={1} />
         </div>
-        <h2 className="pt-10 text text_type_main-medium">Соусы</h2>
+        <h2 id="sauce" className="pt-10 text text_type_main-medium">Соусы</h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "flex-start" }} className="pt-6 pl-4">
           {props.data
             .filter((value) => value.type === "sauce")
@@ -51,7 +55,7 @@ function BurgerIngredients(props) {
               );
             })}
         </div>
-        <h2 className="pt-10 text text_type_main-medium">Начинки</h2>
+        <h2 id="main" className="pt-10 text text_type_main-medium">Начинки</h2>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "flex-start" }} className="pt-6 pl-4">
           {props.data
             .filter((value) => value.type === "main")

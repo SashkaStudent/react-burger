@@ -1,6 +1,4 @@
 import {
-  Tab,
-  Button,
   Logo,
   BurgerIcon,
   ListIcon,

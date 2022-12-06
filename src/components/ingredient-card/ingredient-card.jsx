@@ -13,9 +13,9 @@ function IngredientCard({ ingredient, counter }) {
         alt={ingredient.name}
       />
 
-      {counter > 0 ? (
+      {counter > 0 && (
         <Counter count={counter} size="default" />
-      ) : null}
+      )}
 
       <Price price={ingredient.price} extraClass="pt-2 pb-2" />
 

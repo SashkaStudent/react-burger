@@ -7,7 +7,7 @@ import React from "react";
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 
-function BurgerConstructor({data, bun}){
+function BurgerConstructor({data, bun, handleMakeOrderClick}){
   return (
     <div className={`${constructorStyles.constructor} pt-25 pl-4`}>
       <div className="pl-8 pb-4">
@@ -46,7 +46,7 @@ function BurgerConstructor({data, bun}){
       </div>
       <div className={`${constructorStyles.container} pt-10 pr-4`}>
         <Price price={610} size="large" extraClass="pr-10" />
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrderClick}>
           Оформить заказ
         </Button>
       </div>

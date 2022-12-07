@@ -5,9 +5,10 @@ import ingredientPropTypes from "../../utils/types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React from "react";
 
-function BurgerIngredients(props) {
+function BurgerIngredients({data, handleOnIngredientChoose}) {
   // let categories = [...new Set(data.reduce((prev, curr)=>[...prev, curr.type],[]))];
   // console.log(data);
+
   const categories = [
     { value: "bun", text: "Булки" },
     { value: "sauce", text: "Соусы" },
@@ -26,7 +27,7 @@ function BurgerIngredients(props) {
               {category.text}
             </h2>
             <div className={`${ingredientsStyle.category} pt-6 pl-4`}>
-              {props.data
+              {data
                 .filter((value) => value.type === category.value)
                 .map((element) => {
                   return (
@@ -34,6 +35,7 @@ function BurgerIngredients(props) {
                       ingredient={element}
                       key={element._id}
                       counter={1}
+                      handleCardOnClick={handleOnIngredientChoose}
                     />
                   );
                 })}

@@ -4,9 +4,9 @@ import cardStyles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 
-function IngredientCard({ ingredient, counter }) {
+function IngredientCard({ ingredient, counter, handleCardOnClick }) {
   return (
-    <div className={`${cardStyles.card}`}>
+    <div className={`${cardStyles.card}`} onClick={(e)=>handleCardOnClick(e, ingredient)}>
       <img
         className={`${cardStyles.image}`}
         src={ingredient.image}

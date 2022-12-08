@@ -1,6 +1,5 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
-import doneImg from "../../images/done.svg";
 
 function Modal({ children, handleCloseOnClick}) {
   return (

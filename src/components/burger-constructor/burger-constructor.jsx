@@ -3,7 +3,6 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 

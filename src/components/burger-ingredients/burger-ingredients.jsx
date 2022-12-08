@@ -6,8 +6,6 @@ import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React from "react";
 
 function BurgerIngredients({data, handleOnIngredientChoose}) {
-  // let categories = [...new Set(data.reduce((prev, curr)=>[...prev, curr.type],[]))];
-  // console.log(data);
 
   const categories = [
     { value: "bun", text: "Булки" },

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import data from "../../utils/data.js";
+// import data from "../../utils/data.js";
 import styles from "./app.module.css";
 
 import AppHeader from "../app-header/app-header";
@@ -18,7 +18,7 @@ function App() {
     status: "Loading...",
   });
 
-  const [modalIsOpened, setModalState] = React.useState(false);
+  const [modalIsOpened, setModalOpened] = React.useState(false);
   const [ingredientChoosed, setIngredient] = React.useState(null);
   const [orderNumber, setOrderNumber] = React.useState(0);
 
@@ -43,19 +43,30 @@ function App() {
   }, []);
 
   const openModal = (e, ingredient) => {
-    setModalState(true);
+    setModalOpened(true);
+    document.addEventListener('keydown', closeByEsc);
+
     if (ingredient) {
       setIngredient(ingredient);
     } else {
-      const randomOrderNumber = addLeadingZeros(randomInt(999999));
-      setOrderNumber(randomInt(randomOrderNumber));
+      const randomOrderNumber = addLeadingZeros(randomInt(999999), 6);
+      setOrderNumber(randomOrderNumber);
     }
   };
 
   const closeModal = (e) => {
-    setModalState(false);
+    setModalOpened(false);
     setIngredient(null);
+    document.removeEventListener('keydown', closeByEsc);
+
   };
+
+  const closeByEsc = (e) => {
+    if (e.key === 'Escape') {
+      closeModal(e);
+    }
+  }
+
 
   return (
     <div className={styles.app}>
@@ -72,12 +83,12 @@ function App() {
         ) : (
           <>
             <BurgerIngredients
-              data={data}
+              data={state.data}
               handleOnIngredientChoose={openModal}
             ></BurgerIngredients>
             <BurgerConstructor
-              data={data.filter((val) => val.type !== "bun")}
-              bun={data[0]}
+              data={state.data.filter((val) => val.type !== "bun")}
+              bun={state.data[0]}
               handleMakeOrderClick={(e) => openModal(e, null)}
             ></BurgerConstructor>
             <ModalOverlay isOpened={modalIsOpened} handleOnClose={closeModal}>

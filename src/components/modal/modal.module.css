@@ -8,10 +8,6 @@
     width: 720px;
 }
 
-.number {
-    text-shadow: 0px 5px 25px #4c4cff91;
-}
-
 .close {
     position: absolute;
     top: 0;
@@ -20,29 +16,4 @@
     padding: 0;
     background-color: #ffffff00;
     cursor: pointer;
-}
-
-.done {
-    height: 120px;
-    width: 120px;
-}
-
-.composition {
-    display: flex;
-    flex-direction: row;
-    gap:20px;
-}
-
-.element {
-  display: block;
-  text-align: center;
-}
-
-.value {
-  display: block;
-}
-
-.details {
-  text-align: left;
-  width: calc(100% - 80px);
 }

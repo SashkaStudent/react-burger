@@ -1,12 +1,11 @@
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import modalStyles from "../modal/modal.module.css";
+import modalStyles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
 
-function OrderDetails() {
+function OrderDetails({orderNumber}) {
   return (
     <>
       <p className={`${modalStyles.number} pt-30 text text_type_digits-large`}>
-        034536
+        {orderNumber}
       </p>
       <p className="text text_type_main-default pt-8">Идентификатор заказа</p>
       <img

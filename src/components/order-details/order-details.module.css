@@ -17,9 +17,8 @@
     top: 0;
     right: 0;
     border: none;
-    padding: 0;
+    padding-left: 0;
     background-color: #ffffff00;
-    cursor: pointer;
 }
 
 .done {

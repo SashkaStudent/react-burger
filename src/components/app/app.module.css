@@ -13,3 +13,7 @@
 .wrapper {
   background-color: #1C1C21;
 }
+
+.status {
+  margin: calc(50vh - 88px) auto;
+}

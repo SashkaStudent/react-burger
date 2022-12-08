@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 const modalRoot = document.getElementById("react-modals");
 
 
-function ModalOverlay({ isEnabled, children, handleOnClose }) {
+function ModalOverlay({ isOpened, children, handleOnClose }) {
 
   const onOverlayClick = (e)=>{
     if(e.target.classList.contains(modalOverlayStyles.overlay)){
@@ -14,7 +14,7 @@ function ModalOverlay({ isEnabled, children, handleOnClose }) {
   }
 
   return createPortal(
-    (<div className={`${modalOverlayStyles.overlay} ${!isEnabled?modalOverlayStyles.overlay_disabled:""}`} onClick={onOverlayClick}>
+    (<div className={`${modalOverlayStyles.overlay} ${!isOpened?modalOverlayStyles.overlay_disabled:""}`} onClick={onOverlayClick}>
       {children}
     </div>),
     modalRoot

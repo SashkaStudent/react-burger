@@ -44,7 +44,7 @@ function App() {
 
   const openModal = (e, ingredient) => {
     setModalOpened(true);
-    document.addEventListener('keydown', closeByEsc);
+    //document.addEventListener('keydown', closeByEsc);
 
     if (ingredient) {
       setIngredient(ingredient);
@@ -57,15 +57,15 @@ function App() {
   const closeModal = (e) => {
     setModalOpened(false);
     setIngredient(null);
-    document.removeEventListener('keydown', closeByEsc);
+   // document.removeEventListener('keydown', closeByEsc);
 
   };
 
-  const closeByEsc = (e) => {
-    if (e.key === 'Escape') {
-      closeModal(e);
-    }
-  }
+  // const closeByEsc = (e) => {
+  //   if (e.key === 'Escape') {
+  //     closeModal(e);
+  //   }
+  // }
 
 
   return (
@@ -85,21 +85,21 @@ function App() {
             <BurgerIngredients
               data={state.data}
               handleOnIngredientChoose={openModal}
-            ></BurgerIngredients>
+            />
             <BurgerConstructor
               data={state.data.filter((val) => val.type !== "bun")}
               bun={state.data[0]}
               handleMakeOrderClick={(e) => openModal(e, null)}
-            ></BurgerConstructor>
-            <ModalOverlay isOpened={modalIsOpened} handleOnClose={closeModal}>
-              <Modal handleCloseOnClick={closeModal}>
+            />
+            {modalIsOpened&&(
+            <Modal handleCloseOnClick={closeModal}>
                 {ingredientChoosed ? (
                   <IngredientDetails ingredient={ingredientChoosed} />
                 ) : (
                   <OrderDetails orderNumber={orderNumber} />
                 )}
               </Modal>
-            </ModalOverlay>
+              )}
           </>
         )}
       </main>

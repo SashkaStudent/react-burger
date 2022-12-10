@@ -3,8 +3,10 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import ingredientPropTypes from "../../utils/types";
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
 
 function BurgerConstructor({data, bun, handleMakeOrderClick}){
   return (
@@ -52,5 +54,13 @@ function BurgerConstructor({data, bun, handleMakeOrderClick}){
     </div>
   );
 }
+
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  bun: ingredientPropTypes.isRequired,
+  handleMakeOrderClick: PropTypes.func
+
+};
 
 export default BurgerConstructor;

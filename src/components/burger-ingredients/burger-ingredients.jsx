@@ -47,6 +47,7 @@ function BurgerIngredients({data, handleOnIngredientChoose}) {
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  handleOnIngredientChoose: PropTypes.func
 };
 
 export default BurgerIngredients;

@@ -1,11 +1,14 @@
 import modalStyles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
+import PropTypes from "prop-types";
+import { addLeadingZeros } from "../../utils/helpers";
+
 
 function OrderDetails({orderNumber}) {
   return (
     <>
       <p className={`${modalStyles.number} pt-30 text text_type_digits-large`}>
-        {orderNumber}
+        {addLeadingZeros(orderNumber, 6)}
       </p>
       <p className="text text_type_main-default pt-8">Идентификатор заказа</p>
       <img
@@ -21,6 +24,10 @@ function OrderDetails({orderNumber}) {
       </p>
     </>
   );
+}
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired
 }
 
 export default OrderDetails;

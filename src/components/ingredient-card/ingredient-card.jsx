@@ -27,6 +27,7 @@ function IngredientCard({ ingredient, counter, handleCardOnClick }) {
 IngredientCard.propTypes = {
   ingredient: ingredientPropTypes.isRequired,
   counter: PropTypes.number.isRequired,
+  handleCardOnClick: PropTypes.func
 };
 
 export default IngredientCard;

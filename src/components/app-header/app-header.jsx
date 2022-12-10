@@ -9,7 +9,7 @@ import NavLink from "../nav-link/nav-link";
 import NavMenu from "../nav-menu/nav-menu";
 import headerStyles from "./app-header.module.css";
 
-function AppHeader(props) {
+function AppHeader() {
   return (
   <header className={`${headerStyles.header} pt-4 pb-4`}>
       <NavMenu>

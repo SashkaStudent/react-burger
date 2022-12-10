@@ -1,0 +1,19 @@
+.app {
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1240px;
+  gap:40px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  background-color: #1C1C21;
+}
+
+.status {
+  margin: calc(50vh - 88px) auto;
+}

@@ -1,0 +1,37 @@
+.ingredients{
+    column-gap: 8px;
+    max-width: 600px;
+    height: 912px;
+}
+.container {
+ overflow-y: scroll;
+ height: 716px;
+}
+.container::-webkit-scrollbar {
+    width: 8px;
+    
+  }
+
+  .container::-webkit-scrollbar-track {
+    background: #2F2F37; 
+  }
+
+  .container::-webkit-scrollbar-thumb {
+    background: #8585AD; 
+  }
+  
+  /* Handle on hover */
+  .container::-webkit-scrollbar-thumb:hover {
+    background: #a2a2d3; 
+  }
+
+.category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24; 
+  justify-content: flex-start;
+}
+
+.tab {
+  display: flex;
+}

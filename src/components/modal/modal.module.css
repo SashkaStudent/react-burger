@@ -1,0 +1,19 @@
+.modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #1C1C21;
+    align-items: center;
+    border-radius: 40px;
+    width: 720px;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    padding: 0;
+    background-color: #ffffff00;
+    cursor: pointer;
+}

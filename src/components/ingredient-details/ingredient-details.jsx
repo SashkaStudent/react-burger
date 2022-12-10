@@ -7,7 +7,7 @@ function IngredientDetails({ingredient}) {
       <p className={`pt-10 text text_type_main-large ${detailsStyles.details}`}>
         Детали ингредиента
       </p>
-      <img className={detailsStyles.image} src={ingredient.image_large} alt="Изображение ингредиента."/>
+      <img className={detailsStyles.image} src={ingredient.image_large} alt={ingredient.name}/>
       <p className={`text text_type_main-medium pt-4`}>
         {ingredient.name}
       </p>

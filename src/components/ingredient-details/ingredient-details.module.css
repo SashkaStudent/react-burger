@@ -1,0 +1,27 @@
+.composition {
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+}
+
+.element {
+  display: block;
+  text-align: center;
+  min-width: 112px;
+
+}
+
+.value {
+  display: block;
+}
+
+.details {
+  text-align: left;
+  width: calc(100% - 80px);
+  line-height: 40px;
+}
+
+.image {
+    width: 480px;
+    height: 240px;
+}

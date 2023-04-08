@@ -7,8 +7,39 @@ import ingredientPropTypes from "../../utils/types";
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
+import { useContext, useReducer } from "react";
+import { ConstructorContext } from "../../services/constructorContext";
 
-function BurgerConstructor({data, bun, handleMakeOrderClick}){
+
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "calc":
+      const result = 999;
+      return { price: result };
+    case "reset":
+      return { price: state.price };
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+}
+
+
+
+// function BurgerConstructor({data, bun, handleMakeOrderClick}){
+function BurgerConstructor({ handleMakeOrderClick }) {
+
+  const {bun, ingredients} = useContext(ConstructorContext);
+  const totalPrice = ()=>{
+    const bunsSum = bun.price * 2;
+    const ingSum = ingredients.reduce((prev, curr)=>prev+curr.price, 0);
+    return bunsSum + ingSum;
+  }
+  //const initialState = { ingredients: constructorContext.ingredients, bun: constructorContext.bun, price: 0 };
+  //const [state, dispatch] = useReducer(reducer, initialState);
+  //const price = initialState.ingredients.reduce((prev, curr)=>prev+curr.price, 0);
+ // dispatch({type:"calc", initialState});
+//  const bun = initialState.bun;
   return (
     <div className={`${constructorStyles.constructor} pt-25 pl-4`}>
       <div className="pl-8 pb-4">
@@ -21,7 +52,7 @@ function BurgerConstructor({data, bun, handleMakeOrderClick}){
         />
       </div>
       <ul className={constructorStyles.list}>
-        {data.map((value) => {
+        {ingredients.map((value) => {
           return (
             <li className={constructorStyles.item} key={value._id}>
               <DragIcon type="primary" />
@@ -46,7 +77,7 @@ function BurgerConstructor({data, bun, handleMakeOrderClick}){
         />
       </div>
       <div className={`${constructorStyles.container} pt-10 pr-4`}>
-        <Price price={610} size="large" extraClass="pr-10" />
+        <Price price={totalPrice()} size="large" extraClass="pr-10" />
         <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrderClick}>
           Оформить заказ
         </Button>
@@ -57,8 +88,8 @@ function BurgerConstructor({data, bun, handleMakeOrderClick}){
 
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-  bun: ingredientPropTypes.isRequired,
+  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  // bun: ingredientPropTypes.isRequired,
   handleMakeOrderClick: PropTypes.func
 
 };

@@ -3,9 +3,20 @@ import ingredientsStyle from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
-import React from "react";
+import React, { useContext } from "react";
+import { ConstructorContext } from "../../services/constructorContext";
+
 
 function BurgerIngredients({data, handleOnIngredientChoose}) {
+
+  const {bun, ingredients} = useContext(ConstructorContext);
+
+  const getCount = (id)=>{
+    if(id == bun._id) return 2;
+    
+    return ingredients.filter(i => i._id == id).length;
+
+  }
 
   const categories = [
     { value: "bun", text: "Булки" },
@@ -32,7 +43,7 @@ function BurgerIngredients({data, handleOnIngredientChoose}) {
                     <IngredientCard
                       ingredient={element}
                       key={element._id}
-                      counter={1}
+                      counter={getCount(element._id)}
                       handleCardOnClick={handleOnIngredientChoose}
                     />
                   );

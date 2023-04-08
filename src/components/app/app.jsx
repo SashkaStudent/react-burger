@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import styles from "./app.module.css";
-
+import { getData, postData } from "../../utils/api";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -8,6 +8,10 @@ import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
 import { randomInt } from "../../utils/helpers.js";
+import {
+  ConstructorContext,
+  OrderContext,
+} from "../../services/constructorContext";
 
 function App() {
   const [state, setState] = React.useState({
@@ -21,19 +25,10 @@ function App() {
   const [orderNumber, setOrderNumber] = React.useState(0);
 
   useEffect(() => {
-    const handleRes = (res) =>
-      res.ok ? Promise.resolve(res) : Promise.reject(`Ошибка: ${res.status}`);
-    const handleJson = (res) => res.json();
-
-    const getData = () => {
-      return fetch(`https://norma.nomoreparties.space/api/ingredients`)
-        .then(handleRes)
-        .then(handleJson);
-    };
-
     getData()
       .then((o) => {
         setState({ data: o.data, isLoaded: true });
+        console.log(o.data);
       })
       .catch((e) => {
         setState({ data: null, isLoaded: false, status: `${e}` });
@@ -41,14 +36,21 @@ function App() {
   }, []);
 
   const openModal = (e, ingredient) => {
-    setModalOpened(true);
-    //document.addEventListener('keydown', closeByEsc);
-
     if (ingredient) {
       setIngredient(ingredient);
+      setModalOpened(true);
     } else {
-      const randomOrderNumber = randomInt(999999);
-      setOrderNumber(randomOrderNumber);
+
+      const choosedIngredients = state.data.map((i) => i._id);
+
+      postData(choosedIngredients)
+        .then((o) => {
+          console.log(o.order.number);
+          setOrderNumber(o.order.number);
+          setModalOpened(true)
+        })
+        .catch((e) => {})
+
     }
   };
 
@@ -71,24 +73,31 @@ function App() {
           </div>
         ) : (
           <>
+          <ConstructorContext.Provider
+              value={{ bun: state.data[0], ingredients: state.data.slice(5) }}
+            >
             <BurgerIngredients
               data={state.data}
               handleOnIngredientChoose={openModal}
             />
-            <BurgerConstructor
-              data={state.data.filter((val) => val.type !== "bun")}
-              bun={state.data[0]}
-              handleMakeOrderClick={(e) => openModal(e, null)}
-            />
-            {modalIsOpened&&(
-            <Modal handleCloseOnClick={closeModal}>
+
+            
+              <BurgerConstructor
+                handleMakeOrderClick={(e) => openModal(e, null)}
+              />
+            </ConstructorContext.Provider>
+
+            {modalIsOpened && (
+              <Modal handleCloseOnClick={closeModal}>
                 {ingredientChoosed ? (
                   <IngredientDetails ingredient={ingredientChoosed} />
                 ) : (
-                  <OrderDetails orderNumber={orderNumber} />
+                  <OrderContext.Provider value={orderNumber}>
+                    <OrderDetails/>
+                  </OrderContext.Provider>
                 )}
               </Modal>
-              )}
+            )}
           </>
         )}
       </main>

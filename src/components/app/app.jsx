@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useMemo } from "react";
 import styles from "./app.module.css";
 import { getData, postData } from "../../utils/api";
 import AppHeader from "../app-header/app-header";
@@ -11,6 +11,7 @@ import { randomInt } from "../../utils/helpers.js";
 import {
   ConstructorContext,
   OrderContext,
+  IngredientsContext
 } from "../../services/constructorContext";
 
 function App() {
@@ -24,11 +25,12 @@ function App() {
   const [ingredientChoosed, setIngredient] = React.useState(null);
   const [orderNumber, setOrderNumber] = React.useState(0);
 
+  const stateData = useMemo(()=> state.data, [state]);
+  
   useEffect(() => {
     getData()
       .then((o) => {
         setState({ data: o.data, isLoaded: true });
-        console.log(o.data);
       })
       .catch((e) => {
         setState({ data: null, isLoaded: false, status: `${e}` });
@@ -49,7 +51,7 @@ function App() {
           setOrderNumber(o.order.number);
           setModalOpened(true)
         })
-        .catch((e) => {})
+        .catch((e) => { })
 
     }
   };
@@ -73,15 +75,18 @@ function App() {
           </div>
         ) : (
           <>
-          <ConstructorContext.Provider
-              value={{ bun: state.data[0], ingredients: state.data.slice(5) }}
-            >
-            <BurgerIngredients
-              data={state.data}
-              handleOnIngredientChoose={openModal}
-            />
 
-            
+            <ConstructorContext.Provider
+              value={{bun:stateData[0], ingredients:stateData.slice(6)}}
+            >
+              <IngredientsContext.Provider value={state.data}>
+                <BurgerIngredients
+                 handleOnIngredientChoose={openModal}
+                />
+              </IngredientsContext.Provider>
+
+
+
               <BurgerConstructor
                 handleMakeOrderClick={(e) => openModal(e, null)}
               />
@@ -93,7 +98,7 @@ function App() {
                   <IngredientDetails ingredient={ingredientChoosed} />
                 ) : (
                   <OrderContext.Provider value={orderNumber}>
-                    <OrderDetails/>
+                    <OrderDetails />
                   </OrderContext.Provider>
                 )}
               </Modal>

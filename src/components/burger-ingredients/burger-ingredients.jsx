@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React, { useContext } from "react";
-import { ConstructorContext } from "../../services/constructorContext";
+import { ConstructorContext, IngredientsContext } from "../../services/constructorContext";
 
 
-function BurgerIngredients({data, handleOnIngredientChoose}) {
+function BurgerIngredients({handleOnIngredientChoose}) {
 
   const {bun, ingredients} = useContext(ConstructorContext);
+  const data = useContext(IngredientsContext);
+
 
   const getCount = (id)=>{
     if(id == bun._id) return 2;
@@ -57,7 +59,7 @@ function BurgerIngredients({data, handleOnIngredientChoose}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+ // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleOnIngredientChoose: PropTypes.func
 };
 

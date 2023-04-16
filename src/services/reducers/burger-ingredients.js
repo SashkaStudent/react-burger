@@ -47,7 +47,8 @@ export const ingredientsReducer = (state = initialState, action)=>{
               ingredientsRequest: false,
               bun: action.defaultBun,
               constructor: action.constructor,
-              totalPrice: action.defaultBun.price * 2
+              totalPrice: action.defaultBun.price * 2,
+              choosedIngredient:[],
             };
           }
           case GET_INGREDIENTS_FAILED: {
@@ -78,7 +79,7 @@ export const ingredientsReducer = (state = initialState, action)=>{
           }
 
           case CLOSE_MODAL: {
-            return {...state, popupOrderIsOpen:false, popupDetailsIsOpen:false}
+            return {...state, popupOrderIsOpen:false, popupDetailsIsOpen:false, choosedIngredient:[], orderNumber:0}
           }
           case SWITCH_TAB:{
             return {...state, currentTab:action.tab}

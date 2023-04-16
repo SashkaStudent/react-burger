@@ -7,23 +7,45 @@ import ingredientPropTypes from "../../utils/types";
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
-import { useContext, useMemo, useReducer } from "react";
+import { useContext, useMemo, useReducer, useEffect } from "react";
 import { ConstructorContext } from "../../services/constructorContext";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
+import { DELETE_INGREDIENT, postOrder } from "../../services/actions/burger-ingredients";
 
 
 // function BurgerConstructor({data, bun, handleMakeOrderClick}){
-function BurgerConstructor({ handleMakeOrderClick }) {
+function BurgerConstructor({  }) {
 
-  const {bun, ingredients} = useSelector(store=> store.constructor);
+  const {bun, constructor, totalPrice} = useSelector(store=> store.ingredients);
 
-  console.log(bun?true:false);
+  // const totalPrice = useMemo(()=>{
 
-  const totalPrice = ()=>{
-    const bunsSum = bun.price * 2;
-    const ingSum = ingredients.reduce((prev, curr)=>prev+curr.price, 0);
-    return bunsSum + ingSum;
+  //   if(bun===undefined||constructor===undefined) return 0;
+  //   const bunsSum = bun.price * 2;
+  //   const ingSum = constructor ? constructor.reduce((prev, curr)=>prev+curr.price, 0): 0;
+  //   return bunsSum + ingSum;
+  // }, [constructor, bun]);
+
+  // const totalPrice = ()=>{
+  //   const bunsSum = bun.price * 2;
+  //   const ingSum = ingredients ? ingredients.reduce((prev, curr)=>prev+curr.price, 0): 0;
+  //   return bunsSum + ingSum;
+  // }
+  const dispatch = useDispatch();
+  const handleMakeOrderClick = () =>{
+    dispatch(postOrder([...constructor, bun, bun]));
   }
+
+  const handleDelete = (index) =>{
+    dispatch({type: DELETE_INGREDIENT, id:index})
+  }
+
+  useEffect(()=>{
+
+
+    
+  }, []);
 // const content = 
 // ()=>{
 //  return bun?
@@ -45,9 +67,11 @@ const content = useMemo(()=>{
   />
 </div>
 <ul className={constructorStyles.list}>
-        {ingredients.map((value) => {
+        {
+        constructor ? (
+        constructor.map((value, index) => {
           return (
-            <li className={constructorStyles.item} key={value._id}>
+            <li className={constructorStyles.item} key={index}>
               <DragIcon type="primary" />
 
               <ConstructorElement
@@ -55,10 +79,12 @@ const content = useMemo(()=>{
                 text={value.name}
                 price={value.price}
                 thumbnail={value.image}
+                handleClose={()=>{handleDelete(index)}}
               />
             </li>
           );
-        })}
+        })):(<></>)
+      }
       </ul>
       <div className="pl-8 pt-4">
         <ConstructorElement
@@ -70,7 +96,7 @@ const content = useMemo(()=>{
         />
       </div>
       <div className={`${constructorStyles.container} pt-10 pr-4`}>
-        <Price price={totalPrice()} size="large" extraClass="pr-10" />
+        <Price price={totalPrice} size="large" extraClass="pr-10" />
         <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrderClick}>
           Оформить заказ
         </Button>
@@ -78,7 +104,7 @@ const content = useMemo(()=>{
 </>
 )
   :<></>;
-}, [bun, ingredients]);
+}, [bun, constructor]);
  /* const content = useMemo (()=>{ return (
     <>
     bun ? (

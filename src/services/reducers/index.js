@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import { ingredientsReducer } from './burger-ingredients';
-import { constructorReducer } from './burger-constructor';
+//import { constructorReducer } from './burger-constructor';
 import { GET_INGREDIENTS } from '../actions';
 // const mainReducer = (state, action)=>{
 //     switch(action.type){
@@ -11,7 +11,5 @@ import { GET_INGREDIENTS } from '../actions';
 
 // }
 
-const initialState = {};
 
-
-export const rootReducer = combineReducers({ingredients:ingredientsReducer, constructor:constructorReducer});
+export const rootReducer = combineReducers({ingredients:ingredientsReducer});

@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 import { addLeadingZeros } from "../../utils/helpers";
 import { useContext } from "react";
 import { OrderContext } from "../../services/constructorContext";
+import { useSelector } from "react-redux";
 
 
 function OrderDetails() {
-  const orderNumber = useContext(OrderContext);
+  //const orderNumber = useContext(OrderContext);
+  const {orderNumber} = useSelector(store=> store.ingredients);
+
   return (
     <>
       <p className={`${modalStyles.number} pt-30 text text_type_digits-large`}>

@@ -3,8 +3,12 @@ import Price from "../price/price";
 import cardStyles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
+import { useSelector } from "react-redux";
+import { useMemo } from "react";
 
 function IngredientCard({ ingredient, counter, handleCardOnClick }) {
+  
+  
   return (
     <div className={`${cardStyles.card}`} onClick={(e)=>handleCardOnClick(e, ingredient)}>
       <img

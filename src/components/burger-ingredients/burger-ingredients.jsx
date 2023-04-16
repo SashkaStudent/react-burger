@@ -5,57 +5,99 @@ import PropTypes from "prop-types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React, { useEffect, useMemo } from "react";
 //import { ConstructorContext, IngredientsContext } from "../../services/constructorContext";
-import {useSelector, useDispatch} from "react-redux";
-import { getItems } from "../../services/actions/burger-ingredients.js";
-function BurgerIngredients({handleOnIngredientChoose}) {
+import { useSelector, useDispatch } from "react-redux";
+import { ADD_INGREDIENT, CLICK_INGREDIENT, getItems, SET_BUN, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
+import { InView, useInView } from "react-intersection-observer";
+function BurgerIngredients() {
 
   // const {bun, ingredients} = useContext(ConstructorContext);
- // const data = useContext(IngredientsContext);
- 
-  const dispatch = useDispatch();
-  const {ingredients, ingredientsRequest, ingredientsFailed} = useSelector(store=> store.ingredients);
-  console.log(useSelector(store=> store));
-  
-  useEffect(()=>{
-    dispatch(getItems());
-  }, [dispatch]);
+  // const data = useContext(IngredientsContext);
+  //const ref = useRef(null);
+  const [bunRef, bunInView] = useInView({ threshold: 0 });
+  const [sauceRef, sauceInView] = useInView({ threshold: 0 });
+  const [mainRef, mainInView] = useInView({ threshold: 0 });
 
-  const getCount = (id)=>{
-  //  if(id == bun._id) return 2;
-    
-    return ingredients.filter(i => i._id == id).length;
+  const dispatch = useDispatch();
+  const { bun, ingredients, ingredientsRequest, ingredientsFailed, constructor } = useSelector(store => store.ingredients);
+
+  const handleOnIngredientChoose = (e, ingredient) => {
+    if (ingredient.type === 'bun') {
+      dispatch({ type: SET_BUN, bun: ingredient });
+
+    } else {
+      dispatch({ type: ADD_INGREDIENT, ingredient: ingredient });
+    }
+
+    dispatch({ type: CLICK_INGREDIENT, ingredient: ingredient });
+  }
+
+
+  useEffect(() => {
+    dispatch(getItems());
+
+  }, []);
+
+  useEffect(
+    () => {
+      if (bunInView) {
+        dispatch({
+          type: SWITCH_TAB,
+          tab: 'bun'
+        })
+      } else if (sauceInView) {
+        dispatch({
+          type: SWITCH_TAB,
+          tab: 'sauce'
+        })
+      } else if (mainInView) {
+        dispatch({
+          type: SWITCH_TAB,
+          tab: 'main'
+        })
+      }
+    }, [bunInView, sauceInView, mainInView])
+
+  const getCount = (id) => {
+    if (id == bun._id) return 2;
+
+    return constructor.filter(i => i._id == id).length;
 
   }
 
   const categories = [
-    { value: "bun", text: "Булки" },
-    { value: "sauce", text: "Соусы" },
-    { value: "main", text: "Начинки" },
+    { value: "bun", text: "Булки", ref: bunRef },
+    { value: "sauce", text: "Соусы", ref: sauceRef },
+    { value: "main", text: "Начинки", ref: mainRef },
   ];
 
-const content = useMemo(()=>{ return (
-  categories.map((category) => (
-    <React.Fragment key={category.value}>
-      <h2 id={category.value} className="text text_type_main-medium">
-        {category.text}
-      </h2>
-      <div className={`${ingredientsStyle.category} pt-6 pl-4`}>
-        {ingredients
-          .filter((value) => value.type === category.value)
-          .map((element) => {
-            return (
-              <IngredientCard
-                ingredient={element}
-                key={element._id}
-                counter={getCount(element._id)}
-                handleCardOnClick={handleOnIngredientChoose}
-              />
-            );
-          })}
-      </div>
-    </React.Fragment>
-  )));}
-  ,[ingredients]);
+  const content = useMemo(() => {
+    return (
+      categories.map((category) => (
+        <React.Fragment key={category.value}>
+
+          <h2 ref={category.ref} id={category.value} className="text text_type_main-medium">
+            {category.text}
+          </h2>
+
+          <div className={`${ingredientsStyle.category} pt-6 pl-4`}>
+            {ingredients
+              .filter((value) => value.type === category.value)
+              .map((element) => {
+
+                return (
+                  <IngredientCard
+                    ingredient={element}
+                    key={element._id}
+                    counter={getCount(element._id)}
+                    handleCardOnClick={handleOnIngredientChoose}
+                  />
+                );
+              })}
+          </div>
+        </React.Fragment>
+      )));
+  }
+    , [ingredients, constructor, bun]);
 
   return (
     <div className={ingredientsStyle.ingredients}>
@@ -64,17 +106,17 @@ const content = useMemo(()=>{ return (
       <IngredientsTab tabs={categories} defaultState={categories[0].value} />
 
       <div className={ingredientsStyle.container}>
-        
-        {ingredientsFailed?<p>Ошибка</p>
-        :
-        (ingredientsRequest?<p>Загрузка</p>:content)}
+
+        {ingredientsFailed ? <p>Ошибка</p>
+          :
+          (ingredientsRequest ? <p>Загрузка</p> : content)}
       </div>
     </div>
   );
 }
 
 BurgerIngredients.propTypes = {
- // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleOnIngredientChoose: PropTypes.func
 };
 

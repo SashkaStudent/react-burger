@@ -15,22 +15,51 @@ import {
   OrderContext,
   IngredientsContext
 } from "../../services/constructorContext";
+import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 
 function App() {
-  const [state, setState] = React.useState({
-    data: null,
-    isLoaded: false,
-    status: "Loading...",
-  });
+  // const [state, setState] = React.useState({
+  //   data: null,
+  //   isLoaded: false,
+  //   status: "Loading...",
+  // });
 
-  const [modalIsOpened, setModalOpened] = React.useState(false);
-  const [ingredientChoosed, setIngredient] = React.useState(null);
-  const [orderNumber, setOrderNumber] = React.useState(0);
+//   const [modalIsOpened, setModalOpened] = React.useState(false);
+//  // const [ingredientChoosed, setIngredient] = React.useState(null);
+//   const [orderNumber, setOrderNumber] = React.useState(0);
 
  // const stateData = useSelector(store=>store.ingredients.ingredients});//useMemo(()=> state.data, [state]);
-  const dispatch = useDispatch();
+ const {popupOrderIsOpen, popupDetailsIsOpen, choosedIngredient} = useSelector(store => store.ingredients);
+ const dispatch = useDispatch();
+
+ const closeModal = (e) => {
+  //  setModalOpened(false);
+  //  setIngredient(null);
+    dispatch({type: CLOSE_MODAL})
+  };
+
+const modalContent = useMemo(() =>{
+  console.log(popupOrderIsOpen);
+ if(popupOrderIsOpen){
+  return (
+  <Modal handleCloseOnClick={closeModal}>
+    <OrderDetails />
+  </Modal>
+  );
+ }
+else if(popupDetailsIsOpen){
+
+  return (
+    <Modal handleCloseOnClick={closeModal}>
+        <IngredientDetails/>
+    </Modal>
+  );
+
+}    
+  
 
 
+}, [popupOrderIsOpen, popupDetailsIsOpen])
 
   /*useEffect(() => {
     getData()
@@ -43,29 +72,26 @@ function App() {
       });
   }, []);*/
 
-  const openModal = (e, ingredient) => {
-    if (ingredient) {
-      setIngredient(ingredient);
-      setModalOpened(true);
-    } else {
+  // const openModal = (e, ingredient) => {
+  //   if (ingredient) {
+  //     setIngredient(ingredient);
+  //     setModalOpened(true);
+  //   } else {
 
-      const choosedIngredients = state.data.map((i) => i._id);
+  //     const choosedIngredients = state.data.map((i) => i._id);
 
-      postData(choosedIngredients)
-        .then((o) => {
-          console.log(o.order.number);
-          setOrderNumber(o.order.number);
-          setModalOpened(true)
-        })
-        .catch((e) => { })
+  //     postData(choosedIngredients)
+  //       .then((o) => {
+  //         console.log(o.order.number);
+  //         setOrderNumber(o.order.number);
+  //         setModalOpened(true)
+  //       })
+  //       .catch((e) => { })
 
-    }
-  };
+  //   }
+  // };
 
-  const closeModal = (e) => {
-    setModalOpened(false);
-    setIngredient(null);
-  };
+
 
   return (
     <div className={styles.app}>
@@ -88,18 +114,20 @@ function App() {
 
               
                 <BurgerIngredients
-                 handleOnIngredientChoose={openModal}
+                // handleOnIngredientChoose={openModal}
                 />
               
 
 
 
-             {<BurgerConstructor
-                handleMakeOrderClick={(e) => openModal(e, null)}
-         />}
-
-
-            {modalIsOpened && (
+             {<BurgerConstructor/>
+                /*handleMakeOrderClick={(e) => openModal(e, null)*/}
+         
+         
+             {
+              modalContent
+             }
+            {/*popupOrderIsOpen && (
               <Modal handleCloseOnClick={closeModal}>
                 {ingredientChoosed ? (
                   <IngredientDetails ingredient={ingredientChoosed} />
@@ -109,7 +137,7 @@ function App() {
                   </OrderContext.Provider>
                 )}
               </Modal>
-            )}
+                )*/}
           </>
         )}
       </main>

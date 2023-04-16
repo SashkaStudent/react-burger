@@ -1,18 +1,13 @@
 import IngredientCard from "../ingredient-card/ingredient-card";
 import ingredientsStyle from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
-//import ingredientPropTypes from "../../utils/types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React, { useEffect, useMemo } from "react";
-//import { ConstructorContext, IngredientsContext } from "../../services/constructorContext";
 import { useSelector, useDispatch } from "react-redux";
-import { ADD_INGREDIENT, CLICK_INGREDIENT, getItems, SET_BUN, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
-import { InView, useInView } from "react-intersection-observer";
+import { CLICK_INGREDIENT, getItems, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
+import { useInView } from "react-intersection-observer";
 function BurgerIngredients() {
 
-  // const {bun, ingredients} = useContext(ConstructorContext);
-  // const data = useContext(IngredientsContext);
-  //const ref = useRef(null);
   const [bunRef, bunInView] = useInView({ threshold: 0 });
   const [sauceRef, sauceInView] = useInView({ threshold: 0 });
   const [mainRef, mainInView] = useInView({ threshold: 0 });
@@ -21,13 +16,6 @@ function BurgerIngredients() {
   const { bun, ingredients, ingredientsRequest, ingredientsFailed, constructor } = useSelector(store => store.ingredients);
 
   const handleOnIngredientChoose = (e, ingredient) => {
-    if (ingredient.type === 'bun') {
-      dispatch({ type: SET_BUN, bun: ingredient });
-
-    } else {
-      dispatch({ type: ADD_INGREDIENT, ingredient: ingredient });
-    }
-
     dispatch({ type: CLICK_INGREDIENT, ingredient: ingredient });
   }
 
@@ -60,7 +48,7 @@ function BurgerIngredients() {
   const getCount = (id) => {
     if (id == bun._id) return 2;
 
-    return constructor.filter(i => i._id == id).length;
+    return constructor.filter(i => i._id === id).length;
 
   }
 

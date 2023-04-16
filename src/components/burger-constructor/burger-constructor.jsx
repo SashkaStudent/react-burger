@@ -1,164 +1,84 @@
 import {
   Button,
   ConstructorElement,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import ingredientPropTypes from "../../utils/types";
+
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
-import { useContext, useMemo, useReducer, useEffect } from "react";
-import { ConstructorContext } from "../../services/constructorContext";
+import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
-import { DELETE_INGREDIENT, postOrder } from "../../services/actions/burger-ingredients";
+import { ADD_INGREDIENT, postOrder, SET_BUN } from "../../services/actions/burger-ingredients";
+import { useDrop } from "react-dnd";
+import ConstructorCard from "../constructor-card/constructor-card";
 
+function BurgerConstructor({ }) {
 
-// function BurgerConstructor({data, bun, handleMakeOrderClick}){
-function BurgerConstructor({  }) {
-
-  const {bun, constructor, totalPrice} = useSelector(store=> store.ingredients);
-
-  // const totalPrice = useMemo(()=>{
-
-  //   if(bun===undefined||constructor===undefined) return 0;
-  //   const bunsSum = bun.price * 2;
-  //   const ingSum = constructor ? constructor.reduce((prev, curr)=>prev+curr.price, 0): 0;
-  //   return bunsSum + ingSum;
-  // }, [constructor, bun]);
-
-  // const totalPrice = ()=>{
-  //   const bunsSum = bun.price * 2;
-  //   const ingSum = ingredients ? ingredients.reduce((prev, curr)=>prev+curr.price, 0): 0;
-  //   return bunsSum + ingSum;
-  // }
+  const { bun, constructor, totalPrice } = useSelector(store => store.ingredients);
   const dispatch = useDispatch();
-  const handleMakeOrderClick = () =>{
+  const handleMakeOrderClick = () => {
     dispatch(postOrder([...constructor, bun, bun]));
   }
+  const [, dropTarget] = useDrop({
+    accept: ["ingredient"],
+    drop(ingredient) {
 
-  const handleDelete = (index) =>{
-    dispatch({type: DELETE_INGREDIENT, id:index})
-  }
-
-  useEffect(()=>{
-
-
-    
-  }, []);
-// const content = 
-// ()=>{
-//  return bun?
-//   ( <p>yep</p>)
-//   :
-//   (<p>nope</p>); 
-// }
-const content = useMemo(()=>{
-  return bun?
-  (
-  <>
-  <div className="pl-8 pb-4">
-  <ConstructorElement
-    type="top"
-    isLocked={true}
-    text={`${bun.name} (верх)`}
-    price={bun.price}
-    thumbnail={bun.image}
-  />
-</div>
-<ul className={constructorStyles.list}>
-        {
-        constructor ? (
-        constructor.map((value, index) => {
-          return (
-            <li className={constructorStyles.item} key={index}>
-              <DragIcon type="primary" />
-
-              <ConstructorElement
-                isLocked={false}
-                text={value.name}
-                price={value.price}
-                thumbnail={value.image}
-                handleClose={()=>{handleDelete(index)}}
-              />
-            </li>
-          );
-        })):(<></>)
+      if (ingredient.type === 'bun') {
+        dispatch({ type: SET_BUN, bun: ingredient });
+      } else {
+        dispatch({ type: ADD_INGREDIENT, ingredient: ingredient });
       }
-      </ul>
-      <div className="pl-8 pt-4">
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
-      <div className={`${constructorStyles.container} pt-10 pr-4`}>
-        <Price price={totalPrice} size="large" extraClass="pr-10" />
-        <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrderClick}>
-          Оформить заказ
-        </Button>
-      </div>
-</>
-)
-  :<></>;
-}, [bun, constructor]);
- /* const content = useMemo (()=>{ return (
-    <>
-    bun ? (
-      <div className="pl-8 pb-4">
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${bun.name} (верх)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
-      <ul className={constructorStyles.list}>
-        {ingredients.map((value) => {
-          return (
-            <li className={constructorStyles.item} key={value._id}>
-              <DragIcon type="primary" />
 
-              <ConstructorElement
-                isLocked={false}
-                text={value.name}
-                price={value.price}
-                thumbnail={value.image}
-              />
-            </li>
-          );
-        })}
-      </ul>
-      <div className="pl-8 pt-4">
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
-      <div className={`${constructorStyles.container} pt-10 pr-4`}>
-        <Price price={totalPrice()} size="large" extraClass="pr-10" />
-        <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrderClick}>
-          Оформить заказ
-        </Button>
-      </div>
-    ) : <><p>empty</p></>
-    </>
-  );
+    },
+    collect: monitor => ({
+       type: monitor.getItemType(),
+      })
+  });
 
-},[bun, ingredients]); */
+  const content = useMemo(() => {
+    return bun ?
+      (
+        <>
+          <div className="pl-8 pb-4">
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+          <ul ref={dropTarget} className={constructorStyles.list}>
 
-  //const initialState = { ingredients: constructorContext.ingredients, bun: constructorContext.bun, price: 0 };
-  //const [state, dispatch] = useReducer(reducer, initialState);
-  //const price = initialState.ingredients.reduce((prev, curr)=>prev+curr.price, 0);
- // dispatch({type:"calc", initialState});
-//  const bun = initialState.bun;
+            {
+              constructor ? (
+                constructor.map((value, index) => {
+                  return (
+                    <ConstructorCard key={index} ingredient={value} index={index} />
+                  );
+                })) : (<></>)
+            }
+          </ul>
+          <div className="pl-8 pt-4">
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+          <div className={`${constructorStyles.container} pt-10 pr-4`}>
+            <Price price={totalPrice} size="large" extraClass="pr-10" />
+            <Button htmlType="button" type="primary" size="large" onClick={handleMakeOrderClick}>
+              Оформить заказ
+            </Button>
+          </div>
+        </>
+      )
+      : <></>;
+  }, [bun, constructor]);
+  
   return (
     <div className={`${constructorStyles.constructor} pt-25 pl-4`}>
       {content}
@@ -168,10 +88,7 @@ const content = useMemo(()=>{
 
 
 BurgerConstructor.propTypes = {
-  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-  // bun: ingredientPropTypes.isRequired,
   handleMakeOrderClick: PropTypes.func
-
 };
 
 export default BurgerConstructor;

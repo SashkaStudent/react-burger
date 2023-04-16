@@ -1,16 +1,13 @@
-import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import tabStyles from "./ingredients-tab.module.css";
 import { useSelector } from "react-redux";
 
-function IngredientsTab({ tabs, defaultState }) {
-  //const [current, setCurrent] = React.useState(defaultState!== undefined?defaultState:tabs[0].value);
+function IngredientsTab({ tabs }) {
 
   const {currentTab} = useSelector(store=>store.ingredients);
 
   const scrollToCurrent = (value) => {
-//    setCurrent(value);
     document.getElementById(value).scrollIntoView({ behavior: "smooth" });
   };
   return (
@@ -36,7 +33,6 @@ const tabPropTypes = PropTypes.shape({
 
 IngredientsTab.propTypes = {
   tabs: PropTypes.arrayOf(tabPropTypes).isRequired,
-  defaultState: PropTypes.string
 };
 
 export default IngredientsTab;

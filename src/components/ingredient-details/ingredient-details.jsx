@@ -1,5 +1,4 @@
 import detailsStyles from "./ingredient-details.module.css";
-import ingredientPropTypes from "../../utils/types";
 import { useSelector } from "react-redux";
 
 function IngredientDetails() {

@@ -13,6 +13,7 @@ export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const SWITCH_TAB = 'SWITCH_TAB';
+export const MOVE = 'MOVE';
 //export const CLOSE_INGREDIENT_DETAILS = "CLOSE_INGREDIENT_DETAILS";
 
 

@@ -8,7 +8,8 @@ import {
     DELETE_INGREDIENT,
     POST_ORDER_SUCCESS,
     CLOSE_MODAL,
-    SWITCH_TAB
+    SWITCH_TAB,
+    MOVE
     } from "../actions/burger-ingredients.js";
 
 
@@ -81,6 +82,12 @@ export const ingredientsReducer = (state = initialState, action)=>{
           }
           case SWITCH_TAB:{
             return {...state, currentTab:action.tab}
+          }
+          case MOVE:{
+            const movingIng = state.constructor[action.drag];
+            state.constructor.splice(action.drag,1);
+            state.constructor.splice(action.drop,0,movingIng);
+            return {...state, constructor:[...state.constructor]}
           }
         default: return state;
     }

@@ -1,96 +1,43 @@
-import React, { useEffect, useContext, useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_INGREDIENTS } from "../../services/actions";
 import styles from "./app.module.css";
-import { getData, postData } from "../../utils/api";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
-import { randomInt } from "../../utils/helpers.js";
-import {
-  ConstructorContext,
-  OrderContext,
-  IngredientsContext
-} from "../../services/constructorContext";
 import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  // const [state, setState] = React.useState({
-  //   data: null,
-  //   isLoaded: false,
-  //   status: "Loading...",
-  // });
 
-//   const [modalIsOpened, setModalOpened] = React.useState(false);
-//  // const [ingredientChoosed, setIngredient] = React.useState(null);
-//   const [orderNumber, setOrderNumber] = React.useState(0);
+  const { popupOrderIsOpen, popupDetailsIsOpen } = useSelector(store => store.ingredients);
+  const dispatch = useDispatch();
 
- // const stateData = useSelector(store=>store.ingredients.ingredients});//useMemo(()=> state.data, [state]);
- const {popupOrderIsOpen, popupDetailsIsOpen, choosedIngredient} = useSelector(store => store.ingredients);
- const dispatch = useDispatch();
-
- const closeModal = (e) => {
-  //  setModalOpened(false);
-  //  setIngredient(null);
-    dispatch({type: CLOSE_MODAL})
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL })
   };
 
-const modalContent = useMemo(() =>{
-  console.log(popupOrderIsOpen);
- if(popupOrderIsOpen){
-  return (
-  <Modal handleCloseOnClick={closeModal}>
-    <OrderDetails />
-  </Modal>
-  );
- }
-else if(popupDetailsIsOpen){
+  const modalContent = useMemo(() => {
+    if (popupOrderIsOpen) {
+      return (
+        <Modal handleCloseOnClick={closeModal}>
+          <OrderDetails />
+        </Modal>
+      );
+    }
+    else if (popupDetailsIsOpen) {
 
-  return (
-    <Modal handleCloseOnClick={closeModal}>
-        <IngredientDetails/>
-    </Modal>
-  );
+      return (
+        <Modal handleCloseOnClick={closeModal}>
+          <IngredientDetails />
+        </Modal>
+      );
 
-}    
-  
-
-
-}, [popupOrderIsOpen, popupDetailsIsOpen])
-
-  /*useEffect(() => {
-    getData()
-      .then((o) => {
-        setState({ data: o.data, isLoaded: true });
-        dispatch({type:GET_INGREDIENTS, ingredients:o.data});
-      })
-      .catch((e) => {
-        setState({ data: null, isLoaded: false, status: `${e}` });
-      });
-  }, []);*/
-
-  // const openModal = (e, ingredient) => {
-  //   if (ingredient) {
-  //     setIngredient(ingredient);
-  //     setModalOpened(true);
-  //   } else {
-
-  //     const choosedIngredients = state.data.map((i) => i._id);
-
-  //     postData(choosedIngredients)
-  //       .then((o) => {
-  //         console.log(o.order.number);
-  //         setOrderNumber(o.order.number);
-  //         setModalOpened(true)
-  //       })
-  //       .catch((e) => { })
-
-  //   }
-  // };
-
+    }
+  }, [popupOrderIsOpen, popupDetailsIsOpen, closeModal])
 
 
   return (
@@ -99,47 +46,13 @@ else if(popupDetailsIsOpen){
         <AppHeader />
       </div>
       <main className={styles.container}>
-        {
-        //!state.isLoaded ? (
-        //  <div className={styles.status}>
-        //    <p className={`text text_type_main-default text_color_inactive`}>
-        //      {state.status}
-        //    </p>
-        //  </div>
-        //) 
-        //:
-         (
-          <>
-
-
-              
-                <BurgerIngredients
-                // handleOnIngredientChoose={openModal}
-                />
-              
-
-
-
-             {<BurgerConstructor/>
-                /*handleMakeOrderClick={(e) => openModal(e, null)*/}
+      
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+              {modalContent}
+            </DndProvider>
          
-         
-             {
-              modalContent
-             }
-            {/*popupOrderIsOpen && (
-              <Modal handleCloseOnClick={closeModal}>
-                {ingredientChoosed ? (
-                  <IngredientDetails ingredient={ingredientChoosed} />
-                ) : (
-                  <OrderContext.Provider value={orderNumber}>
-                    <OrderDetails />
-                  </OrderContext.Provider>
-                )}
-              </Modal>
-                )*/}
-          </>
-        )}
       </main>
     </div>
   );

@@ -8,7 +8,6 @@ function Modal({ children, handleCloseOnClick }) {
 
   useEffect(() => {
     const closeByEsc = (e) => {
-      console.log(e);
       if (e.key === 'Escape') {
         handleCloseOnClick(e);
       }

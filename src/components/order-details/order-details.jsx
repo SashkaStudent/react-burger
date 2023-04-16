@@ -1,14 +1,11 @@
 import modalStyles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
-import PropTypes from "prop-types";
 import { addLeadingZeros } from "../../utils/helpers";
-import { useContext } from "react";
-import { OrderContext } from "../../services/constructorContext";
 import { useSelector } from "react-redux";
 
 
 function OrderDetails() {
-  //const orderNumber = useContext(OrderContext);
+
   const {orderNumber} = useSelector(store=> store.ingredients);
 
   return (

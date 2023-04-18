@@ -13,7 +13,13 @@ function BurgerIngredients() {
   const [mainRef, mainInView] = useInView({ threshold: 0 });
 
   const dispatch = useDispatch();
-  const { bun, ingredients, ingredientsRequest, ingredientsFailed, constructor } = useSelector(store => store.ingredients);
+  
+  const getIngredientsStore = store => store.ingredients;
+  const getConstructorIngredients = store => store.constructor.ingredients;
+  const getConstructorBun = store => store.constructor.bun;
+  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(getIngredientsStore);
+  const constructor = useSelector(getConstructorIngredients);
+  const bun = useSelector(getConstructorBun);
 
   const handleOnIngredientChoose = (e, ingredient) => {
     dispatch({ type: CLICK_INGREDIENT, ingredient: ingredient });

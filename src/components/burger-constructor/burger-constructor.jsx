@@ -8,16 +8,21 @@ import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ADD_INGREDIENT, postOrder, SET_BUN } from "../../services/actions/burger-ingredients";
+import { postOrder } from "../../services/actions/order.js";
+import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "../constructor-card/constructor-card";
 
-function BurgerConstructor({ }) {
 
-  const { bun, constructor, totalPrice } = useSelector(store => store.ingredients);
+function BurgerConstructor({ }) {
+  const getStore = store => store.constructor;
+  const { bun, ingredients, totalPrice } = useSelector(getStore);
   const dispatch = useDispatch();
   const handleMakeOrderClick = () => {
-    dispatch(postOrder([...constructor, bun, bun]));
+
+    const postArray = ingredients.map(ing=>ing._id);
+    postArray.push(bun._id, bun._id);
+    dispatch(postOrder(postArray));
   }
   const [, dropTarget] = useDrop({
     accept: ["ingredient"],
@@ -51,8 +56,8 @@ function BurgerConstructor({ }) {
           <ul ref={dropTarget} className={constructorStyles.list}>
 
             {
-              constructor ? (
-                constructor.map((value, index) => {
+              ingredients ? (
+                ingredients.map((value, index) => {
                   return (
                     <ConstructorCard key={index} ingredient={value} index={index} />
                   );
@@ -77,7 +82,7 @@ function BurgerConstructor({ }) {
         </>
       )
       : <></>;
-  }, [bun, constructor]);
+  }, [bun, ingredients]);
   
   return (
     <div className={`${constructorStyles.constructor} pt-25 pl-4`}>

@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { DELETE_INGREDIENT, MOVE } from "../../services/actions/burger-ingredients";
+import { DELETE_INGREDIENT, MOVE } from "../../services/actions/burger-constructor";
 import constructorCardStyles from "./constructor-card.module.css"
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";

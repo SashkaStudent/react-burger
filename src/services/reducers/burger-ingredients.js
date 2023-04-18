@@ -3,14 +3,9 @@ import {
     GET_INGREDIENTS_REQUEST, 
     GET_INGREDIENTS_SUCCESS, 
     GET_INGREDIENTS_FAILED , 
-    SET_BUN, 
-    ADD_INGREDIENT,
-    DELETE_INGREDIENT,
-    POST_ORDER_SUCCESS,
-    CLOSE_MODAL,
     SWITCH_TAB,
-    MOVE
     } from "../actions/burger-ingredients.js";
+import { CLOSE_MODAL } from "../actions/modal.js";
 
 
 
@@ -20,10 +15,8 @@ const initialState = {
     ingredientsFailed: false,
     constructor:[],
     bun:[],
-    choosedIngredient:[],
+    choosedIngredient:null,
     totalPrice:0,
-    popupOrderIsOpen: false,
-    popupDetailsIsOpen: false,
     orderNumber: 0,
     currentTab: 'bun'
 }
@@ -31,7 +24,7 @@ const initialState = {
 export const ingredientsReducer = (state = initialState, action)=>{
     switch (action.type){
         case CLICK_INGREDIENT:{
-            return {...state, popupDetailsIsOpen:true ,choosedIngredient: action.ingredient};
+            return {...state, choosedIngredient: action.ingredient};
         }
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -48,48 +41,21 @@ export const ingredientsReducer = (state = initialState, action)=>{
               bun: action.defaultBun,
               constructor: action.constructor,
               totalPrice: action.defaultBun.price * 2,
-              choosedIngredient:[],
+              choosedIngredient:null,
             };
           }
           case GET_INGREDIENTS_FAILED: {
             return { ...state, ingredientsFailed: true, ingredientsRequest: false };
           }
 
-          case POST_ORDER_SUCCESS:{
-            return {...state, orderNumber:action.orderNumber, popupOrderIsOpen:true, popupDetailsIsOpen:false}
-          }
-
-          case ADD_INGREDIENT:{
-            const bunsSum = state.bun.price * 2;
-            const ingSum = [...state.constructor, action.ingredient].reduce((prev, curr)=>prev+curr.price, 0);
-
-            return {...state, constructor:[...state.constructor, action.ingredient], totalPrice:bunsSum+ingSum}
-          }
-          case DELETE_INGREDIENT:{
-            state.constructor.splice(action.id,1);
-            const bunsSum = state.bun.price * 2;
-            const ingSum = state.constructor.reduce((prev, curr)=>prev+curr.price, 0);
-            return {...state, constructor:[...state.constructor], totalPrice:bunsSum+ingSum}
-          }
-
-          case SET_BUN: {
-            const bunsSum = action.bun.price * 2;
-            const ingSum = state.constructor.reduce((prev, curr)=>prev+curr.price, 0);
-            return {...state, bun: action.bun, totalPrice:bunsSum+ingSum}
-          }
-
           case CLOSE_MODAL: {
-            return {...state, popupOrderIsOpen:false, popupDetailsIsOpen:false, choosedIngredient:[], orderNumber:0}
+            return {...state, choosedIngredient:null}
           }
+
           case SWITCH_TAB:{
             return {...state, currentTab:action.tab}
           }
-          case MOVE:{
-            const movingIng = state.constructor[action.drag];
-            state.constructor.splice(action.drag,1);
-            state.constructor.splice(action.drop,0,movingIng);
-            return {...state, constructor:[...state.constructor]}
-          }
+
         default: return state;
     }
 }

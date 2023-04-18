@@ -7,13 +7,15 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { CLOSE_MODAL } from "../../services/actions/modal";
 
 function App() {
-
-  const { popupOrderIsOpen, popupDetailsIsOpen } = useSelector(store => store.ingredients);
+  const getIngredientsStore = store => store.ingredients;
+  const getOrderStore = store => store.order;
+  const { choosedIngredient } = useSelector(getIngredientsStore);
+  const { postOrderSuccess } = useSelector(getOrderStore);
   const dispatch = useDispatch();
 
   const closeModal = () => {
@@ -21,23 +23,18 @@ function App() {
   };
 
   const modalContent = useMemo(() => {
-    if (popupOrderIsOpen) {
+    if (postOrderSuccess) {
       return (
-        <Modal handleCloseOnClick={closeModal}>
-          <OrderDetails />
-        </Modal>
+        <OrderDetails />
       );
     }
-    else if (popupDetailsIsOpen) {
-
+    else if (choosedIngredient) {
       return (
-        <Modal handleCloseOnClick={closeModal}>
-          <IngredientDetails />
-        </Modal>
+        <IngredientDetails />
       );
 
     }
-  }, [popupOrderIsOpen, popupDetailsIsOpen, closeModal])
+  }, [postOrderSuccess, choosedIngredient, closeModal])
 
 
   return (
@@ -46,13 +43,19 @@ function App() {
         <AppHeader />
       </div>
       <main className={styles.container}>
-      
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-              {modalContent}
-            </DndProvider>
-         
+
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+          {
+            (choosedIngredient || postOrderSuccess) && (
+              <Modal handleCloseOnClick={closeModal}>
+                {modalContent}
+              </Modal>
+            )
+          }
+        </DndProvider>
+
       </main>
     </div>
   );

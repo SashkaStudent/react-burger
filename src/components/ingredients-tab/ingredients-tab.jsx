@@ -4,8 +4,8 @@ import tabStyles from "./ingredients-tab.module.css";
 import { useSelector } from "react-redux";
 
 function IngredientsTab({ tabs }) {
-
-  const {currentTab} = useSelector(store=>store.ingredients);
+  const getIngredientsStore = store => store.ingredients;
+  const {currentTab} = useSelector(getIngredientsStore);
 
   const scrollToCurrent = (value) => {
     document.getElementById(value).scrollIntoView({ behavior: "smooth" });

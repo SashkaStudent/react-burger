@@ -3,10 +3,17 @@ import Price from "../price/price";
 import cardStyles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
 import ingredientPropTypes from "../../utils/types";
+import { useDrag } from "react-dnd"
 
 function IngredientCard({ ingredient, counter, handleCardOnClick }) {
+  
+  const [,dragRef] = useDrag({
+    type:"ingredient",
+    item:ingredient
+  });
+
   return (
-    <div className={`${cardStyles.card}`} onClick={(e)=>handleCardOnClick(e, ingredient)}>
+    <div className={`${cardStyles.card}`} ref={dragRef} onClick={(e)=>handleCardOnClick(e, ingredient)}>
       <img
         className={`${cardStyles.image}`}
         src={ingredient.image}

@@ -1,61 +1,41 @@
-import React, { useEffect } from "react";
+import { useMemo } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styles from "./app.module.css";
-
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
-import { randomInt } from "../../utils/helpers.js";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { CLOSE_MODAL } from "../../services/actions/modal";
 
 function App() {
-  const [state, setState] = React.useState({
-    data: null,
-    isLoaded: false,
-    status: "Loading...",
-  });
+  const getIngredientsStore = store => store.ingredients;
+  const getOrderStore = store => store.order;
+  const { choosedIngredient } = useSelector(getIngredientsStore);
+  const { postOrderSuccess } = useSelector(getOrderStore);
+  const dispatch = useDispatch();
 
-  const [modalIsOpened, setModalOpened] = React.useState(false);
-  const [ingredientChoosed, setIngredient] = React.useState(null);
-  const [orderNumber, setOrderNumber] = React.useState(0);
+  const closeModal = () => {
+    dispatch({ type: CLOSE_MODAL })
+  };
 
-  useEffect(() => {
-    const handleRes = (res) =>
-      res.ok ? Promise.resolve(res) : Promise.reject(`Ошибка: ${res.status}`);
-    const handleJson = (res) => res.json();
-
-    const getData = () => {
-      return fetch(`https://norma.nomoreparties.space/api/ingredients`)
-        .then(handleRes)
-        .then(handleJson);
-    };
-
-    getData()
-      .then((o) => {
-        setState({ data: o.data, isLoaded: true });
-      })
-      .catch((e) => {
-        setState({ data: null, isLoaded: false, status: `${e}` });
-      });
-  }, []);
-
-  const openModal = (e, ingredient) => {
-    setModalOpened(true);
-    //document.addEventListener('keydown', closeByEsc);
-
-    if (ingredient) {
-      setIngredient(ingredient);
-    } else {
-      const randomOrderNumber = randomInt(999999);
-      setOrderNumber(randomOrderNumber);
+  const modalContent = useMemo(() => {
+    if (postOrderSuccess) {
+      return (
+        <OrderDetails />
+      );
     }
-  };
+    else if (choosedIngredient) {
+      return (
+        <IngredientDetails />
+      );
 
-  const closeModal = (e) => {
-    setModalOpened(false);
-    setIngredient(null);
-  };
+    }
+  }, [postOrderSuccess, choosedIngredient, closeModal])
+
 
   return (
     <div className={styles.app}>
@@ -63,34 +43,19 @@ function App() {
         <AppHeader />
       </div>
       <main className={styles.container}>
-        {!state.isLoaded ? (
-          <div className={styles.status}>
-            <p className={`text text_type_main-default text_color_inactive`}>
-              {state.status}
-            </p>
-          </div>
-        ) : (
-          <>
-            <BurgerIngredients
-              data={state.data}
-              handleOnIngredientChoose={openModal}
-            />
-            <BurgerConstructor
-              data={state.data.filter((val) => val.type !== "bun")}
-              bun={state.data[0]}
-              handleMakeOrderClick={(e) => openModal(e, null)}
-            />
-            {modalIsOpened&&(
-            <Modal handleCloseOnClick={closeModal}>
-                {ingredientChoosed ? (
-                  <IngredientDetails ingredient={ingredientChoosed} />
-                ) : (
-                  <OrderDetails orderNumber={orderNumber} />
-                )}
+
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+          {
+            (choosedIngredient || postOrderSuccess) && (
+              <Modal handleCloseOnClick={closeModal}>
+                {modalContent}
               </Modal>
-              )}
-          </>
-        )}
+            )
+          }
+        </DndProvider>
+
       </main>
     </div>
   );

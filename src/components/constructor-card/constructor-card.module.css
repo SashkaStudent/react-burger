@@ -1,0 +1,15 @@
+.item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+.strange{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+  .itemForDrop {
+    border-top: 1px rgb(110, 42, 159) solid;
+  }

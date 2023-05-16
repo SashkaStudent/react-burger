@@ -1,10 +1,14 @@
 import modalStyles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
-import PropTypes from "prop-types";
 import { addLeadingZeros } from "../../utils/helpers";
+import { useSelector } from "react-redux";
 
 
-function OrderDetails({orderNumber}) {
+function OrderDetails() {
+
+  const getOrderStore = store => store.order;
+  const {orderNumber} = useSelector(getOrderStore);
+
   return (
     <>
       <p className={`${modalStyles.number} pt-30 text text_type_digits-large`}>
@@ -24,10 +28,6 @@ function OrderDetails({orderNumber}) {
       </p>
     </>
   );
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired
 }
 
 export default OrderDetails;

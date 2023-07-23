@@ -10,6 +10,12 @@ import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { CLOSE_MODAL } from "../../services/actions/modal";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import Login from "../pages/login";
+import Register from "../pages/register";
+import ForgotPassword from "../pages/forgot-password";
+import ResetPassword from "../pages/reset-password";
+import Profile from "../pages/profile";
 
 function App() {
   const getIngredientsStore = store => store.ingredients;
@@ -17,7 +23,7 @@ function App() {
   const { choosedIngredient } = useSelector(getIngredientsStore);
   const { postOrderSuccess } = useSelector(getOrderStore);
   const dispatch = useDispatch();
-
+  //
   const closeModal = () => {
     dispatch({ type: CLOSE_MODAL })
   };
@@ -29,6 +35,7 @@ function App() {
       );
     }
     else if (choosedIngredient) {
+      
       return (
         <IngredientDetails />
       );
@@ -39,24 +46,36 @@ function App() {
 
   return (
     <div className={styles.app}>
+      <Router>
+
       <div className={styles.wrapper}>
         <AppHeader />
       </div>
-      <main className={styles.container}>
+        <Routes>
+          <Route path="/" element={
+          <main className={styles.container}>
+            
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+              {
+                (choosedIngredient || postOrderSuccess) && (
+                  <Modal handleCloseOnClick={closeModal}>
+                    {modalContent}
+                  </Modal>
+                )
+              }
+            </DndProvider>
 
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-          {
-            (choosedIngredient || postOrderSuccess) && (
-              <Modal handleCloseOnClick={closeModal}>
-                {modalContent}
-              </Modal>
-            )
-          }
-        </DndProvider>
+          </main>} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/forgot-password" element={<ForgotPassword/>}/>
+          <Route path="/reset-password" element={<ResetPassword/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+        </Routes>
+      </Router>
 
-      </main>
     </div>
   );
 }

@@ -1,10 +1,23 @@
 import detailsStyles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 function IngredientDetails() {
-  const getChoosedIngredient = store => store.ingredients.choosedIngredient;
-  const ingredient = useSelector(getChoosedIngredient);
+  const location = useLocation();
+  console.log(location);
+  const getIngredientsStore = store => store.ingredients;
 
+  const { ingredients, ingredientsRequest, ingredientsFailed, choosedIngredient } = useSelector(getIngredientsStore);
+  //const getChoosedIngredient = store => store.ingredients.choosedIngredient;
+
+  let ingredient = choosedIngredient;
+  const {ingredientId} = useParams();
+  console.log(ingredientId);
+  if(!ingredient){
+    ingredient = ingredients.find(item => item._id === ingredientId);
+  }
+  
+//  if(!ingredient) ingredient = ingredient;
   return (
     <>
       <p className={`pt-10 text text_type_main-large ${detailsStyles.details}`}>

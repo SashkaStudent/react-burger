@@ -8,6 +8,15 @@
   align-items: center;
 }
 
+.contentDetails {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 120px;
+  max-width: 480px;
+  align-items: center;
+}
+
 .button {
   max-width: 253px;
   margin-bottom: 80px;

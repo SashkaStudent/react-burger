@@ -3,3 +3,8 @@
     flex-direction: row;
     align-items: center;
 }
+
+.text {
+  text-decoration: none;
+  color: #f2f2f3;
+}

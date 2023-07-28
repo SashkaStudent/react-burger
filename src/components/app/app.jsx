@@ -28,7 +28,6 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(ingredients.length);
   useEffect(() => {
     dispatch(getItems())
     

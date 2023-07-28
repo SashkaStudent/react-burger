@@ -4,6 +4,7 @@ import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-de
 import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../../services/actions/login";
 import { Link } from "react-router-dom";
 import pagesStyle from "./pages.module.css"
+import { postAuth } from "../../utils/api";
 
 function Login() {
 
@@ -20,6 +21,14 @@ function Login() {
   const onPasswordChange = e => {
     dispatch({ type: CHANGE_LOGIN_PASSWORD, password: e.target.value })
 
+  }
+
+  const onAuthClick = e =>{
+    postAuth(email, password).then(req =>{
+      console.log(req);
+      localStorage.setItem("accessToken", req.accessToken);
+      localStorage.setItem("refreshToken", req.refreshToken);
+    });
   }
 
   return (
@@ -47,7 +56,7 @@ function Login() {
         extraClass="mb-2"
       />
       <Link to='/login'>
-        <Button htmlType="button" type="primary" extraClass={pagesStyle.button} size="medium">
+        <Button htmlType="button" type="primary" extraClass={pagesStyle.button} size="medium" onClick={onAuthClick}>
           Войти
         </Button>
       </Link>

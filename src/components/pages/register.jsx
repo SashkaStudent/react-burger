@@ -8,7 +8,7 @@ import pagesStyle from "./pages.module.css";
 
 function Register() {
 
-  const getRegisterStore = store => { console.log(store); return store.register }
+  const getRegisterStore = store =>  store.register;
   const { email, password, visibility, valid, name } = useSelector(getRegisterStore);
 
   const dispatch = useDispatch();
@@ -28,8 +28,10 @@ function Register() {
   }
   const onRegisterClick = e => {
     postRegister(name, email, password).then(req => {
+      localStorage.setItem("accessToken", req.accessToken);
+      localStorage.setItem("refreshToken", req.refreshToken);
       navigator('/login');
-    });
+    }).catch((err)=>console.log(err));
   }
 
   return (
@@ -58,7 +60,7 @@ function Register() {
       />
       <PasswordInput
 
-        placeholder={'Введите новый пароль'}
+        placeholder={'Пароль'}
         onChange={onPasswordChange}
         value={password}
         name={'password'}

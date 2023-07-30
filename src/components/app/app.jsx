@@ -18,19 +18,24 @@ import ResetPassword from "../pages/reset-password";
 import Profile from "../pages/profile";
 import { getItems } from "../../services/actions/burger-ingredients";
 import IngredientDetailsPage from "../pages/ingredient-details-page";
+import { checkUserAuth } from "../../services/actions/user";
+import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
+import NotFound from "../pages/not-found";
 
 function App() {
   const getIngredientsStore = store => store.ingredients;
   const getOrderStore = store => store.order;
-  const { ingredients, ingredientsRequest, ingredientsFailed, choosedIngredient } = useSelector(getIngredientsStore);
+  const getUser = store => store.user;
+  const { ingredients } = useSelector(getIngredientsStore);
 //  const { choosedIngredient } = useSelector(getIngredientsStore);
   const { postOrderSuccess } = useSelector(getOrderStore);
+  const user = useSelector(getUser);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getItems())
-    
+    dispatch(getItems());
+    dispatch(checkUserAuth(localStorage.getItem('accessToken')));
 }, [])
 
   const background = location.state && location.state.background;
@@ -39,6 +44,9 @@ function App() {
     navigate(-1);
    // dispatch({ type: CLOSE_MODAL })
   };
+  const closeOrderModal = () => {
+    dispatch({ type: CLOSE_MODAL })
+  }
 
   const modalContent = useMemo(() => {
     if (postOrderSuccess) {
@@ -46,14 +54,7 @@ function App() {
         <OrderDetails />
       );
     }
-    else if (choosedIngredient) {
-      
-      return (
-        <IngredientDetails />
-      );
-
-    }
-  }, [postOrderSuccess, choosedIngredient, closeModal])
+  }, [postOrderSuccess, closeOrderModal])
 
 
   return (
@@ -70,23 +71,24 @@ function App() {
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
               <BurgerConstructor />
-              {/* {
-                (choosedIngredient || postOrderSuccess) && (
-                  <Modal handleCloseOnClick={closeModal}>
-                    {modalContent}
+              { 
+                (postOrderSuccess) && (
+                  <Modal handleCloseOnClick={closeOrderModal}>
+                    <OrderDetails />
                   </Modal>
                 )
-              } */}
+              } 
             </DndProvider>
 
           </main>} />
           <Route path='/ingredients/:ingredientId'
                element={(ingredients&&ingredients.length)&&(<IngredientDetailsPage/>)} />
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/forgot-password" element={<ForgotPassword/>}/>
+          <Route path="/login" element={<OnlyUnAuth component={<Login/>}/>}/>
+          <Route path="/register" element={<OnlyUnAuth component={<Register/>}/>}/>
+          <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
           <Route path="/reset-password" element={<ResetPassword/>}/>
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/profile" element={<OnlyAuth component={<Profile/>}/>}/>
+          <Route path="*" element={<NotFound/>} />
         </Routes>
         {background && ( <Routes>
           <Route

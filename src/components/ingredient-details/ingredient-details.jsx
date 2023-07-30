@@ -4,7 +4,6 @@ import { useLocation, useParams } from "react-router-dom";
 
 function IngredientDetails() {
   const location = useLocation();
-  console.log(location);
   const getIngredientsStore = store => store.ingredients;
 
   const { ingredients, ingredientsRequest, ingredientsFailed, choosedIngredient } = useSelector(getIngredientsStore);
@@ -12,7 +11,6 @@ function IngredientDetails() {
 
   let ingredient = choosedIngredient;
   const {ingredientId} = useParams();
-  console.log(ingredientId);
   if(!ingredient){
     ingredient = ingredients.find(item => item._id === ingredientId);
   }

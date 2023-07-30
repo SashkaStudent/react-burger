@@ -5,12 +5,14 @@ import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../../services/action
 import { Link } from "react-router-dom";
 import pagesStyle from "./pages.module.css"
 import { postAuth } from "../../utils/api";
+import { getLoginData } from "../../services/actions/user";
 
 function Login() {
 
-  const getLoginStore = store => { console.log(store); return store.login }
+  const getLoginStore = store => { return store.login }
   const { email, password, valid } = useSelector(getLoginStore);
-
+  const getUserStore = store => store.user;
+  const { isAuthenticated } = useSelector(getUserStore);
   const dispatch = useDispatch();
 
   const onEmailChange = e => {
@@ -24,13 +26,13 @@ function Login() {
   }
 
   const onAuthClick = e =>{
-    postAuth(email, password).then(req =>{
-      console.log(req);
-      localStorage.setItem("accessToken", req.accessToken);
-      localStorage.setItem("refreshToken", req.refreshToken);
-    });
-  }
+    dispatch(getLoginData(email, password));
+    dispatch({ type: CHANGE_LOGIN_EMAIL, email: '', valid: true })
+    dispatch({ type: CHANGE_LOGIN_PASSWORD, password: '' })
 
+
+  }
+  
   return (
     <div className={pagesStyle.content}>
       <p className="text text_type_main-medium">

@@ -3,34 +3,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CHANGE_FORGOT_EMAIL } from "../../services/actions/forgot-password";
-import { postPasswordReset } from "../../utils/api";
+import { patchUser, postPasswordReset } from "../../utils/api";
 import pagesStyle from "./pages.module.css"
 import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_PROFILE_PASSWORD } from "../../services/actions/profile";
+import { CHANGE_USER, postLogoutUser } from "../../services/actions/user";
 
 function Profile() {
   const getProfileStore = store => { return store.profile }
-  const { name, email, password, valid } = useSelector(getProfileStore);
+  const getUserStore = store => store.user;
+  const {password, valid } = useSelector(getProfileStore);
+  const { name, email } = useSelector(getUserStore);
+  
+
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const navButtonClassName ='text text_type_main-medium pt-4 pb-4'
   const navButtonClassNameInactive ='text text_type_main-medium text_color_inactive pt-4 pb-4'
   const onNameChange = e => {
-    dispatch({ type: CHANGE_PROFILE_NAME, name: e.target.value });
+    dispatch({ type: CHANGE_USER, data: { user: {name: e.target.value, email: email}} });
+    patchUser(localStorage.getItem("accessToken"), {name: e.target.value, email: email});
   }
   const onEmailChange = e => {
-    dispatch({ type: CHANGE_PROFILE_EMAIL, email: e.target.value, valid: e.nativeEvent.target.validity.valid })
+    dispatch({ type: CHANGE_USER, data: { user: {name: name, email: e.target.value}} });
+    dispatch({ type: CHANGE_PROFILE_EMAIL, valid: e.nativeEvent.target.validity.valid })
+    patchUser(localStorage.getItem("accessToken"), {name: name, email: e.target.value});
+
   }
   const onPasswordChange = e => {
     dispatch({ type: CHANGE_PROFILE_PASSWORD, password: e.target.value })
+    patchUser(localStorage.getItem("accessToken"), {name: name, email: email, password: e.target.value});
+
   }
-  // const onResetClick = e => {
-  //   postPasswordReset(email)
-  //   .then(req =>{
-  //     if(req.success){
-  //       navigate('/reset-password', { replace: true });
-  //     }
-  //   });
-  // }
+
+  const onLogout = e =>{
+    dispatch(postLogoutUser(localStorage.getItem("refreshToken")));
+  }
+
   return (
     <div className={pagesStyle.profileContent}>
       <div className={pagesStyle.profileNav}>
@@ -47,12 +56,10 @@ function Profile() {
           )}
         </NavLink>
 
-        <NavLink to="/exit" className={pagesStyle.linkText}>
-          {({ isActive, isPending }) => (
-            <p className={isActive ? navButtonClassName : navButtonClassNameInactive}>
+        
+            <p onClick={onLogout} className={`${pagesStyle.buttonText} ${navButtonClassNameInactive}`}>
               Выход</p>
-          )}
-        </NavLink>
+          
         <p className="text text_type_main-default text_color_inactive pt-20">
           В этом разделе вы можете изменить&nbsp;свои персональные данные
         </p>

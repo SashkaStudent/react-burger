@@ -62,3 +62,7 @@
   text-decoration: none;
   color:inherit;
 }
+
+.buttonText {
+  cursor: pointer;
+}

@@ -1,7 +1,9 @@
 const handleRes = (res) =>
-  res.ok ? Promise.resolve(res) : res.json().then((err) => Promise.reject(err));
-
-const handleJson = (res) => res.json();
+  { 
+    return res.ok ? Promise.resolve(res) : res.json().then((err) => Promise.reject(err));
+}
+const handleJson = (res) =>
+  res.json();
 
 export const getData = () => {
   return fetch(`https://norma.nomoreparties.space/api/ingredients`)
@@ -85,6 +87,19 @@ export const postAuth = (email, password) =>{
 
 };
 
+export const postLogout = (data) =>{
+  return fetch(`https://norma.nomoreparties.space/api/auth/logout`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          token: data
+      })
+  })
+  .then(handleRes)
+  .then(handleJson);
+}
 // const handleRes = (res) => {
 //   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 // };
@@ -101,20 +116,38 @@ export const refreshToken = () => {
   }).then(handleRes);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const patchUser = (token, endpoint) => {
+  console.log(token, endpoint);
+  fetchWithRefresh(token, 'PATCH', endpoint);
+
+}
+
+export const fetchWithRefresh = async (token, method, endpoint) => {
+ 
+  const options = {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      authorization: token
+    },
+    body: JSON.stringify(endpoint)
+  }
+  
+  
   try {
-    const res = await fetch(url, options);
-    return await handleRes(res);
+
+    const res = await fetch('https://norma.nomoreparties.space/api/auth/user', options).then(handleRes).then(handleJson);   
+    return await res;
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
         return Promise.reject(refreshData);
-      }
+      };
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options); //повторяем запрос
+      const res = await fetch('https://norma.nomoreparties.space/api/auth/user', options); //повторяем запрос
       return await handleRes(res);
     } else {
       return Promise.reject(err);

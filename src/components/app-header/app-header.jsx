@@ -4,13 +4,25 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import HeaderNavLink from "../nav-link/header-nav-link";
 
 import NavMenu from "../nav-menu/nav-menu";
 import headerStyles from "./app-header.module.css";
 
+
+
 function AppHeader() {
+
+  const isAuthChecked = useSelector(state => state.user.isAuthenticated);
+  const switchNavLink = () => {
+    if (isAuthChecked) {
+        return '/profile';
+    }
+    return '/login';
+}
+
   return (
     <header className={`${headerStyles.header} pt-4 pb-4`}>
       <NavMenu>
@@ -34,7 +46,7 @@ function AppHeader() {
       </NavMenu>
       <Logo />
 
-      <NavLink to='/login' className={headerStyles.linkText}>
+      <NavLink to={switchNavLink()} className={headerStyles.linkText}>
       {({ isActive, isPending }) => (
         <HeaderNavLink>
           <ProfileIcon type={isActive ? 'primary' : 'secondary'} />

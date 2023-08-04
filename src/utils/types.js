@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const ingredientPropTypes = PropTypes.shape({
+export const ingredientPropTypes = PropTypes.shape({
     calories: PropTypes.number,
     carbohydrates: PropTypes.number,
     fat: PropTypes.number,
@@ -16,4 +16,15 @@ const ingredientPropTypes = PropTypes.shape({
     
   });
 
-  export default ingredientPropTypes;
+ export const cardOrderPropTypes = PropTypes.shape({
+    ingredients: PropTypes.arrayOf(PropTypes.string),
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    number: PropTypes.number,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string,
+    
+  });
+
+  //export default ingredientPropTypes;

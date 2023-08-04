@@ -21,6 +21,8 @@ import IngredientDetailsPage from "../pages/ingredient-details-page";
 import { checkUserAuth } from "../../services/actions/user";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import NotFound from "../pages/not-found";
+//import OrderFeed from "../order-feed/order-feed";
+import Feed from "../pages/feed";
 
 function App() {
   const getIngredientsStore = store => store.ingredients;
@@ -88,6 +90,7 @@ function App() {
           <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
           <Route path="/reset-password" element={<ResetPassword/>}/>
           <Route path="/profile" element={<OnlyAuth component={<Profile/>}/>}/>
+          <Route path="/feed" element={(ingredients&&ingredients.length)&&<Feed/>} />
           <Route path="*" element={<NotFound/>} />
         </Routes>
         {background && ( <Routes>

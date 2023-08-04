@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-height: 214px;
+  gap: 24px;
+  background: #1C1C21;
+  border-radius: 40px;
+  border: none;
+}

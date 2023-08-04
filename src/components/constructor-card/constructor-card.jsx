@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { DELETE_INGREDIENT, MOVE } from "../../services/actions/burger-constructor";
 import constructorCardStyles from "./constructor-card.module.css"
 import PropTypes from "prop-types";
-import ingredientPropTypes from "../../utils/types";
+import {ingredientPropTypes} from "../../utils/types";
 
 function ConstructorCard({ ingredient, index }) {
 

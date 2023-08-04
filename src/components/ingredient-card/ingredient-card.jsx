@@ -2,7 +2,7 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Price from "../price/price";
 import cardStyles from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
-import ingredientPropTypes from "../../utils/types";
+import {ingredientPropTypes} from "../../utils/types";
 import { useDrag } from "react-dnd"
 import { Link, useLocation } from "react-router-dom";
 

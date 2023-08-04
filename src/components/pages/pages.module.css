@@ -66,3 +66,17 @@
 .buttonText {
   cursor: pointer;
 }
+
+.feedContainer {
+  padding-top: 40px;
+  width: 1248px;
+  margin: 0 auto;
+
+}
+
+.feedWrapper {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

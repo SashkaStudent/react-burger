@@ -6,39 +6,40 @@ import { CHANGE_FORGOT_EMAIL } from "../../services/actions/forgot-password";
 import { patchUser, postPasswordReset } from "../../utils/api";
 import pagesStyle from "./pages.module.css"
 import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_PROFILE_PASSWORD } from "../../services/actions/profile";
-import { CHANGE_USER, postLogoutUser } from "../../services/actions/user";
+import { changeUserData, CHANGE_USER, postLogoutUser } from "../../services/actions/user";
 
 function Profile() {
   const getProfileStore = store => { return store.profile }
   const getUserStore = store => store.user;
-  const {password, valid } = useSelector(getProfileStore);
-  const { name, email } = useSelector(getUserStore);
-  
-
-
+  const {name, email, password, valid } = useSelector(getProfileStore);
+  const user = useSelector(getUserStore);
   const dispatch = useDispatch();
 
   const navButtonClassName ='text text_type_main-medium pt-4 pb-4'
   const navButtonClassNameInactive ='text text_type_main-medium text_color_inactive pt-4 pb-4'
   const onNameChange = e => {
-    dispatch({ type: CHANGE_USER, data: { user: {name: e.target.value, email: email}} });
-    patchUser(localStorage.getItem("accessToken"), {name: e.target.value, email: email});
+    dispatch({ type: CHANGE_PROFILE_NAME, name: e.target.value });
   }
   const onEmailChange = e => {
-    dispatch({ type: CHANGE_USER, data: { user: {name: name, email: e.target.value}} });
-    dispatch({ type: CHANGE_PROFILE_EMAIL, valid: e.nativeEvent.target.validity.valid })
-    patchUser(localStorage.getItem("accessToken"), {name: name, email: e.target.value});
-
+    dispatch({ type: CHANGE_PROFILE_EMAIL, email: e.target.value, valid: e.nativeEvent.target.validity.valid })
   }
   const onPasswordChange = e => {
     dispatch({ type: CHANGE_PROFILE_PASSWORD, password: e.target.value })
-    patchUser(localStorage.getItem("accessToken"), {name: name, email: email, password: e.target.value});
-
   }
 
   const onLogout = e =>{
     dispatch(postLogoutUser(localStorage.getItem("refreshToken")));
   }
+
+  const onSaveClick = e =>{
+    dispatch({ type: CHANGE_USER, data: { user: {name: name, email: email}} });
+    dispatch(changeUserData(localStorage.getItem("accessToken"), {name: name, email: email, password: password}));
+  }
+
+  const onCancelClick = e =>{
+    dispatch({ type: CHANGE_PROFILE_NAME, name: user.name });
+    dispatch({ type: CHANGE_PROFILE_EMAIL, email: user.email, valid: true })
+   }
 
   return (
     <div className={pagesStyle.profileContent}>
@@ -94,9 +95,9 @@ function Profile() {
           name={'password'}
           icon={'EditIcon'}
         />
+        <Button htmlType="button" onClick={onSaveClick}>Сохранить</Button>
+        <Button htmlType="button" onClick={onCancelClick}>Отмена</Button>
       </div>
-
-
     </div>
   );
 }

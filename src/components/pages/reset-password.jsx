@@ -23,6 +23,7 @@ function ResetPassword() {
 
   }
   const onSaveClick = e => {
+    e.preventDefault();
     postNewPassword(password, code).then(req => {
       if (req.success) {
         dispatch({ type: CHANGE_RESET_PASSWORD, password: "" })
@@ -35,36 +36,37 @@ function ResetPassword() {
   }
   return (
     <div className={pagesStyle.content}>
-      <PasswordInput
-
-        placeholder={'Введите новый пароль'}
-        onChange={onPasswordChange}
-        value={password}
-        name={'password'}
-        extraClass="mb-2"
-      />
-      <Input
-        type={'text'}
-        placeholder={'Введите код из письма'}
-        onChange={onCodeChange}
-        value={code}
-        name={'code'}
-        error={false}
-        size={'default'}
-        extraClass="ml-1"
-      />
-      <Button htmlType="button" type="primary" size="medium" onClick={onSaveClick} extraClass={pagesStyle.button}>
-        Восстановить
-      </Button>
-      <div className={pagesStyle.row}>
-      <p className="text text_type_main-default text_color_inactive">
-        Вспомнили пароль?
-      </p>
-      <Link to='/login'>
-        <Button htmlType="button" type="secondary" size="medium" extraClass={pagesStyle.inlineButton}>
-          Войти
+      <form className={pagesStyle.form}>
+        <PasswordInput
+          placeholder={'Введите новый пароль'}
+          onChange={onPasswordChange}
+          value={password}
+          name={'password'}
+          extraClass="mb-2"
+        />
+        <Input
+          type={'text'}
+          placeholder={'Введите код из письма'}
+          onChange={onCodeChange}
+          value={code}
+          name={'code'}
+          error={false}
+          size={'default'}
+          extraClass="ml-1"
+        />
+        <Button htmlType="submit" type="primary" size="medium" onClick={onSaveClick} extraClass={pagesStyle.button}>
+          Восстановить
         </Button>
-      </Link>
+      </form>
+      <div className={pagesStyle.row}>
+        <p className="text text_type_main-default text_color_inactive">
+          Вспомнили пароль?
+        </p>
+        <Link to='/login'>
+          <Button htmlType="button" type="secondary" size="medium" extraClass={pagesStyle.inlineButton}>
+            Войти
+          </Button>
+        </Link>
       </div>
 
     </div>

@@ -116,10 +116,10 @@ export const refreshToken = () => {
   }).then(handleRes);
 };
 
-export const patchUser = (token, endpoint) => {
+export const patchUser = async (token, endpoint) => {
   console.log(token, endpoint);
-  fetchWithRefresh(token, 'PATCH', endpoint);
-
+  const res = await fetchWithRefresh(token, 'PATCH', endpoint);
+  return await res;
 }
 
 export const fetchWithRefresh = async (token, method, endpoint) => {

@@ -12,17 +12,25 @@ import { postOrder } from "../../services/actions/order.js";
 import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "../constructor-card/constructor-card";
+import { useNavigate } from "react-router-dom";
 
 
 function BurgerConstructor({ }) {
   const getStore = store => store.constructor;
+  const getUserStore = store => store.user;
   const { bun, ingredients, totalPrice } = useSelector(getStore);
+  const user = useSelector(getUserStore);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleMakeOrderClick = () => {
+    if(user.isAuthenticated){
+      const postArray = ingredients.map(ing=>ing._id);
+      postArray.push(bun._id, bun._id);
+      dispatch(postOrder(postArray));
+    } else {
+      navigate("/login");
+    }
 
-    const postArray = ingredients.map(ing=>ing._id);
-    postArray.push(bun._id, bun._id);
-    dispatch(postOrder(postArray));
   }
   const [, dropTarget] = useDrop({
     accept: ["ingredient"],
@@ -82,7 +90,7 @@ function BurgerConstructor({ }) {
         </>
       )
       : <></>;
-  }, [bun, ingredients]);
+  }, [bun, ingredients, user]);
   
   return (
     <div className={`${constructorStyles.constructor} pt-25 pl-4`}>

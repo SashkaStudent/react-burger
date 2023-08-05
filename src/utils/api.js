@@ -100,9 +100,6 @@ export const postLogout = (data) =>{
   .then(handleRes)
   .then(handleJson);
 }
-// const handleRes = (res) => {
-//   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-// };
 
 export const refreshToken = () => {
   return fetch(`https://norma.nomoreparties.space/api/auth/token`, {
@@ -140,14 +137,14 @@ export const fetchWithRefresh = async (token, method, endpoint) => {
     return await res;
   } catch (err) {
     if (err.message === "jwt expired") {
-      const refreshData = await refreshToken(); //обновляем токен
+      const refreshData = await refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       };
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
-      const res = await fetch('https://norma.nomoreparties.space/api/auth/user', options); //повторяем запрос
+      const res = await fetch('https://norma.nomoreparties.space/api/auth/user', options);
       return await handleRes(res);
     } else {
       return Promise.reject(err);

@@ -1,8 +1,8 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../../services/actions/reset-password";
-import { postNewPassword } from "../../utils/api";
+import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../services/actions/reset-password";
+import { postNewPassword } from "../utils/api";
 import pagesStyle from "./pages.module.css"
 
 function ResetPassword() {

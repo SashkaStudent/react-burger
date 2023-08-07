@@ -1,5 +1,5 @@
-import OrderFeed from "../order-feed/order-feed";
-import StatsFeed from "../stats-feed/stats-feed";
+import OrderFeed from "../components/order-feed/order-feed";
+import StatsFeed from "../components/stats-feed/stats-feed";
 import pagesStyle from "./pages.module.css";
 
 function Feed() {

@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../../services/actions/login";
+import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../services/actions/login";
 import { Link } from "react-router-dom";
 import pagesStyle from "./pages.module.css"
-import { postAuth } from "../../utils/api";
-import { getLoginData } from "../../services/actions/user";
+import { postAuth } from "../utils/api";
+import { getLoginData } from "../services/actions/user";
 
 function Login() {
 

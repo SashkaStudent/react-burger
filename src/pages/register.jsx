@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { CHANGE_REGISTER_NAME, CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_PASSWORD } from "../../services/actions/register";
+import { CHANGE_REGISTER_NAME, CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_PASSWORD } from "../services/actions/register";
 import { Link, useNavigate } from "react-router-dom";
-import { postRegister } from "../../utils/api";
+import { postRegister } from "../utils/api";
 import pagesStyle from "./pages.module.css";
 
 function Register() {

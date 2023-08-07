@@ -2,11 +2,11 @@ import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { CHANGE_FORGOT_EMAIL } from "../../services/actions/forgot-password";
-import { patchUser, postPasswordReset } from "../../utils/api";
+import { CHANGE_FORGOT_EMAIL } from "../services/actions/forgot-password";
+import { patchUser, postPasswordReset } from "../utils/api";
 import pagesStyle from "./pages.module.css"
-import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_PROFILE_PASSWORD } from "../../services/actions/profile";
-import { changeUserData, CHANGE_USER, postLogoutUser } from "../../services/actions/user";
+import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_PROFILE_PASSWORD } from "../services/actions/profile";
+import { changeUserData, CHANGE_USER, postLogoutUser } from "../services/actions/user";
 
 function Profile() {
   const getProfileStore = store => { return store.profile }

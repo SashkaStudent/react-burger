@@ -11,18 +11,18 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { CLOSE_MODAL } from "../../services/actions/modal";
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
-import Login from "../pages/login";
-import Register from "../pages/register";
-import ForgotPassword from "../pages/forgot-password";
-import ResetPassword from "../pages/reset-password";
-import Profile from "../pages/profile";
+import Login from "../../pages/login";
+import Register from "../../pages/register";
+import ForgotPassword from "../../pages/forgot-password";
+import ResetPassword from "../../pages/reset-password";
+import Profile from "../../pages/profile";
 import { getItems } from "../../services/actions/burger-ingredients";
-import IngredientDetailsPage from "../pages/ingredient-details-page";
+import IngredientDetailsPage from "../../pages/ingredient-details-page";
 import { checkUserAuth } from "../../services/actions/user";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
-import NotFound from "../pages/not-found";
+import NotFound from "../../pages/not-found";
 //import OrderFeed from "../order-feed/order-feed";
-import Feed from "../pages/feed";
+import Feed from "../../pages/feed";
 
 function App() {
   const getIngredientsStore = store => store.ingredients;

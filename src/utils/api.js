@@ -11,11 +11,12 @@ export const getData = () => {
     .then(handleJson);
 };
 
-export const postData = (ingredients) => {
+export const postData = (ingredients, accessToken) => {
   return fetch(`https://norma.nomoreparties.space/api/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "authorization": accessToken
     },
     body: JSON.stringify({
       ingredients: ingredients,

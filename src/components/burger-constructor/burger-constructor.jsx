@@ -22,11 +22,12 @@ function BurgerConstructor({ }) {
   const user = useSelector(getUserStore);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+ // console.log(localStorage.getItem("accessToken")?.slice(7));
   const handleMakeOrderClick = () => {
     if(user.isAuthenticated){
       const postArray = ingredients.map(ing=>ing._id);
       postArray.push(bun._id, bun._id);
-      dispatch(postOrder(postArray));
+      dispatch(postOrder(postArray, localStorage.getItem("accessToken")));
     } else {
       navigate("/login");
     }

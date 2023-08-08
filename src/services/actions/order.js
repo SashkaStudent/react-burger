@@ -5,10 +5,10 @@ export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
 
-export function postOrder(ingredients){
+export function postOrder(ingredients, accessToken){
     return function (dispatch) {
       dispatch({type:POST_ORDER_REQUEST});
-      postData(ingredients).then(res =>{
+      postData(ingredients, accessToken).then(res =>{
         if (res && res.success) {
           dispatch({
             type:POST_ORDER_SUCCESS,

@@ -12,7 +12,7 @@ function CardOrder({order}) {
 
  // console.log(Date.parse(order.createdAt));
   const d = new Date(order.createdAt);
-  console.log(d);
+ // console.log(d);
   const orderIngredients = [];
   order.ingredients.map(item=>{
    orderIngredients.push(ingredients.find(ing => item === ing._id));
@@ -25,7 +25,7 @@ function CardOrder({order}) {
 
   return (
     <div className={orderStyles.container}>
-      <div><p>{"#"+order.number}</p> <p>{d.toLocaleDateString("ru-RU")}</p></div>
+      <div><p>{"#"+order.number}</p> <p>{d.toString("DD:MM hh:mm")}</p></div>
       <div><p>{order.name}</p></div>
       <div>
         {

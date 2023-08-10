@@ -3,19 +3,15 @@ import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 
 function IngredientDetails() {
-  const location = useLocation();
   const getIngredientsStore = store => store.ingredients;
-
-  const { ingredients, ingredientsRequest, ingredientsFailed, choosedIngredient } = useSelector(getIngredientsStore);
-  //const getChoosedIngredient = store => store.ingredients.choosedIngredient;
+  const { ingredients, choosedIngredient } = useSelector(getIngredientsStore);
 
   let ingredient = choosedIngredient;
   const {ingredientId} = useParams();
   if(!ingredient){
     ingredient = ingredients.find(item => item._id === ingredientId);
   }
-  
-//  if(!ingredient) ingredient = ingredient;
+
   return (
     <>
       <p className={`pt-10 text text_type_main-large ${detailsStyles.details}`}>

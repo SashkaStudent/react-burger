@@ -6,9 +6,8 @@ import orderFeedStyles from "./order-feed.module.css"
 
 
 function OrderFeed() {
-  const {orders, total, totalToday} = useSelector(store => store.orderFeed.orders);
+  const {orders} = useSelector(store => store.orderFeed.orders);
   const dispatch = useDispatch();
-console.log(orders);
   useEffect(() => {
       dispatch(connect("wss://norma.nomoreparties.space/orders/all"))
       return () => {

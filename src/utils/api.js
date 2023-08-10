@@ -101,9 +101,6 @@ export const postLogout = (data) =>{
   .then(handleRes)
   .then(handleJson);
 }
-// const handleRes = (res) => {
-//   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-// };
 
 export const refreshToken = () => {
   return fetch(`https://norma.nomoreparties.space/api/auth/token`, {
@@ -118,7 +115,6 @@ export const refreshToken = () => {
 };
 
 export const patchUser = async (token, endpoint) => {
-  console.log(token, endpoint);
   const res = await fetchWithRefresh(token, 'PATCH', endpoint);
   return await res;
 }

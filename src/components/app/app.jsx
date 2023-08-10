@@ -21,15 +21,16 @@ import IngredientDetailsPage from "../../pages/ingredient-details-page";
 import { checkUserAuth } from "../../services/actions/user";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import NotFound from "../../pages/not-found";
-//import OrderFeed from "../order-feed/order-feed";
 import Feed from "../../pages/feed";
+import OrderFeedDetails from "../../pages/order-feed-details";
+import ProfileFeed from "../profile-feed/profile-feed";
+import ProfileEdit from "../profile-edit/profile-edit";
 
 function App() {
   const getIngredientsStore = store => store.ingredients;
   const getOrderStore = store => store.order;
   const getUser = store => store.user;
   const { ingredients } = useSelector(getIngredientsStore);
-//  const { choosedIngredient } = useSelector(getIngredientsStore);
   const { postOrderSuccess } = useSelector(getOrderStore);
   const user = useSelector(getUser);
   const location = useLocation();
@@ -44,19 +45,10 @@ function App() {
   //
   const closeModal = () => {
     navigate(-1);
-   // dispatch({ type: CLOSE_MODAL })
   };
   const closeOrderModal = () => {
     dispatch({ type: CLOSE_MODAL })
   }
-
-  const modalContent = useMemo(() => {
-    if (postOrderSuccess) {
-      return (
-        <OrderDetails />
-      );
-    }
-  }, [postOrderSuccess, closeOrderModal])
 
 
   return (
@@ -89,8 +81,16 @@ function App() {
           <Route path="/register" element={<OnlyUnAuth component={<Register/>}/>}/>
           <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
           <Route path="/reset-password" element={<ResetPassword/>}/>
-          <Route path="/profile" element={<OnlyAuth component={<Profile/>}/>}/>
-          <Route path="/feed" element={(ingredients&&ingredients.length)&&<Feed/>} />
+          <Route path="/profile" element={<OnlyAuth component={<Profile/>}/>}>
+            <Route path="/profile" element={<ProfileEdit/>}/>
+            <Route path="/profile/orders" element={<ProfileFeed/>}/>
+          </Route>
+          <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderFeedDetails/>}/>}/>
+          <Route path="/feed">
+            <Route index element={(ingredients&&ingredients.length)&&<Feed/>}/>
+            <Route path=':id' element={<OrderFeedDetails/>}/>
+          </Route>
+          
           <Route path="*" element={<NotFound/>} />
         </Routes>
         {background && ( <Routes>

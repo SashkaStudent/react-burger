@@ -4,11 +4,8 @@ import { useLocation, useParams } from "react-router-dom";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 
 function IngredientDetailsPage() {
-  const location = useLocation();
   const getIngredientsStore = store => store.ingredients;
-
-  const { ingredients, ingredientsRequest, ingredientsFailed, choosedIngredient } = useSelector(getIngredientsStore);
-  //const getChoosedIngredient = store => store.ingredients.choosedIngredient;
+  const { ingredients, choosedIngredient } = useSelector(getIngredientsStore);
 
   let ingredient = choosedIngredient;
   const {ingredientId} = useParams();
@@ -16,7 +13,6 @@ function IngredientDetailsPage() {
     ingredient = ingredients.find(item => item._id === ingredientId);
   }
   
-//  if(!ingredient) ingredient = ingredient;
   return (
     <div className={pagesStyle.contentDetails}>
       <IngredientDetails/>

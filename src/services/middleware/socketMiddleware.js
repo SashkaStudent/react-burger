@@ -6,7 +6,6 @@ const socketFeedMiddleware = (wsActions) => {
           const { dispatch } = store;
           
           const { type } = action;
-      console.log(type);
 
           const {
               wsConnect,

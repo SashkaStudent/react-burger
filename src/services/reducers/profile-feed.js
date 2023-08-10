@@ -1,10 +1,11 @@
 import {
-  WS_ORDER_FEED_CONNECTING,
-  WS_ORDER_FEED_OPEN,
-  WS_ORDER_FEED_DISCONNECT,
-  WS_ORDER_FEED_ERROR,
-  WS_ORDER_FEED_MESSAGE,
-} from "../actions/order-feed";
+  WS_PROFILE_FEED_CONNECTING,
+  WS_PROFILE_FEED_OPEN,
+  WS_PROFILE_FEED_DISCONNECT,
+  WS_PROFILE_FEED_ERROR,
+  WS_PROFILE_FEED_MESSAGE,
+} from "../actions/profile-feed";
+
 
 const initialState = {
   status: "Disconnect",
@@ -19,30 +20,30 @@ const initialState = {
   connectingError: "",
 };
 
-const orderFeedReducer = (state = initialState, action) => {
+const profileFeedReducer = (state = initialState, action) => {
   switch (action.type) {
-    case WS_ORDER_FEED_CONNECTING:
+    case WS_PROFILE_FEED_CONNECTING:
       return {
         ...state,
         status: "Conneting",
       };
-    case WS_ORDER_FEED_OPEN:
+    case WS_PROFILE_FEED_OPEN:
       return {
         ...state,
         status: "Open",
         connectingError: "",
       };
-    case WS_ORDER_FEED_DISCONNECT:
+    case WS_PROFILE_FEED_DISCONNECT:
       return {
         ...state,
         status: "Disconnect",
       };
-    case WS_ORDER_FEED_ERROR:
+    case WS_PROFILE_FEED_ERROR:
       return {
         ...state,
         connectingError: action.payload,
       };
-    case WS_ORDER_FEED_MESSAGE:
+    case WS_PROFILE_FEED_MESSAGE:
       return {
         ...state,
         orders: action.payload,
@@ -52,4 +53,4 @@ const orderFeedReducer = (state = initialState, action) => {
   }
 };
 
-export default orderFeedReducer;
+export default profileFeedReducer;

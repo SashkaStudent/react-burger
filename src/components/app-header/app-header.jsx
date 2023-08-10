@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import HeaderNavLink from "../nav-link/header-nav-link";
 
 import NavMenu from "../nav-menu/nav-menu";
@@ -18,7 +18,7 @@ function AppHeader() {
   const isAuthChecked = useSelector(state => state.user.isAuthenticated);
   const switchNavLink = () => {
     if (isAuthChecked) {
-        return '/profile';
+        return '/profile/';
     }
     return '/login';
 }

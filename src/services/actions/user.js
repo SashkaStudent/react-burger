@@ -8,18 +8,6 @@ export const POST_LOGOUT_USER = 'POST_LOGOUT_USER';
 export const CHANGE_USER = 'CHANGE_USER';
 
 
-// export const getLoginData = data => (dispatch) => {
-//   dispatch(getUserDataInitial());
-//   postLoginUser(data)
-//       .then(checkResponse)
-//       .then(res => {
-//           localStorage.setItem("accessToken", res.accessToken);
-//           localStorage.setItem("refreshToken", res.refreshToken);
-//           dispatch(getUserSuccess(res))
-//       })
-//       .catch(err => dispatch(getUserDataFailed()))
-// }
-
 export function getLoginData(email, password) {
   return function (dispatch) {
     dispatch(getUserDataInitial());
@@ -42,7 +30,6 @@ export function checkUserAuth() {
           fetchWithRefresh(localStorage.getItem("accessToken"))
               .then(res => {
                 dispatch(getUserSuccess(res));
-                //dispatch({ type: CHANGE_USER, data: { user: {name: res.user.name, email: res.user.email}} });
                 dispatch({ type: CHANGE_PROFILE_NAME, name: res.user.name });
                 dispatch({ type: CHANGE_PROFILE_EMAIL, email: res.user.email, valid: true })
 
@@ -62,27 +49,9 @@ export const postLogoutUser = data => (dispatch) => {
 
 export function changeUserData(token, endpoint) {
   return function (dispatch) {
-
-    patchUser(token,endpoint).then(res=>{
-      console.log(res);
-    });
-      // if (localStorage.getItem("accessToken")) {
-      //     fetchWithRefresh(localStorage.getItem("accessToken"))
-      //         .then(res => {
-      //           dispatch({ type: CHANGE_USER, data: { user: {name: res.user.name, email: res.user.email}} });
-      //           dispatch(getUserSuccess(res))
-      //         }).catch(err => {console.log(err);dispatch(getUserDataFailed())})
-      // }
+    patchUser(token,endpoint);
   };
 };
-
-// export const changeUserData: AppThunk = (method, endpoint) => (dispatch: AppDispatch) => {
-//   if (localStorage.getItem("accessToken")) {
-//       fetchWithRefresh(localStorage.getItem("accessToken"), method, endpoint )
-//           .then(res => dispatch(changeUser(res)))
-//           .catch(err => console.log(err))
-//   }
-// }
 
 export const getUserDataInitial = () => {
   return {

@@ -1,0 +1,36 @@
+.container{
+  position: relative;
+  display: flex;
+  border-radius: 100px;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border: #7f1ab200 2px solid;
+  background: rgb(128,26,178);
+  background: linear-gradient(90deg, rgba(128,26,178,1) 0%, rgba(76,76,255,1) 100%);
+  box-sizing: border-box;
+}
+
+
+
+.image {
+  margin: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #1C1C21;
+}
+
+.imageFaded {
+  filter: brightness(0.6);
+}
+
+.counter {
+  margin-top: auto;
+  position: absolute;
+  text-align: center;
+  align-self: center;
+  width: 100%;
+}

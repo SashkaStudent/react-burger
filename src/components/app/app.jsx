@@ -42,7 +42,7 @@ function App() {
 }, [])
 
   const background = location.state && location.state.background;
-  //
+
   const closeModal = () => {
     navigate(-1);
   };
@@ -104,7 +104,24 @@ function App() {
 	            </Modal>
 	          }
 	        />
-        </Routes>)}
+          <Route path='/profile/orders/:id' element={
+	            <Modal handleCloseOnClick={closeModal}>
+                <>
+	              {(<OrderFeedDetails/>)}
+                </>
+	            </Modal>
+	          }/>
+            <Route path='/feed/:id' element={
+	            <Modal handleCloseOnClick={closeModal}>
+                <>
+	              {(<OrderFeedDetails/>)}
+                </>
+	            </Modal>
+	          }/>
+        </Routes>)
+        
+        
+        }
 
     </div>
   );

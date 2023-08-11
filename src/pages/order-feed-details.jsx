@@ -15,27 +15,35 @@ function OrderFeedDetails() {
   const location = useLocation();
   const getOrderFeedOrders = store => store.orderFeed.orders;
   const getProfileFeedOrders = store => store.profileFeed.orders;
-  const orderFeedDetailsSelector = location.state === '/profile/orders' ? getProfileFeedOrders : getOrderFeedOrders;
+
+  const feedOrders = useSelector(getOrderFeedOrders);
+  const profileOrders = useSelector(getProfileFeedOrders);
+  const orderFeedDetailsSelector = location.state?.background.pathname === '/profile/orders' ? getProfileFeedOrders : getOrderFeedOrders;
 
   const { orders } = useSelector(orderFeedDetailsSelector);
   const { ingredients } = useSelector(store => store.ingredients);
   const { id } = useParams();
-  const selectedOrder = orders && orders.find(item => item._id === id);
+
+  const allOrders = useMemo(() => {
+    if (feedOrders.orders && profileOrders.orders) return [...feedOrders.orders, ...profileOrders.orders]
+    else if (feedOrders.orders) return feedOrders.orders;
+    else return [];
+
+  }, [feedOrders.orders, profileOrders.orders]);
+
+  const selectedOrder = allOrders && allOrders.find(item => item._id === id);
+
 
   const wsInitOrderFeed = () => {
     dispatch(connect("wss://norma.nomoreparties.space/orders/all"));
+    dispatch(profileConnect(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem("accessToken")?.slice(7)}`));
+
     return () => {
       dispatch(disconnect());
-    }
-  }
-
-  const wsInitProfileFeed = () => {
-    dispatch(profileConnect(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem("accessToken").slice(7)}`));
-    return () => {
       dispatch(profileDisconnect());
     }
-
   }
+
   const result = (status) => {
     switch (status) {
       case "done": return "Выполнен";
@@ -44,11 +52,10 @@ function OrderFeedDetails() {
     }
   }
 
-const resultStyle = selectedOrder?.status === 'done'? pagesStyle.statusDone: '';
+  const resultStyle = selectedOrder?.status === 'done' ? pagesStyle.statusDone : '';
 
   useEffect(() => {
-    (orderFeedDetailsSelector === getOrderFeedOrders) && wsInitOrderFeed();
-    (orderFeedDetailsSelector === getProfileFeedOrders) && wsInitProfileFeed();
+    wsInitOrderFeed();
   }, []);
 
   const { totalPrice, ingredientsInOrder } = useMemo(() => {
@@ -112,7 +119,6 @@ const resultStyle = selectedOrder?.status === 'done'? pagesStyle.statusDone: '';
             <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(selectedOrder.updatedAt)} />
             <Price price={totalPrice} />
           </div>
-
         </>
       )}
     </div>

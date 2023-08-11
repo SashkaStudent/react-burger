@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React, { useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CLICK_INGREDIENT, getItems, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
+import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
 import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
 function BurgerIngredients() {
 
   const [bunRef, bunInView] = useInView({ threshold: 0 });
@@ -21,17 +20,10 @@ function BurgerIngredients() {
   const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(getIngredientsStore);
   const constructor = useSelector(getConstructorIngredients);
   const bun = useSelector(getConstructorBun);
-  const navigate = useNavigate();
+
   const handleOnIngredientChoose = (e, ingredient) => {
- //   navigate('/ingredients/id123231132');
     dispatch({ type: CLICK_INGREDIENT, ingredient: ingredient });
   }
-
-
-  useEffect(() => {
-    dispatch(getItems());
-
-  }, []);
 
   useEffect(
     () => {

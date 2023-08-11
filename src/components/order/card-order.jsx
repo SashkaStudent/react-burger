@@ -49,7 +49,7 @@ function CardOrder({ order, isProfile }) {
   const name = order.name.length > 36 ? order.name.slice(0, 35) + "..." : order.name;
 
   return (
-    <Link to={`${location.pathname}/${order._id}`} state={location.pathname} className={orderStyles.link}>
+    <Link to={`${location.pathname}/${order._id}`} state={{background:location}} className={orderStyles.link}>
       <div className={orderStyles.container}>
         <div className={orderStyles.info}>
           <p className="text text_type_digits-default">{"#" + order.number}</p>

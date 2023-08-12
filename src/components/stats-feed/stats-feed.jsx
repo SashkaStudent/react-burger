@@ -22,7 +22,7 @@ function StatsFeed() {
           <p className={`${statsStyles.statusHeader} text text_type_main-medium`}>Готовы:</p>
           <ul className={statsStyles.list}>
             {
-              (ordersStatus?.done.slice(0, 15).map(item => { return (<li className={`${statsStyles.listItem} text text_type_digits-default`} key={item._id}>{item.number}</li>) }))
+              (ordersStatus?.done?.slice(0, 15).map(item => { return (<li className={`${statsStyles.listItem} text text_type_digits-default`} key={item._id}>{item.number}</li>) }))
             }
 
           </ul>
@@ -32,7 +32,7 @@ function StatsFeed() {
           <p className={`${statsStyles.statusHeader} text text_type_main-medium`}>В работе:</p>
           <ul className={statsStyles.list}>
             {
-              (ordersStatus?.work.map(item => {
+              (ordersStatus?.work?.map(item => {
                 return (<li className={`${statsStyles.listItem} ${statsStyles.listItemPending} text text_type_digits-default`} key={item._id}>{item.number}</li>)
               }))
             }

@@ -6,6 +6,7 @@ import IngredientPreview from "../components/ingredient-preview/ingredient-previ
 import Price from "../components/price/price";
 import { connect, disconnect } from "../services/actions/order-feed";
 import { connect as profileConnect, disconnect as profileDisconnect } from "../services/actions/profile-feed";
+import { WS_BASE_URL } from "../utils/data";
 import pagesStyle from "./pages.module.css"
 
 
@@ -18,9 +19,7 @@ function OrderFeedDetails() {
 
   const feedOrders = useSelector(getOrderFeedOrders);
   const profileOrders = useSelector(getProfileFeedOrders);
-  const orderFeedDetailsSelector = location.state?.background.pathname === '/profile/orders' ? getProfileFeedOrders : getOrderFeedOrders;
 
-  const { orders } = useSelector(orderFeedDetailsSelector);
   const { ingredients } = useSelector(store => store.ingredients);
   const { id } = useParams();
 
@@ -35,8 +34,8 @@ function OrderFeedDetails() {
 
 
   const wsInitOrderFeed = () => {
-    dispatch(connect("wss://norma.nomoreparties.space/orders/all"));
-    dispatch(profileConnect(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem("accessToken")?.slice(7)}`));
+    dispatch(connect(`${WS_BASE_URL}/all`));
+    dispatch(profileConnect(`${WS_BASE_URL}?token=${localStorage.getItem("accessToken")?.slice(7)}`));
 
     return () => {
       dispatch(disconnect());

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect, disconnect } from "../../services/actions/profile-feed";
+import { WS_BASE_URL } from "../../utils/data";
 import CardOrder from "../order/card-order";
 import profileFeedStyles from "./profile-feed.module.css"
 
@@ -9,7 +10,7 @@ function ProfileFeed() {
   const {orders} = useSelector(store => store.profileFeed.orders);
   const dispatch = useDispatch();
   useEffect(() => {
-      dispatch(connect(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem("accessToken").slice(7)}`))
+      dispatch(connect(`${WS_BASE_URL}?token=${localStorage.getItem("accessToken").slice(7)}`))
       return () => {
          dispatch(disconnect())
       }

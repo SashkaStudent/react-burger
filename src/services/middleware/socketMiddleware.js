@@ -1,4 +1,4 @@
-const socketFeedMiddleware = (wsActions) => {
+const socketMiddleware = (wsActions) => {
 
   return (store) => {
       let socket = null;
@@ -47,4 +47,4 @@ const socketFeedMiddleware = (wsActions) => {
   };
 };
 
-export default socketFeedMiddleware;
+export default socketMiddleware;

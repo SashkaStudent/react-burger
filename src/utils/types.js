@@ -26,5 +26,3 @@ export const ingredientPropTypes = PropTypes.shape({
     updatedAt: PropTypes.string,
     
   });
-
-  //export default ingredientPropTypes;

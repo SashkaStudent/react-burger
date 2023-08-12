@@ -1,3 +1,5 @@
+import { BASE_URL_API } from "./data";
+
 const handleRes = (res) =>
   { 
     return res.ok ? Promise.resolve(res) : res.json().then((err) => Promise.reject(err));
@@ -6,13 +8,13 @@ const handleJson = (res) =>
   res.json();
 
 export const getData = () => {
-  return fetch(`https://norma.nomoreparties.space/api/ingredients`)
+  return fetch(`${BASE_URL_API}/ingredients`)
     .then(handleRes)
     .then(handleJson);
 };
 
 export const postData = (ingredients, accessToken) => {
-  return fetch(`https://norma.nomoreparties.space/api/orders`, {
+  return fetch(`${BASE_URL_API}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +29,7 @@ export const postData = (ingredients, accessToken) => {
 };
 
 export const postPasswordReset = (email) => {
-  return fetch(`https://norma.nomoreparties.space/api/password-reset`, {
+  return fetch(`${BASE_URL_API}/password-reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +43,7 @@ export const postPasswordReset = (email) => {
 };
 
 export const postNewPassword = (password, token) => {
-  return fetch(`https://norma.nomoreparties.space/api/password-reset/reset`, {
+  return fetch(`${BASE_URL_API}/password-reset/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +58,7 @@ export const postNewPassword = (password, token) => {
 };
 
 export const postRegister = (name, email, password) => {
-  return fetch(`https://norma.nomoreparties.space/api/auth/register`, {
+  return fetch(`${BASE_URL_API}/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -73,7 +75,7 @@ export const postRegister = (name, email, password) => {
 
 export const postAuth = (email, password) =>{
 
-  return fetch(`https://norma.nomoreparties.space/api/auth/login`,{
+  return fetch(`${BASE_URL_API}/auth/login`,{
     method:"POST",
     headers: {
       "Content-Type": "application/json",
@@ -89,7 +91,7 @@ export const postAuth = (email, password) =>{
 };
 
 export const postLogout = (data) =>{
-  return fetch(`https://norma.nomoreparties.space/api/auth/logout`, {
+  return fetch(`${BASE_URL_API}/auth/logout`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -103,7 +105,7 @@ export const postLogout = (data) =>{
 }
 
 export const refreshToken = () => {
-  return fetch(`https://norma.nomoreparties.space/api/auth/token`, {
+  return fetch(`${BASE_URL_API}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -133,7 +135,7 @@ export const fetchWithRefresh = async (token, method, endpoint) => {
   
   try {
 
-    const res = await fetch('https://norma.nomoreparties.space/api/auth/user', options).then(handleRes).then(handleJson);   
+    const res = await fetch(`${BASE_URL_API}/auth/user`, options).then(handleRes).then(handleJson);   
     return await res;
   } catch (err) {
     if (err.message === "jwt expired") {
@@ -144,7 +146,7 @@ export const fetchWithRefresh = async (token, method, endpoint) => {
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
-      const res = await fetch('https://norma.nomoreparties.space/api/auth/user', options); //повторяем запрос
+      const res = await fetch(`${BASE_URL_API}/auth/user`, options); //повторяем запрос
       return await handleRes(res);
     } else {
       return Promise.reject(err);

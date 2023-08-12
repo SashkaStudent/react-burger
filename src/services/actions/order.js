@@ -20,6 +20,6 @@ export function postOrder(ingredients, accessToken){
             error: res.error
           });
         }
-      })
+      }).catch(err=>{console.log(err)});
     }
   }

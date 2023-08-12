@@ -25,7 +25,7 @@ export function getItems() {
             type: GET_INGREDIENTS_FAILED
           });
         }
-      });
+      }).catch(err=>{console.log(err)});
     };
   }
 

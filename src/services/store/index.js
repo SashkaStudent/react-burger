@@ -9,7 +9,7 @@ import { resetReducer } from "../reducers/reset-password";
 import { profileReducer } from "../reducers/profile";
 import ReduxThunk from "redux-thunk";
 import userReducer from "../reducers/user";
-import socketFeedMiddleware from "../middleware/socketMiddleware";
+import socketMiddleware from "../middleware/socketMiddleware";
 
 import {
   WS_ORDER_FEED_CLOSE,
@@ -75,8 +75,8 @@ const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(ReduxThunk),
-    applyMiddleware(socketFeedMiddleware(orderFeedStates)),
-    applyMiddleware(socketFeedMiddleware(profileFeedStates))
+    applyMiddleware(socketMiddleware(orderFeedStates)),
+    applyMiddleware(socketMiddleware(profileFeedStates))
   )
 );
 

@@ -18,10 +18,10 @@ function AppHeader() {
   const isAuthChecked = useSelector(state => state.user.isAuthenticated);
   const switchNavLink = () => {
     if (isAuthChecked) {
-        return '/profile/';
+      return '/profile/';
     }
     return '/login';
-}
+  }
 
   return (
     <header className={`${headerStyles.header} pt-4 pb-4`}>
@@ -34,25 +34,26 @@ function AppHeader() {
             </HeaderNavLink>
           )}
         </NavLink>
-        
+
         <NavLink to="/feed" className={headerStyles.linkText}>
-        {({ isActive, isPending }) => (
-          <HeaderNavLink>
-            <ListIcon type={isActive ? 'primary' : 'secondary'} />
-            <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Лента заказов</p>
-          </HeaderNavLink>
-        )}
+          {({ isActive, isPending }) => (
+            <HeaderNavLink>
+              <ListIcon type={isActive ? 'primary' : 'secondary'} />
+              <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Лента заказов</p>
+            </HeaderNavLink>
+          )}
         </NavLink>
       </NavMenu>
-      <Logo />
-
+      <NavLink to="/" className={headerStyles.linkText}>
+        <Logo />
+      </NavLink>
       <NavLink to={switchNavLink()} className={headerStyles.linkText}>
-      {({ isActive, isPending }) => (
-        <HeaderNavLink>
-          <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
-          <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Личный кабинет</p>
-        </HeaderNavLink>
-      )}
+        {({ isActive, isPending }) => (
+          <HeaderNavLink>
+            <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+            <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Личный кабинет</p>
+          </HeaderNavLink>
+        )}
       </NavLink>
     </header>
   );

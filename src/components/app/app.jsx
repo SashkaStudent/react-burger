@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
     dispatch(getItems());
     dispatch(checkUserAuth(localStorage.getItem('accessToken')));
-}, [])
+  }, [])
 
   const background = location.state && location.state.background;
 
@@ -53,75 +53,75 @@ function App() {
 
   return (
     <div className={styles.app}>
-      
 
-      <div className={styles.wrapper}>
-        <AppHeader />
-      </div>
+      <DndProvider backend={HTML5Backend}>
+
+        <div className={styles.wrapper}>
+          <AppHeader />
+        </div>
         <Routes location={background || location}>
           <Route path="/" element={
-          <main className={styles.container}>
-            
-            <DndProvider backend={HTML5Backend}>
+
+            <main className={styles.container}>
+
               <BurgerIngredients />
               <BurgerConstructor />
-              { 
+              {
                 (postOrderSuccess) && (
                   <Modal handleCloseOnClick={closeOrderModal}>
                     <OrderDetails />
                   </Modal>
                 )
-              } 
-            </DndProvider>
+              }
 
-          </main>} />
+            </main>
+          } />
           <Route path='/ingredients/:ingredientId'
-               element={(ingredients&&ingredients.length)&&(<IngredientDetailsPage/>)} />
-          <Route path="/login" element={<OnlyUnAuth component={<Login/>}/>}/>
-          <Route path="/register" element={<OnlyUnAuth component={<Register/>}/>}/>
-          <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword/>}/>}/>
-          <Route path="/reset-password" element={<ResetPassword/>}/>
-          <Route path="/profile" element={<OnlyAuth component={<Profile/>}/>}>
-            <Route path="/profile" element={<ProfileEdit/>}/>
-            <Route path="/profile/orders" element={<ProfileFeed/>}/>
+            element={(ingredients && ingredients.length) && (<IngredientDetailsPage />)} />
+          <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
+          <Route path="/register" element={<OnlyUnAuth component={<Register />} />} />
+          <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />} />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
+            <Route path="/profile" element={<ProfileEdit />} />
+            <Route path="/profile/orders" element={<ProfileFeed />} />
           </Route>
-          <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderFeedDetails/>}/>}/>
+          <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderFeedDetails />} />} />
           <Route path="/feed">
-            <Route index element={(ingredients&&ingredients.length)&&<Feed/>}/>
-            <Route path=':id' element={<OrderFeedDetails/>}/>
+            <Route index element={(ingredients && ingredients.length) && <Feed />} />
+            <Route path=':id' element={<OrderFeedDetails />} />
           </Route>
-          
-          <Route path="*" element={<NotFound/>} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
-        {background && ( <Routes>
+        {background && (<Routes>
           <Route
-	          path='/ingredients/:ingredientId'
-	          element={
-	            <Modal handleCloseOnClick={closeModal}>
+            path='/ingredients/:ingredientId'
+            element={
+              <Modal handleCloseOnClick={closeModal}>
                 <>
-	              {(ingredients&&ingredients.length)&&(<IngredientDetails/>)}
+                  {(ingredients && ingredients.length) && (<IngredientDetails />)}
                 </>
-	            </Modal>
-	          }
-	        />
+              </Modal>
+            }
+          />
           <Route path='/profile/orders/:id' element={
-	            <Modal handleCloseOnClick={closeModal}>
-                <>
-	              {(<OrderFeedDetails/>)}
-                </>
-	            </Modal>
-	          }/>
-            <Route path='/feed/:id' element={
-	            <Modal handleCloseOnClick={closeModal}>
-                <>
-	              {(<OrderFeedDetails/>)}
-                </>
-	            </Modal>
-	          }/>
+            <Modal handleCloseOnClick={closeModal}>
+              <>
+                {(<OrderFeedDetails />)}
+              </>
+            </Modal>
+          } />
+          <Route path='/feed/:id' element={
+            <Modal handleCloseOnClick={closeModal}>
+              <>
+                {(<OrderFeedDetails />)}
+              </>
+            </Modal>
+          } />
         </Routes>)
-        
-        
         }
+      </DndProvider>
 
     </div>
   );

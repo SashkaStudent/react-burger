@@ -4,16 +4,13 @@ import pagesStyle from "./pages.module.css";
 
 function Feed() {
   return (
-    <>
       <div className={pagesStyle.feedContainer}>
         <p className="text text_type_main-large">Лента заказов</p>
         <div className={pagesStyle.feedWrapper}>
-          <OrderFeed></OrderFeed>
-          <StatsFeed></StatsFeed>
+          <OrderFeed/>
+          <StatsFeed/>
         </div>
       </div>
-    </>
-
   )
 }
 

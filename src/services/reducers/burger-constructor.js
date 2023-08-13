@@ -22,7 +22,7 @@ export const constructorReducer = (state = initialState, action)=>{
   case ADD_INGREDIENT:{
     const bunsSum = state.bun.price * 2;
     const ingSum = [...state.ingredients, action.ingredient].reduce((prev, curr)=>prev+curr.price, 0);
-    const ingredient = action.ingredient;
+    const ingredient = {...action.ingredient};
     ingredient.key = action.uuid;
     return {...state, ingredients:[...state.ingredients, ingredient], totalPrice:bunsSum+ingSum}
   }

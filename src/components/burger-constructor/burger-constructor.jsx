@@ -13,7 +13,7 @@ import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-construct
 import { useDrop } from "react-dnd";
 import ConstructorCard from "../constructor-card/constructor-card";
 import { useNavigate } from "react-router-dom";
-
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor({ }) {
   const getStore = store => store.constructor;
@@ -41,7 +41,7 @@ function BurgerConstructor({ }) {
       if (ingredient.type === 'bun') {
         dispatch({ type: SET_BUN, bun: ingredient });
       } else {
-        dispatch({ type: ADD_INGREDIENT, ingredient: ingredient });
+        dispatch({ type: ADD_INGREDIENT, ingredient: ingredient, uuid: uuidv4() });
       }
 
     },
@@ -90,7 +90,7 @@ function BurgerConstructor({ }) {
               ingredients ? (
                 ingredients.map((value, index) => {
                   return (
-                    <ConstructorCard key={index} ingredient={value} index={index} />
+                    <ConstructorCard key={value.key} ingredient={value} index={index} />
                   );
                 })) : (<></>)
             }

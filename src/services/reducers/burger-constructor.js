@@ -10,7 +10,7 @@ const initialState = {
 export const constructorReducer = (state = initialState, action)=>{
   switch(action.type) {
     case INIT_CONSTRUCTOR:{
-      return {...state, bun: action.bun, ingredients:action.ingredients, totalPrice:action.bun.price*2}
+      return {...state, bun: [], ingredients:[], totalPrice:0}
 
     }
     case SET_BUN: {

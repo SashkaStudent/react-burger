@@ -24,18 +24,18 @@ function BurgerConstructor({ }) {
   const dispatch = useDispatch();
 
   const handleMakeOrderClick = () => {
-    if(user.isAuthenticated){
-      const postArray = ingredients.map(ing=>ing._id);
+    if (user.isAuthenticated) {
+      const postArray = ingredients.map(ing => ing._id);
       postArray.push(bun._id, bun._id);
       dispatch(postOrder(postArray, localStorage.getItem("accessToken")));
     } else {
-      
+
       navigate("/login");
     }
 
   }
   const [, dropTarget] = useDrop({
-    accept: ["ingredient"],
+    accept: ["ingredient", "bun"],
     drop(ingredient) {
 
       if (ingredient.type === 'bun') {
@@ -46,12 +46,33 @@ function BurgerConstructor({ }) {
 
     },
     collect: monitor => ({
-       type: monitor.getItemType(),
-      })
+      type: monitor.getItemType(),
+    })
   });
 
+  const [, dropBunTarget] = useDrop({
+    accept: ["bun"],
+    drop(ingredient) {
+
+      if (ingredient.type === 'bun') {
+        dispatch({ type: SET_BUN, bun: ingredient });
+      }
+
+    },
+    collect: monitor => ({
+      type: monitor.getItemType(),
+    })
+  });
+
+  const bunIsSet = () => {
+    if (bun && bun?.type == "bun") {
+      return true;
+    } else return false;
+
+  }
+
   const content = useMemo(() => {
-    return bun ?
+    return bunIsSet() ?
       (
         <>
           <div className="pl-8 pb-4">
@@ -91,9 +112,13 @@ function BurgerConstructor({ }) {
           </div>
         </>
       )
-      : <></>;
+      : <div ref={dropBunTarget} className={`${constructorStyles.emptyConstructor} pl-8 pb-4`}>
+        <p className="text text_type_main-default text_color_inactive">
+          Пожалуйста, перенесите сюда булку, а затем другие ингредиенты для создания заказа
+        </p>
+      </div>;
   }, [bun, ingredients, user]);
-  
+
   return (
     <div className={`${constructorStyles.constructor} pt-25 pl-4`}>
       {content}

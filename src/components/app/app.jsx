@@ -31,8 +31,7 @@ function App() {
   const getOrderStore = store => store.order;
   const getUser = store => store.user;
   const { ingredients } = useSelector(getIngredientsStore);
-  const { postOrderSuccess } = useSelector(getOrderStore);
-  const user = useSelector(getUser);
+  const { postOrderSuccess, postOrderRequest } = useSelector(getOrderStore);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -67,10 +66,14 @@ function App() {
               <BurgerIngredients />
               <BurgerConstructor />
               {
-                (postOrderSuccess) && (
+                (postOrderSuccess) ? (
                   <Modal handleCloseOnClick={closeOrderModal}>
                     <OrderDetails />
                   </Modal>
+                ):(postOrderRequest)&&(
+                  <Modal handleCloseOnClick={closeOrderModal}>
+                  <p className="text text_type_main-medium p-15">Загрузка...</p>
+                </Modal>
                 )
               }
 

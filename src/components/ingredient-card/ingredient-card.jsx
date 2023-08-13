@@ -8,8 +8,9 @@ import { Link, useLocation } from "react-router-dom";
 
 function IngredientCard({ ingredient, counter, handleCardOnClick }) {
   const location = useLocation();
+  const type = ingredient.type === "bun"? "bun" : "ingredient"
   const [,dragRef] = useDrag({
-    type:"ingredient",
+    type:type,
     item:ingredient
   });
 

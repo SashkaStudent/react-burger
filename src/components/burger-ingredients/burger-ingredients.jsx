@@ -46,6 +46,7 @@ function BurgerIngredients() {
     }, [bunInView, sauceInView, mainInView])
 
   const getCount = (id) => {
+    if(!bun) return 0;
     if (id == bun._id) return 2;
 
     return constructor.filter(i => i._id === id).length;
@@ -90,9 +91,7 @@ function BurgerIngredients() {
   return (
     <div className={ingredientsStyle.ingredients}>
       <h2 className="pt-10 text text_type_main-large">Соберите бургер</h2>
-
       <IngredientsTab tabs={categories} defaultState={categories[0].value} />
-
       <div className={ingredientsStyle.container}>
 
         {ingredientsFailed ? <p>Ошибка</p>

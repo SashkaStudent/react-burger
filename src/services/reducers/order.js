@@ -26,7 +26,7 @@ export const orderReducer = (state = initialState, action)=>{
         return {...state, orderNumber:0, postOrderSuccess:false, postOrderRequest:false, postOrderFailed:true}
       }
       case CLOSE_MODAL: {
-        return {...state, postOrderSuccess:false, orderNumber:0}
+        return {...state, postOrderRequest:false, postOrderSuccess:false, orderNumber:0}
       }
 
       default: return state;

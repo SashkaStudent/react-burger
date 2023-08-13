@@ -91,5 +91,3 @@ function Register() {
 
 export default Register;
 
-
-//{"success":true,"user":{"email":"alalstepan@gmail.com","name":"SashkaStudent"},"accessToken":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NjllYTA2OGE0YjYyMDAxYzgzYWEzOSIsImlhdCI6MTY4NDY2Mjc5MCwiZXhwIjoxNjg0NjYzOTkwfQ.F9Ft27pQAV3KAFrBVYVG1OOyjcMWVlD7Rl9qwwV_xCk","refreshToken":"1a5b6677c1e6b6a33125613999c7775a56cd02d824dbf0402b5505700173d8600bb9bf69d94a5602"}

@@ -103,7 +103,6 @@ function BurgerIngredients() {
 }
 
 BurgerIngredients.propTypes = {
-  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleOnIngredientChoose: PropTypes.func
 };
 

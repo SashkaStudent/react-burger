@@ -9,7 +9,7 @@ function Price({ price, size, extraClass }) {
       ? "text text_type_digits-medium"
       : "text text_type_digits-default";
   return (
-    <div className={`${priceStyles.price} ${extraClass}`}>
+    <div className={`${priceStyles.price}  ${priceStyles.text} ${extraClass}`}>
       <p className={`${textStyle} pr-2`}>{price}</p>
       <CurrencyIcon type="primary" />
     </div>

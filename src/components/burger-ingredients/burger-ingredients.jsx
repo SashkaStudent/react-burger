@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React, { useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CLICK_INGREDIENT, getItems, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
+import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
 import { useInView } from "react-intersection-observer";
 function BurgerIngredients() {
 
@@ -24,12 +24,6 @@ function BurgerIngredients() {
   const handleOnIngredientChoose = (e, ingredient) => {
     dispatch({ type: CLICK_INGREDIENT, ingredient: ingredient });
   }
-
-
-  useEffect(() => {
-    dispatch(getItems());
-
-  }, []);
 
   useEffect(
     () => {
@@ -52,6 +46,7 @@ function BurgerIngredients() {
     }, [bunInView, sauceInView, mainInView])
 
   const getCount = (id) => {
+    if(!bun) return 0;
     if (id == bun._id) return 2;
 
     return constructor.filter(i => i._id === id).length;
@@ -96,9 +91,7 @@ function BurgerIngredients() {
   return (
     <div className={ingredientsStyle.ingredients}>
       <h2 className="pt-10 text text_type_main-large">Соберите бургер</h2>
-
       <IngredientsTab tabs={categories} defaultState={categories[0].value} />
-
       <div className={ingredientsStyle.container}>
 
         {ingredientsFailed ? <p>Ошибка</p>
@@ -110,7 +103,6 @@ function BurgerIngredients() {
 }
 
 BurgerIngredients.propTypes = {
-  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   handleOnIngredientChoose: PropTypes.func
 };
 

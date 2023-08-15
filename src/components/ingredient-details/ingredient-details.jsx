@@ -1,9 +1,16 @@
 import detailsStyles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 function IngredientDetails() {
-  const getChoosedIngredient = store => store.ingredients.choosedIngredient;
-  const ingredient = useSelector(getChoosedIngredient);
+  const getIngredientsStore = store => store.ingredients;
+  const { ingredients, choosedIngredient } = useSelector(getIngredientsStore);
+
+  let ingredient = choosedIngredient;
+  const {ingredientId} = useParams();
+  if(!ingredient){
+    ingredient = ingredients.find(item => item._id === ingredientId);
+  }
 
   return (
     <>

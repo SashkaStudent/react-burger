@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-right:8px;
+  width: 844px;
+  overflow-y: scroll;
+  height: 576px;
+  gap:24px;
+}
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  padding-right:8px;
+  overflow-y: scroll;
+  height: 576px;
+  width: 608px;
+  gap:16px;
+ } */
+ .container::-webkit-scrollbar {
+     width: 8px;
+     
+   }
+ 
+   .container::-webkit-scrollbar-track {
+     background: #2F2F37; 
+   }
+ 
+   .container::-webkit-scrollbar-thumb {
+     background: #8585AD; 
+   }
+   
+   .container::-webkit-scrollbar-thumb:hover {
+     background: #a2a2d3; 
+   }

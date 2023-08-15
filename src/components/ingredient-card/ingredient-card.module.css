@@ -8,8 +8,14 @@
     width: 272px;
     height: 208px;
     cursor: pointer;
+    color: #f3f3f2;
+    text-decoration: none;
 }
 
 .image {
     width: 240px;
+}
+
+.link {
+  text-decoration: none;
 }

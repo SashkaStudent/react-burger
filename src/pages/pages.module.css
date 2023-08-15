@@ -1,0 +1,155 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 180px;
+  max-width: 480px;
+  gap: 24px;
+  align-items: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 480px;
+  gap: 24px;
+  align-items: center;
+}
+
+.contentDetails {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 120px;
+  max-width: 480px;
+  align-items: center;
+}
+
+.button {
+  max-width: 253px;
+  margin-bottom: 80px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.inlineButton {
+  padding: 0;
+}
+
+.wrapper {
+  margin: auto;
+  width: 1240px;
+  align-items: center;
+}
+
+.profileContent {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin-top: 120px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.profileNav {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  padding-right: 60px;
+  justify-content: flex-start;
+}
+
+.outlet {
+  margin: 0;
+}
+
+.linkText{
+  text-decoration: none;
+  color:inherit;
+}
+
+.buttonText {
+  cursor: pointer;
+}
+
+.feedContainer {
+  padding-top: 40px;
+  width: 1248px;
+  margin: 0 auto;
+
+}
+
+.feedWrapper {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.feedDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  padding-top: 122px;
+  width: 640px;
+}
+
+.feedDetailsNumber {
+  text-align: center;
+}
+
+.ingredientsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 366px;
+  overflow-y: scroll;
+}
+
+.ingredientsContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredientsContainer::-webkit-scrollbar-track {
+  background: #2F2F37; 
+}
+
+.ingredientsContainer::-webkit-scrollbar-thumb {
+  background: #8585AD; 
+}
+
+.ingredientsContainer::-webkit-scrollbar-thumb:hover {
+  background: #a2a2d3; 
+}
+
+.ingredientRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-right: 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ingredientPrice {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  gap:6px;
+}
+
+.summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.statusDone {
+  color: #00CCCC;
+}

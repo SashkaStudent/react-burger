@@ -10,7 +10,7 @@ const initialState = {
 export const constructorReducer = (state = initialState, action)=>{
   switch(action.type) {
     case INIT_CONSTRUCTOR:{
-      return {...state, bun: action.bun, ingredients:action.ingredients, totalPrice:action.bun.price*2}
+      return {...state, bun: [], ingredients:[], totalPrice:0}
 
     }
     case SET_BUN: {
@@ -22,8 +22,9 @@ export const constructorReducer = (state = initialState, action)=>{
   case ADD_INGREDIENT:{
     const bunsSum = state.bun.price * 2;
     const ingSum = [...state.ingredients, action.ingredient].reduce((prev, curr)=>prev+curr.price, 0);
-
-    return {...state, ingredients:[...state.ingredients, action.ingredient], totalPrice:bunsSum+ingSum}
+    const ingredient = {...action.ingredient};
+    ingredient.key = action.uuid;
+    return {...state, ingredients:[...state.ingredients, ingredient], totalPrice:bunsSum+ingSum}
   }
   case DELETE_INGREDIENT:{
     state.ingredients.splice(action.id,1);

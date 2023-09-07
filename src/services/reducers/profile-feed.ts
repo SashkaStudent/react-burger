@@ -1,13 +1,23 @@
-import {
-  WS_PROFILE_FEED_CONNECTING,
-  WS_PROFILE_FEED_OPEN,
-  WS_PROFILE_FEED_DISCONNECT,
-  WS_PROFILE_FEED_ERROR,
-  WS_PROFILE_FEED_MESSAGE,
-} from "../actions/profile-feed";
+// import {
+//   WS_PROFILE_FEED_CONNECTING,
+//   WS_PROFILE_FEED_OPEN,
+//   WS_PROFILE_FEED_DISCONNECT,
+//   WS_PROFILE_FEED_ERROR,
+//   WS_PROFILE_FEED_MESSAGE,
+//   TProfileFeed,
+// } from "../actions/profile-feed";
 
+import type { TProfileFeedAction } from "../actions/profile-feed";
+import { WS_PROFILE_FEED_CONNECTING, WS_PROFILE_FEED_DISCONNECT, WS_PROFILE_FEED_ERROR, WS_PROFILE_FEED_MESSAGE, WS_PROFILE_FEED_OPEN } from "../types/action-constants";
+import { IOrders } from "../types/order";
 
-const initialState = {
+type TProfileFeedState = {
+  readonly status: string;
+  readonly orders: IOrders[];
+  readonly connectingError: string;
+}
+
+const initialState: TProfileFeedState = {
   status: "Disconnect",
   orders: [
     {
@@ -20,7 +30,7 @@ const initialState = {
   connectingError: "",
 };
 
-const profileFeedReducer = (state = initialState, action) => {
+const profileFeedReducer = (state = initialState, action: TProfileFeedAction): TProfileFeedState => {
   switch (action.type) {
     case WS_PROFILE_FEED_CONNECTING:
       return {

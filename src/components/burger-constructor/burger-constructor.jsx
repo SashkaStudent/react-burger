@@ -8,7 +8,7 @@ import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postOrder } from "../../services/actions/order.js";
+import { postOrder } from "../../services/actions/order.ts";
 import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "../constructor-card/constructor-card";

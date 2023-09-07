@@ -1,14 +1,21 @@
 //import { CHANGE_RESET_PASSWORD, CHANGE_RESET_CODE}
 
-import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../actions/reset-password";
+import type { TResetAction } from "../actions/reset-password";
+import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../types/action-constants";
 
-const initialState = {
+type TResetPasswordState = {
+  password: string;
+  code: string;
+  visibility: boolean;
+}
+
+const initialState: TResetPasswordState = {
   password: "",
   code: "",
   visibility: false
 };
 
-export const resetReducer = (state = initialState, action) => {
+export const resetReducer = (state: TResetPasswordState = initialState, action: TResetAction): TResetPasswordState => {
   switch (action.type) {
     case CHANGE_RESET_CODE: {
       return { ...state, code: action.code };

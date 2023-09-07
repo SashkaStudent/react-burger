@@ -1,12 +1,28 @@
+// import {
+//   WS_ORDER_FEED_CONNECTING,
+//   WS_ORDER_FEED_OPEN,
+//   WS_ORDER_FEED_DISCONNECT,
+//   WS_ORDER_FEED_ERROR,
+//   WS_ORDER_FEED_MESSAGE,
+// } from "../actions/order-feed";
+
+import type { TOrderFeedAction } from "../actions/order-feed";
 import {
   WS_ORDER_FEED_CONNECTING,
-  WS_ORDER_FEED_OPEN,
   WS_ORDER_FEED_DISCONNECT,
   WS_ORDER_FEED_ERROR,
   WS_ORDER_FEED_MESSAGE,
-} from "../actions/order-feed";
+  WS_ORDER_FEED_OPEN,
+} from "../types/action-constants";
+import { IOrder, IOrders } from "../types/order";
 
-const initialState = {
+type IOrderFeedState = {
+  readonly status: string;
+  readonly orders: IOrders[];
+  readonly connectingError: string;
+}
+
+const initialState: IOrderFeedState = {
   status: "Disconnect",
   orders: [
     {
@@ -19,7 +35,7 @@ const initialState = {
   connectingError: "",
 };
 
-const orderFeedReducer = (state = initialState, action) => {
+const orderFeedReducer = (state: IOrderFeedState = initialState, action: TOrderFeedAction): IOrderFeedState => {
   switch (action.type) {
     case WS_ORDER_FEED_CONNECTING:
       return {

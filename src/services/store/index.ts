@@ -19,7 +19,7 @@ import {
   WS_ORDER_FEED_ERROR,
   WS_ORDER_FEED_MESSAGE,
   WS_ORDER_FEED_OPEN,
-} from "../actions/order-feed";
+} from "../types/action-constants";
 import {
   WS_PROFILE_FEED_CLOSE,
   WS_PROFILE_FEED_CONNECT,
@@ -28,7 +28,7 @@ import {
   WS_PROFILE_FEED_ERROR,
   WS_PROFILE_FEED_MESSAGE,
   WS_PROFILE_FEED_OPEN,
-} from "../actions/profile-feed";
+} from "../types/action-constants";
 
 import orderFeedReducer from "../reducers/order-feed";
 import profileFeedReducer from "../reducers/profile-feed";
@@ -47,10 +47,10 @@ const rootReducer = combineReducers({
   profileFeed: profileFeedReducer
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const thunkEnhancer = applyMiddleware(ReduxThunk);
-const enhancer = composeEnhancers(thunkEnhancer);
+//const thunkEnhancer = applyMiddleware(ReduxThunk);
+//const enhancer = composeEnhancers(thunkEnhancer);
 
 const orderFeedStates = {
   wsConnect: WS_ORDER_FEED_CONNECT,

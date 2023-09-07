@@ -1,8 +1,17 @@
-import { POST_AUTH, POST_AUTH_SUCCESS, POST_AUTH_FAILED, POST_LOGOUT_USER, CHANGE_USER } from "../actions/user"
+//import { POST_AUTH, POST_AUTH_SUCCESS, POST_AUTH_FAILED, POST_LOGOUT_USER, CHANGE_USER } from "../actions/user"
 
+import type { TUserAction } from "../actions/user"
+import { CHANGE_USER, POST_AUTH, POST_AUTH_FAILED, POST_AUTH_SUCCESS, POST_LOGOUT_USER } from "../types/action-constants"
 
+type TUserState = {
+  feedRequest: boolean,
+  feedFailed: boolean,
+  isAuthenticated: boolean,
+  name: string,
+  email: string,
+}
 
-const initialState = {
+const initialState: TUserState = {
   feedRequest: false,
   feedFailed: false,
   isAuthenticated: false,
@@ -10,7 +19,7 @@ const initialState = {
   email: '',
 }
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state: TUserState = initialState, action: TUserAction): TUserState => {
   switch ( action.type ) {
       case POST_AUTH:
           return {

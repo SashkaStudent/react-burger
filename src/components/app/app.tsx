@@ -9,7 +9,6 @@ import OrderDetails from "../order-details/order-details.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { CLOSE_MODAL } from "../../services/actions/modal";
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
 import Login from "../../pages/login";
 import Register from "../../pages/register";
@@ -25,6 +24,7 @@ import Feed from "../../pages/feed";
 import OrderFeedDetails from "../../pages/order-feed-details";
 import ProfileFeed from "../profile-feed/profile-feed";
 import ProfileEdit from "../profile-edit/profile-edit";
+import { CLOSE_MODAL } from "../../services/types/action-constants";
 
 function App() {
   const getIngredientsStore = store => store.ingredients;

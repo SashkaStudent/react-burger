@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+//import { useDispatch, useSelector } from "react-redux";
 import { connect, disconnect } from "../../services/actions/order-feed";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { WS_BASE_URL } from "../../utils/data";
 import CardOrder from "../order/card-order";
 import orderFeedStyles from "./order-feed.module.css"

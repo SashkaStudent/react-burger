@@ -1,6 +1,13 @@
+import { FC } from "react";
 import imageStyle from "./ingredient-preview.module.css";
 
-function IngredientPreview({ alt, src, remaining }) {
+type TIngredientPreview = {
+  alt: string;
+  src: string;
+  remaining: number;
+}
+
+const IngredientPreview: FC<TIngredientPreview> = ({ alt, src, remaining }) => {
 
   const imageClass = remaining > 0 ? `${imageStyle.image} ${imageStyle.imageFaded}` : imageStyle.image;
 

@@ -2,11 +2,15 @@ import IngredientCard from "../ingredient-card/ingredient-card";
 import ingredientsStyle from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
-import React, { useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
+import React, { FC, useEffect, useMemo } from "react";
+//import { useSelector, useDispatch } from "react-redux";
+//import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
 import { useInView } from "react-intersection-observer";
-function BurgerIngredients() {
+import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/types/action-constants";
+import { useDispatch, useSelector } from "../../services/types/hooks";
+import { IIngredient } from "../../services/types/ingredient";
+import { ITab } from "../../services/types/tab";
+const BurgerIngredients:FC = () => {
 
   const [bunRef, bunInView] = useInView({ threshold: 0 });
   const [sauceRef, sauceInView] = useInView({ threshold: 0 });
@@ -14,14 +18,14 @@ function BurgerIngredients() {
 
   const dispatch = useDispatch();
   
-  const getIngredientsStore = store => store.ingredients;
-  const getConstructorIngredients = store => store.constructor.ingredients;
-  const getConstructorBun = store => store.constructor.bun;
-  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(getIngredientsStore);
-  const constructor = useSelector(getConstructorIngredients);
-  const bun = useSelector(getConstructorBun);
+  //const getIngredientsStore = store => store.ingredients;
+ // const getConstructorIngredients = store => store.constructor.ingredients;
+ // const getConstructorBun = store => store.constructor.bun;
+  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector( store => store.ingredients);
+  const constructor = useSelector(store => store.constructor.ingredients);
+  const bun = useSelector(store => store.constructor.bun);
 
-  const handleOnIngredientChoose = (e, ingredient) => {
+  const handleOnIngredientChoose = (e:null, ingredient:IIngredient) => {
     dispatch({ type: CLICK_INGREDIENT, ingredient: ingredient });
   }
 
@@ -45,7 +49,7 @@ function BurgerIngredients() {
       }
     }, [bunInView, sauceInView, mainInView])
 
-  const getCount = (id) => {
+  const getCount = (id: string) => {
     if(!bun) return 0;
     if (id == bun._id) return 2;
 
@@ -53,7 +57,9 @@ function BurgerIngredients() {
 
   }
 
-  const categories = [
+
+
+  const categories: ITab[] = [
     { value: "bun", text: "Булки", ref: bunRef },
     { value: "sauce", text: "Соусы", ref: sauceRef },
     { value: "main", text: "Начинки", ref: mainRef },
@@ -91,7 +97,9 @@ function BurgerIngredients() {
   return (
     <div className={ingredientsStyle.ingredients}>
       <h2 className="pt-10 text text_type_main-large">Соберите бургер</h2>
-      <IngredientsTab tabs={categories} defaultState={categories[0].value} />
+      
+      {/* defaultState={categories[0].value} */}
+      <IngredientsTab tabs={categories} />
       <div className={ingredientsStyle.container}>
 
         {ingredientsFailed ? <p>Ошибка</p>

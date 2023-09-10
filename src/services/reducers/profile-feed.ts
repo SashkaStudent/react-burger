@@ -13,20 +13,19 @@ import { IOrders } from "../types/order";
 
 type TProfileFeedState = {
   readonly status: string;
-  readonly orders: IOrders[];
+  readonly orders: IOrders;
   readonly connectingError: string;
 }
 
 const initialState: TProfileFeedState = {
   status: "Disconnect",
-  orders: [
+  orders:
     {
       success: true,
       orders: [],
       total: "",
       totalToday: "",
     },
-  ],
   connectingError: "",
 };
 

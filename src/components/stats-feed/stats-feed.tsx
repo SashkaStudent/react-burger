@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
+//import { useSelector } from "react-redux";
 import statsStyles from "./stats-feed.module.css";
 
 function StatsFeed() {
@@ -41,7 +42,7 @@ function StatsFeed() {
       </div>
       <div>
         <p className="text text_type_main-medium">Выполнено за всё время:</p>
-        <p className="text text_type_digits-large">{total?.toLocaleString("ru-RU")}</p>
+        <p className="text text_type_digits-large">{total?.toLocaleString()}</p>
       </div>
       <div>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>

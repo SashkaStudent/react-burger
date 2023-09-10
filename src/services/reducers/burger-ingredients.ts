@@ -6,7 +6,7 @@
 //     SWITCH_TAB,
 //     } from "../actions/burger-ingredients.js";
 
-import type { TBurgerIngredientsAction } from "../actions/burger-ingredients.js";
+import type { TBurgerIngredientsAction } from "../actions/burger-ingredients";
 //import { CLOSE_MODAL } from "../actions/modal.js";
 import {
   CLICK_INGREDIENT,
@@ -15,8 +15,8 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   SWITCH_TAB,
-} from "../types/action-constants.js";
-import { IIngredient, IIngredientRequest } from "../types/ingredient.js";
+} from "../types/action-constants";
+import { IIngredient, IIngredientRequest } from "../types/ingredient";
 
 type TBurgerIngredientsState = {
   ingredients: IIngredient[];

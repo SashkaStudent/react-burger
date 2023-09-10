@@ -1,3 +1,4 @@
+import { IIngredient } from "../services/types/ingredient";
 import { BASE_URL_API } from "./data";
 
 const handleRes = (res: Response) => {
@@ -12,7 +13,7 @@ export const getData = () => {
   return fetch(`${BASE_URL_API}/ingredients`).then(handleRes).then(handleJson);
 };
 
-export const postData = (ingredients: string, accessToken: string) => {
+export const postData = (ingredients: string[], accessToken: string) => {
   return fetch(`${BASE_URL_API}/orders`, {
     method: "POST",
     headers: {

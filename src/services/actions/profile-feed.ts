@@ -33,7 +33,7 @@ export interface IError {
 
 export interface IMessage {
   readonly type: typeof WS_PROFILE_FEED_MESSAGE;
-  readonly payload: IOrders[];
+  readonly payload: IOrders;
 }
 
 export interface IClose {
@@ -64,7 +64,7 @@ export const error = (error:string):IError => ({
   payload: error
 });
 
-export const message = (arr: IOrders[]):IMessage => ({
+export const message = (arr: IOrders):IMessage => ({
   type: WS_PROFILE_FEED_MESSAGE,
   payload: arr
 });

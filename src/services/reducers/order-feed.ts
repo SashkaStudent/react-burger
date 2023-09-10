@@ -18,20 +18,20 @@ import { IOrder, IOrders } from "../types/order";
 
 type IOrderFeedState = {
   readonly status: string;
-  readonly orders: IOrders[];
+  readonly orders: IOrders;
   readonly connectingError: string;
 }
 
 const initialState: IOrderFeedState = {
   status: "Disconnect",
-  orders: [
+  orders: 
     {
       success: true,
       orders: [],
       total: "",
       totalToday: "",
     },
-  ],
+  
   connectingError: "",
 };
 

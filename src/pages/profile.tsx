@@ -1,14 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Outlet } from "react-router-dom";
 import pagesStyle from "./pages.module.css";
 import { postLogoutUser } from "../services/actions/user";
+import { FC } from 'react';
+import { useDispatch } from "../services/types/hooks";
 
-function Profile() {
+
+const Profile: FC = () => {
   const dispatch = useDispatch();
   const navButtonClassName = 'text text_type_main-medium pt-4 pb-4'
   const navButtonClassNameInactive = 'text text_type_main-medium text_color_inactive pt-4 pb-4'
 
-  const onLogout = e => {
+  const onLogout = () => {
     dispatch(postLogoutUser(localStorage.getItem("refreshToken")));
   }
 

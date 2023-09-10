@@ -6,27 +6,31 @@ import {
 import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
-import { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { postOrder } from "../../services/actions/order.ts";
-import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-constructor";
+import { FC, useMemo } from "react";
+//import { useSelector, useDispatch } from "react-redux";
+import { postOrder } from "../../services/actions/order";
+//import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "../constructor-card/constructor-card";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from "../../services/types/hooks";
+//import { useDispatch } from "react-redux";
+import { IIngredient } from "../../services/types/ingredient";
+import { ADD_INGREDIENT, SET_BUN } from "../../services/types/action-constants";
 
-function BurgerConstructor({ }) {
-  const getStore = store => store.constructor;
-  const getUserStore = store => store.user;
-  const { bun, ingredients, totalPrice } = useSelector(getStore);
-  const user = useSelector(getUserStore);
+const BurgerConstructor: FC = () => {
+ // const getStore = store => store.constructor;
+ // const getUserStore = store => store.user;
+  const { bun, ingredients, totalPrice } = useSelector(store => store.constructor);
+  const user = useSelector(store => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleMakeOrderClick = () => {
     if (user.isAuthenticated) {
       const postArray = ingredients.map(ing => ing._id);
-      postArray.push(bun._id, bun._id);
+      postArray.push(bun!._id, bun!._id);
       dispatch(postOrder(postArray, localStorage.getItem("accessToken")));
     } else {
 
@@ -36,7 +40,7 @@ function BurgerConstructor({ }) {
   }
   const [, dropTarget] = useDrop({
     accept: ["ingredient", "bun"],
-    drop(ingredient) {
+    drop(ingredient: IIngredient) {
 
       if (ingredient.type === 'bun') {
         dispatch({ type: SET_BUN, bun: ingredient });
@@ -52,7 +56,7 @@ function BurgerConstructor({ }) {
 
   const [, dropBunTarget] = useDrop({
     accept: ["bun"],
-    drop(ingredient) {
+    drop(ingredient: IIngredient) {
 
       if (ingredient.type === 'bun') {
         dispatch({ type: SET_BUN, bun: ingredient });
@@ -79,9 +83,9 @@ function BurgerConstructor({ }) {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
+              text={`${bun!.name} (верх)`}
+              price={bun!.price}
+              thumbnail={bun!.image}
             />
           </div>
           <ul ref={dropTarget} className={constructorStyles.list}>
@@ -99,9 +103,9 @@ function BurgerConstructor({ }) {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image}
+              text={`${bun!.name} (низ)`}
+              price={bun!.price}
+              thumbnail={bun!.image}
             />
           </div>
           <div className={`${constructorStyles.container} pt-10 pr-4`}>

@@ -1,8 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { FC, useEffect, useMemo } from "react";
+//import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+import { useSelector } from "../../services/types/hooks";
 
-const Protected = ({ onlyUnAuth = false, component }) => {
+type TProtectedRoute = {
+  onlyUnAuth?: boolean;
+  component: JSX.Element;
+}
+
+const Protected: FC<TProtectedRoute> = ({ onlyUnAuth = false, component }) => {
   const location = useLocation();
   const user = useSelector(state => state.user.name);
   let token = localStorage.getItem("accessToken");
@@ -23,6 +29,8 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }) => (
+
+
+export const OnlyUnAuth: FC<{component:JSX.Element}> = ({ component }) => (
   <Protected onlyUnAuth={true} component={component} />
 );

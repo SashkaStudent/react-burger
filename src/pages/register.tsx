@@ -1,32 +1,34 @@
 import React, { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { CHANGE_REGISTER_NAME, CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_PASSWORD } from "../services/actions/register";
+//import { CHANGE_REGISTER_NAME, CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_PASSWORD } from "../services/actions/register";
 import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../utils/api";
 import pagesStyle from "./pages.module.css";
+import { useDispatch, useSelector } from "../services/types/hooks";
+import { CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_NAME, CHANGE_REGISTER_PASSWORD } from "../services/types/action-constants";
 
 function Register() {
 
-  const getRegisterStore = store => store.register;
-  const { email, password, visibility, valid, name } = useSelector(getRegisterStore);
+  // const getRegisterStore = store => store.register;
+  const { email, password, visibility, valid, name } = useSelector(store => store.register);
 
   const dispatch = useDispatch();
   const navigator = useNavigate();
 
-  const onEmailChange = e => {
-    dispatch({ type: CHANGE_REGISTER_EMAIL, email: e.target.value, valid: e.nativeEvent.target.validity.valid })
+  const onEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: CHANGE_REGISTER_EMAIL, email: e.target.value, valid: e.currentTarget.validity.valid })
 
   }
-  const onPasswordChange = e => {
+  const onPasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: CHANGE_REGISTER_PASSWORD, password: e.target.value })
   }
 
-  const onNameChange = e => {
+  const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: CHANGE_REGISTER_NAME, name: e.target.value })
 
   }
-  const onRegisterClick = e => {
+  const onRegisterClick = (e:React.FormEvent) => {
     e.preventDefault();
     postRegister(name, email, password).then(req => {
       localStorage.setItem("accessToken", req.accessToken);

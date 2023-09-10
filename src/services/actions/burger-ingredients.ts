@@ -1,4 +1,5 @@
-import { getData } from "../../utils/api.js";
+//import { getData } from "../../utils/api.js";
+import { getData } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../store/store-types.js";
 import {
   CLICK_INGREDIENT,
@@ -7,7 +8,7 @@ import {
   GET_INGREDIENTS_SUCCESS,
   INIT_CONSTRUCTOR,
   SWITCH_TAB,
-} from "../types/action-constants.js";
+} from "../types/action-constants";
 import { IIngredient, IIngredientRequest } from "../types/ingredient.js";
 import { ICloseModal } from "./modal.js";
 
@@ -59,7 +60,7 @@ export const getItems: AppThunk = () => (dispatch: AppDispatch) => {
       .then((res) => {
         if (res && res.success) {
           
-          dispatch(getIngredientsSuccess(res.data));
+          dispatch(getIngredientsSuccess(res));
           dispatch({
             type: INIT_CONSTRUCTOR
           });

@@ -1,24 +1,26 @@
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect, useMemo } from "react";
+//import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import IngredientPreview from "../components/ingredient-preview/ingredient-preview";
 import Price from "../components/price/price";
 import { connect, disconnect } from "../services/actions/order-feed";
 import { connect as profileConnect, disconnect as profileDisconnect } from "../services/actions/profile-feed";
+import { useDispatch, useSelector } from "../services/types/hooks";
+import { IIngredient } from "../services/types/ingredient";
 import { WS_BASE_URL } from "../utils/data";
 import pagesStyle from "./pages.module.css"
 
 
 
-function OrderFeedDetails() {
+const OrderFeedDetails: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const getOrderFeedOrders = store => store.orderFeed.orders;
-  const getProfileFeedOrders = store => store.profileFeed.orders;
+  // const getOrderFeedOrders = store => store.orderFeed.orders;
+  // const getProfileFeedOrders = store => store.profileFeed.orders;
 
-  const feedOrders = useSelector(getOrderFeedOrders);
-  const profileOrders = useSelector(getProfileFeedOrders);
+  const feedOrders = useSelector(store => store.orderFeed.orders);
+  const profileOrders = useSelector(store => store.orderFeed.orders);
 
   const { ingredients } = useSelector(store => store.ingredients);
   const { id } = useParams();
@@ -43,7 +45,7 @@ function OrderFeedDetails() {
     }
   }
 
-  const result = (status) => {
+  const result = (status: string) => {
     switch (status) {
       case "done": return "Выполнен";
       case "pending": return "Готовится";
@@ -57,37 +59,48 @@ function OrderFeedDetails() {
     wsInitOrderFeed();
   }, []);
 
-  const { totalPrice, ingredientsInOrder } = useMemo(() => {
+  type TCountedIngredient = {
+    ingredient: IIngredient;
+    count: number;
+  }
+  //{ totalPrice, ingredientsInOrder }
 
-    if (!selectedOrder || !ingredients) return 0;
+  //function useMemo<T>(factory: () => T, deps: any[] | undefined): T;
+
+ // type TMemo = {totalPrice: number, ingredientsInOrder: TCountedIngredient[]};
+  const {totalPrice, ingredientsInOrder}  = useMemo(() => {
+
+    if (!selectedOrder || !ingredients) return { totalPrice: 0, ingredientsInOrder: [] };
+
     const indexList = selectedOrder.ingredients;
-    const ingredientsInOrder = [];
-    indexList.map((id) => ingredientsInOrder.push(ingredients.find((item) => item._id === id)));
-    const sum = ingredientsInOrder.reduce((prev, curr) => {
+    const ingredientsInOrder: IIngredient[] = [];
+    indexList.map((id) => ingredientsInOrder.push(ingredients.find((item) => item._id === id)!));
+    const sum: number = ingredientsInOrder.reduce((prev, curr) => {
       prev += curr.price;
       return prev;
     }, 0);
 
-    const uniqueIngredients = new Map();
+    const uniqueIngredients = new Map<IIngredient, number>();
 
     ingredientsInOrder.forEach(item => {
       if (uniqueIngredients.has(item)) {
-        const count = uniqueIngredients.get(item) + 1;
+        const count = uniqueIngredients.get(item)! + 1;
         uniqueIngredients.set(item, count);
       } else {
         uniqueIngredients.set(item, 1);
       }
     });
 
-    const countedIngredients = [];
+    const countedIngredients: TCountedIngredient[] = [];
     uniqueIngredients.forEach((value, item) => {
       countedIngredients.push({ ingredient: item, count: value });
     });
 
     countedIngredients.sort((a, b) => { if (a.ingredient.type === 'bun') return -1; else return 1 })
 
+    const result = { totalPrice: sum, ingredientsInOrder: countedIngredients };
 
-    return { totalPrice: sum, ingredientsInOrder: countedIngredients };
+    return result;
 
   }, [selectedOrder, ingredients]);
 
@@ -103,7 +116,7 @@ function OrderFeedDetails() {
             {ingredientsInOrder.map((item, index) => {
 
               return (
-                <div className={pagesStyle.ingredientRow} key={item._id + "" + index}>
+                <div className={pagesStyle.ingredientRow} key={item.ingredient._id + "" + index}>
                   <IngredientPreview alt={item.ingredient.name} src={item.ingredient.image} remaining={0} />
                   <p className="text text_type_main-default pl-4">{item.ingredient.name}</p>
                   <div className={pagesStyle.ingredientPrice}>

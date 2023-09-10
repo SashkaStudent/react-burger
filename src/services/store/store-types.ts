@@ -31,7 +31,7 @@ export type TApplicationActions =
   | TUserAction;
 
   export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, TRootState, TApplicationActions>
+  ThunkAction<TReturn,TRootState, Action, TApplicationActions>
 >;
 
 export type AppDispatch = typeof store.dispatch;

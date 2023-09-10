@@ -1,9 +1,14 @@
+import { FC } from 'react';
 import menuStyles from './nav-menu.module.css'
 
-function NavMenu(props){
+type TNavMenu = {
+  children?: JSX.Element;
+}
+
+const NavMenu: FC<TNavMenu> = ({children})=>{
     return (
         <ul className={menuStyles.menu}>
-            {props.children}
+            {children}
         </ul>
     )
 }

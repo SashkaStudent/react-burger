@@ -1,17 +1,20 @@
 import detailsStyles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import { useSelector } from "../../services/types/hooks";
+import { IIngredient } from "../../services/types/ingredient";
+import { FC } from "react";
 
-function IngredientDetails() {
-  const getIngredientsStore = store => store.ingredients;
-  const { ingredients, choosedIngredient } = useSelector(getIngredientsStore);
+const IngredientDetails: FC = () => {
+  // const getIngredientsStore = store => store.ingredients;
+  const { ingredients, choosedIngredient } = useSelector(store => store.ingredients);
 
-  let ingredient = choosedIngredient;
+  let ingredient: IIngredient | undefined | null = choosedIngredient;
   const {ingredientId} = useParams();
   if(!ingredient){
     ingredient = ingredients.find(item => item._id === ingredientId);
   }
-
+  if(ingredient)
   return (
     <>
       <p className={`pt-10 text text_type_main-large ${detailsStyles.details}`}>
@@ -46,6 +49,7 @@ function IngredientDetails() {
       </div>
     </>
   );
+  else return (<></>)
 }
 
 export default IngredientDetails;

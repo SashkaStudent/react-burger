@@ -1,28 +1,30 @@
-import React, { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useEffect, useMemo } from "react";
+//import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../services/actions/login";
+//import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../services/actions/login";
 import { Link } from "react-router-dom";
 import pagesStyle from "./pages.module.css"
 import { postAuth } from "../utils/api";
 import { getLoginData } from "../services/actions/user";
+import { useDispatch, useSelector } from "../services/types/hooks";
+import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../services/types/action-constants";
 
-function Login() {
+const Login:FC = () => {
 
-  const getLoginStore = store => { return store.login }
-  const { email, password, valid } = useSelector(getLoginStore);
+  //const getLoginStore = store => { return store.login }
+  const { email, password, valid } = useSelector(store => store.login);
   const dispatch = useDispatch();
 
-  const onEmailChange = e => {
-    dispatch({ type: CHANGE_LOGIN_EMAIL, email: e.target.value, valid: e.nativeEvent.target.validity.valid })
+  const onEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: CHANGE_LOGIN_EMAIL, email: e.currentTarget.value, valid: e.currentTarget.validity.valid })
 
   }
-  const onPasswordChange = e => {
+  const onPasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: CHANGE_LOGIN_PASSWORD, password: e.target.value })
 
   }
 
-  const onAuthClick = e => {
+  const onAuthClick = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(getLoginData(email, password));
     dispatch({ type: CHANGE_LOGIN_EMAIL, email: '', valid: true })

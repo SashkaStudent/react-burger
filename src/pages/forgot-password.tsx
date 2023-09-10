@@ -1,19 +1,23 @@
 import React, { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { CHANGE_FORGOT_EMAIL } from "../services/actions/forgot-password";
+// import { CHANGE_FORGOT_EMAIL } from "../services/actions/forgot-password";
 import { postPasswordReset } from "../utils/api";
 import pagesStyle from "./pages.module.css"
+import { CHANGE_FORGOT_EMAIL } from "../services/types/action-constants";
+import { useDispatch, useSelector } from "../services/types/hooks";
+
+
 function ForgotPassword() {
-  const getForgotStore = store => { return store.forgot }
-  const { email } = useSelector(getForgotStore);
+  //const getForgotStore = store => { return store.forgot }
+  const { email } = useSelector(store => store.forgot );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onEmailChange = e => {
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: CHANGE_FORGOT_EMAIL, email: e.target.value })
   }
-  const onResetClick = e => {
+  const onResetClick = (e:React.FormEvent) => {
     e.preventDefault();
     postPasswordReset(email)
       .then(req => {

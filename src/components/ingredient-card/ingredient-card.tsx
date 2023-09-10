@@ -5,8 +5,16 @@ import PropTypes from "prop-types";
 import {ingredientPropTypes} from "../../utils/types";
 import { useDrag } from "react-dnd"
 import { Link, useLocation } from "react-router-dom";
+import { FC } from "react";
+import { IIngredient } from "../../services/types/ingredient";
 
-function IngredientCard({ ingredient, counter, handleCardOnClick }) {
+type TIngredientCard = {
+  ingredient: IIngredient;
+  counter: number;
+  handleCardOnClick: Function;
+}
+
+const IngredientCard:FC<TIngredientCard> = ({ ingredient, counter, handleCardOnClick }) => {
   const location = useLocation();
   const type = ingredient.type === "bun"? "bun" : "ingredient"
   const [,dragRef] = useDrag({
@@ -29,17 +37,17 @@ function IngredientCard({ ingredient, counter, handleCardOnClick }) {
       {counter > 0 && (
         <Counter count={counter} size="default" />
       )}
-      <Price price={ingredient.price} extraClass="pt-2 pb-2" />
+      <Price size="medium" price={ingredient.price} extraClass="pt-2 pb-2" />
       <p className="text text_type_main-default">{ingredient.name}</p>
     </div>
     </Link>
   );
 }
 
-IngredientCard.propTypes = {
-  ingredient: ingredientPropTypes.isRequired,
-  counter: PropTypes.number.isRequired,
-  handleCardOnClick: PropTypes.func
-};
+// IngredientCard.propTypes = {
+//   ingredient: ingredientPropTypes.isRequired,
+//   counter: PropTypes.number.isRequired,
+//   handleCardOnClick: PropTypes.func
+// };
 
 export default IngredientCard;

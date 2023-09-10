@@ -1,22 +1,29 @@
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { FC, useMemo } from "react";
+//import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "../../services/types/hooks";
+import { IIngredient } from "../../services/types/ingredient";
+import { IOrder } from "../../services/types/order";
 import { cardOrderPropTypes } from "../../utils/types";
 import IngredientPreview from "../ingredient-preview/ingredient-preview";
 import Price from "../price/price";
 import orderStyles from "./card-order.module.css";
 
+type TCardOrder = {
+  order: IOrder;
+  isProfile?: boolean;
+}
 
-function CardOrder({ order, isProfile }) {
+const CardOrder: FC<TCardOrder> = ({ order, isProfile }) => {
 
-  const getIngredientsStore = store => store.ingredients.ingredients;
-  const ingredients = useSelector(getIngredientsStore);
+  //const getIngredientsStore = store => store.ingredients.ingredients;
+  const ingredients = useSelector(store => store.ingredients.ingredients);
   const location = useLocation();
 
   const d = new Date(order.updatedAt);
-  const orderIngredients = [];
-  const result = (status) => {
+  const orderIngredients: IIngredient[] = [];
+  const result = (status: string) => {
     switch (status) {
       case "done": return "Выполнен";
       case "pending": return "Готовится";
@@ -24,12 +31,13 @@ function CardOrder({ order, isProfile }) {
     }
   }
 
-  const uniqueIngredients = [];
+  const uniqueIngredients: IIngredient[] = [];
 
 
 
   order.ingredients.map(item => {
-    orderIngredients.push(ingredients.find(ing => item === ing._id));
+    const ingredient = ingredients.find(ing => item === ing._id);
+    ingredient && orderIngredients.push(ingredient);
   });
 
   let price = 0;
@@ -83,8 +91,8 @@ function CardOrder({ order, isProfile }) {
   );
 }
 
-CardOrder.propTypes = {
-  order: cardOrderPropTypes.isRequired
-}
+// CardOrder.propTypes = {
+//   order: cardOrderPropTypes.isRequired
+// }
 
 export default CardOrder;

@@ -4,12 +4,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { DELETE_INGREDIENT, MOVE } from "../../services/actions/burger-constructor";
+//import { DELETE_INGREDIENT, MOVE } from "../../services/actions/burger-constructor";
 import constructorCardStyles from "./constructor-card.module.css"
 import PropTypes from "prop-types";
 import {ingredientPropTypes} from "../../utils/types";
+import { FC } from "react";
+import { IIngredient } from "../../services/types/ingredient";
+import { DELETE_INGREDIENT, MOVE } from "../../services/types/action-constants";
 
-function ConstructorCard({ ingredient, index }) {
+type TConstructorCard = {
+  ingredient: IIngredient;
+  index: number;
+}
+
+const ConstructorCard:FC<TConstructorCard> = ({ ingredient, index }) => {
 
   const dispatch = useDispatch();
 
@@ -19,7 +27,7 @@ function ConstructorCard({ ingredient, index }) {
     });
     const [{isOver}, dropTarget] = useDrop({
         accept: ['card'], 
-        drop(item){
+        drop(item: TConstructorCard){
           dispatch({type:MOVE, drag:item.index, drop:index});
 
         },
@@ -57,10 +65,10 @@ function ConstructorCard({ ingredient, index }) {
     )
 }
 
-ConstructorCard.propTypes = {
-  ingredient: ingredientPropTypes.isRequired,
-  index: PropTypes.number.isRequired,
+// ConstructorCard.propTypes = {
+//   ingredient: ingredientPropTypes.isRequired,
+//   index: PropTypes.number.isRequired,
 
-}
+// }
 
 export default ConstructorCard;

@@ -2,21 +2,6 @@ import { ADD_INGREDIENT, DELETE_INGREDIENT, INIT_CONSTRUCTOR, MOVE, SET_BUN } fr
 import { IIngredient } from "../types/ingredient";
 import { IPostOrderSuccess } from "./order";
 
-// export const SET_BUN = "SET_BUN";
-// export const INIT_CONSTRUCTOR = "INIT_CONSTRUCTOR";
-// export const ADD_INGREDIENT = "ADD_INGREDIENT";
-// export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
-// export const MOVE = 'MOVE';
-
-// export enum Actions {
-//   SET_BUN,
-//   INIT_CONSTRUCTOR,
-//   ADD_INGREDIENT,
-//   DELETE_INGREDIENT,
-//   MOVE,
-//   CLEAR
-// }
-
 export interface IInit {
   readonly type: typeof INIT_CONSTRUCTOR;
 }

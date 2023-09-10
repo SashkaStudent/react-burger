@@ -26,9 +26,4 @@ const ModalOverlay: FC<TModalOverlay> = ({children, handleOnClose }) => {
   );
 }
 
-// ModalOverlay.propTypes = {
-//   children: PropTypes.element.isRequired,
-//   handleOnClose: PropTypes.func
-// }
-
 export default ModalOverlay;

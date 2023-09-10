@@ -47,11 +47,6 @@ const rootReducer = combineReducers({
   profileFeed: profileFeedReducer
 });
 
-//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-//const thunkEnhancer = applyMiddleware(ReduxThunk);
-//const enhancer = composeEnhancers(thunkEnhancer);
-
 const orderFeedStates = {
   wsConnect: WS_ORDER_FEED_CONNECT,
   wsDisconnect: WS_ORDER_FEED_DISCONNECT,

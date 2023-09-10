@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-//import { useDispatch, useSelector } from "react-redux";
 import { connect, disconnect } from "../../services/actions/profile-feed";
 import { useDispatch, useSelector } from "../../services/types/hooks";
 import { WS_BASE_URL } from "../../utils/data";

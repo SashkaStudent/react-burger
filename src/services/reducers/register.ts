@@ -1,5 +1,3 @@
-//import {CHANGE_REGISTER_NAME, CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_PASSWORD, TOGGLE_REGISTER_VISIBILITY_PASSWORD, TRegisterAction } from "../actions/register"
-
 import type { TRegisterAction } from "../actions/register";
 import { CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_NAME, CHANGE_REGISTER_PASSWORD, TOGGLE_REGISTER_VISIBILITY_PASSWORD } from "../types/action-constants";
 

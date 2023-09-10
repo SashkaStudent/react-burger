@@ -1,6 +1,3 @@
-//import { CLOSE_MODAL } from "../actions/modal";
-//import { POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from "../actions/order";
-
 import type { TPostOrderAction } from "../actions/order";
 import { CLOSE_MODAL, POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from "../types/action-constants";
 

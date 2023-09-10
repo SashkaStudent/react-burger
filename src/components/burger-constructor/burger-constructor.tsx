@@ -7,21 +7,16 @@ import Price from "../price/price";
 import constructorStyles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import { FC, useMemo } from "react";
-//import { useSelector, useDispatch } from "react-redux";
 import { postOrder } from "../../services/actions/order";
-//import { ADD_INGREDIENT, SET_BUN } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import ConstructorCard from "../constructor-card/constructor-card";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "../../services/types/hooks";
-//import { useDispatch } from "react-redux";
 import { IIngredient } from "../../services/types/ingredient";
 import { ADD_INGREDIENT, SET_BUN } from "../../services/types/action-constants";
 
 const BurgerConstructor: FC = () => {
- // const getStore = store => store.constructor;
- // const getUserStore = store => store.user;
   const { bun, ingredients, totalPrice } = useSelector(store => store.constructor);
   const user = useSelector(store => store.user);
   const navigate = useNavigate();

@@ -1,4 +1,3 @@
-//import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Outlet } from "react-router-dom";
 import pagesStyle from "./pages.module.css";
 import { postLogoutUser } from "../services/actions/user";

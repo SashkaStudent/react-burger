@@ -1,12 +1,10 @@
 import detailsStyles from "./ingredient-details.module.css";
-//import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "../../services/types/hooks";
 import { IIngredient } from "../../services/types/ingredient";
 import { FC } from "react";
 
 const IngredientDetails: FC = () => {
-  // const getIngredientsStore = store => store.ingredients;
   const { ingredients, choosedIngredient } = useSelector(store => store.ingredients);
 
   let ingredient: IIngredient | undefined | null = choosedIngredient;

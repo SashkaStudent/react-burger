@@ -3,8 +3,6 @@ import ingredientsStyle from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import IngredientsTab from "../ingredients-tab/ingredients-tab";
 import React, { FC, useEffect, useMemo } from "react";
-//import { useSelector, useDispatch } from "react-redux";
-//import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/actions/burger-ingredients.js";
 import { useInView } from "react-intersection-observer";
 import { CLICK_INGREDIENT, SWITCH_TAB } from "../../services/types/action-constants";
 import { useDispatch, useSelector } from "../../services/types/hooks";
@@ -17,10 +15,6 @@ const BurgerIngredients:FC = () => {
   const [mainRef, mainInView] = useInView({ threshold: 0 });
 
   const dispatch = useDispatch();
-  
-  //const getIngredientsStore = store => store.ingredients;
- // const getConstructorIngredients = store => store.constructor.ingredients;
- // const getConstructorBun = store => store.constructor.bun;
   const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector( store => store.ingredients);
   const constructor = useSelector(store => store.constructor.ingredients);
   const bun = useSelector(store => store.constructor.bun);

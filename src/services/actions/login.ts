@@ -1,7 +1,3 @@
-// export const CHANGE_LOGIN_EMAIL = "CHANGE_LOGIN_EMAIL";
-// export const CHANGE_LOGIN_PASSWORD = "CHANGE_LOGIN_PASSWORD";
-// export const TOGGLE_LOGIN_VISIBILITY_PASSWORD = "TOGGLE_LOGIN_VISIBILITY_PASSWORD"
-
 import { CHANGE_LOGIN_EMAIL, CHANGE_LOGIN_PASSWORD } from "../types/action-constants";
 
 export interface IChangeLoginEmail {

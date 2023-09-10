@@ -1,6 +1,5 @@
 import pagesStyle from "./pages.module.css"
-//import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { useSelector } from "../services/types/hooks";
 import { FC } from "react";

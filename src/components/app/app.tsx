@@ -1,12 +1,10 @@
-import { useEffect, useMemo } from "react";
-//import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-//import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
@@ -18,7 +16,6 @@ import Profile from "../../pages/profile";
 import { getItems } from "../../services/actions/burger-ingredients";
 import IngredientDetailsPage from "../../pages/ingredient-details-page";
 import { checkUserAuth } from "../../services/actions/user";
-//import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import NotFound from "../../pages/not-found";
 import Feed from "../../pages/feed";
 import OrderFeedDetails from "../../pages/order-feed-details";
@@ -30,9 +27,6 @@ import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App(): JSX.Element {
-  //const getIngredientsStore = store => store.ingredients;
-  //const getOrderStore = store => store.order;
-  //const getUser = store => store.user;
   const { ingredients } = useSelector(store => store.ingredients);
   const { postOrderSuccess, postOrderRequest } = useSelector(store => store.order);
   const location = useLocation();

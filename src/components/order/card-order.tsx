@@ -1,11 +1,9 @@
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useMemo } from "react";
-//import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "../../services/types/hooks";
 import { IIngredient } from "../../services/types/ingredient";
 import { IOrder } from "../../services/types/order";
-import { cardOrderPropTypes } from "../../utils/types";
 import IngredientPreview from "../ingredient-preview/ingredient-preview";
 import Price from "../price/price";
 import orderStyles from "./card-order.module.css";
@@ -17,7 +15,6 @@ type TCardOrder = {
 
 const CardOrder: FC<TCardOrder> = ({ order, isProfile }) => {
 
-  //const getIngredientsStore = store => store.ingredients.ingredients;
   const ingredients = useSelector(store => store.ingredients.ingredients);
   const location = useLocation();
 
@@ -90,9 +87,5 @@ const CardOrder: FC<TCardOrder> = ({ order, isProfile }) => {
     </Link>
   );
 }
-
-// CardOrder.propTypes = {
-//   order: cardOrderPropTypes.isRequired
-// }
 
 export default CardOrder;

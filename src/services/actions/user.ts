@@ -6,13 +6,6 @@ import {
 } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../store/store-types";
 import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_USER, POST_AUTH, POST_AUTH_FAILED, POST_AUTH_SUCCESS, POST_LOGOUT_USER } from "../types/action-constants";
-//import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME } from "./profile";
-
-// export const POST_AUTH = 'POST_AUTH';
-// export const POST_AUTH_SUCCESS = 'POST_AUTH_SUCCESS';
-// export const POST_AUTH_FAILED = 'POST_AUTH_FAILED';
-// export const POST_LOGOUT_USER = 'POST_LOGOUT_USER';
-// export const CHANGE_USER = 'CHANGE_USER';
 
 interface IPayload {
   user: IUser;

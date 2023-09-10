@@ -1,5 +1,3 @@
-//import { POST_AUTH, POST_AUTH_SUCCESS, POST_AUTH_FAILED, POST_LOGOUT_USER, CHANGE_USER } from "../actions/user"
-
 import type { TUserAction } from "../actions/user"
 import { CHANGE_USER, POST_AUTH, POST_AUTH_FAILED, POST_AUTH_SUCCESS, POST_LOGOUT_USER } from "../types/action-constants"
 

@@ -1,8 +1,8 @@
-function addLeadingZeros(num, totalLength) {
+function addLeadingZeros(num: number, totalLength: number) {
     return String(num).padStart(totalLength, '0');
 }
 
-function randomInt(max){
+function randomInt(max: number){
     return Math.floor(Math.random()*max);
 }
 

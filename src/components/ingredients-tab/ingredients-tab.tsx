@@ -4,7 +4,6 @@ import { FC } from "react";
 import { useSelector } from "../../services/types/hooks";
 import { ITab } from "../../services/types/tab";
 import tabStyles from "./ingredients-tab.module.css";
-//import { useSelector } from "react-redux";
 
 type TIngredientsTab = {
   tabs: ITab[];
@@ -32,14 +31,5 @@ const IngredientsTab:FC<TIngredientsTab> = ({ tabs }) => {
     </div>
   );
 }
-
-// const tabPropTypes = PropTypes.shape({
-//   value: PropTypes.string.isRequired,
-//   text: PropTypes.string.isRequired,
-// });
-
-// IngredientsTab.propTypes = {
-//   tabs: PropTypes.arrayOf(tabPropTypes).isRequired,
-// };
 
 export default IngredientsTab;

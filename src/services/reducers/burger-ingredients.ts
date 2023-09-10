@@ -1,13 +1,4 @@
-// import {
-//     CLICK_INGREDIENT,
-//     GET_INGREDIENTS_REQUEST,
-//     GET_INGREDIENTS_SUCCESS,
-//     GET_INGREDIENTS_FAILED ,
-//     SWITCH_TAB,
-//     } from "../actions/burger-ingredients.js";
-
 import type { TBurgerIngredientsAction } from "../actions/burger-ingredients";
-//import { CLOSE_MODAL } from "../actions/modal.js";
 import {
   CLICK_INGREDIENT,
   CLOSE_MODAL,

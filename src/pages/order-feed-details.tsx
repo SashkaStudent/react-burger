@@ -1,7 +1,6 @@
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useEffect, useMemo } from "react";
-//import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import IngredientPreview from "../components/ingredient-preview/ingredient-preview";
 import Price from "../components/price/price";
 import { connect, disconnect } from "../services/actions/order-feed";
@@ -15,10 +14,6 @@ import pagesStyle from "./pages.module.css"
 
 const OrderFeedDetails: FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  // const getOrderFeedOrders = store => store.orderFeed.orders;
-  // const getProfileFeedOrders = store => store.profileFeed.orders;
-
   const feedOrders = useSelector(store => store.orderFeed.orders);
   const profileOrders = useSelector(store => store.orderFeed.orders);
 
@@ -63,11 +58,7 @@ const OrderFeedDetails: FC = () => {
     ingredient: IIngredient;
     count: number;
   }
-  //{ totalPrice, ingredientsInOrder }
 
-  //function useMemo<T>(factory: () => T, deps: any[] | undefined): T;
-
- // type TMemo = {totalPrice: number, ingredientsInOrder: TCountedIngredient[]};
   const {totalPrice, ingredientsInOrder}  = useMemo(() => {
 
     if (!selectedOrder || !ingredients) return { totalPrice: 0, ingredientsInOrder: [] };

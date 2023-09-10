@@ -1,5 +1,3 @@
-//import { CHANGE_RESET_PASSWORD, CHANGE_RESET_CODE}
-
 import type { TResetAction } from "../actions/reset-password";
 import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../types/action-constants";
 

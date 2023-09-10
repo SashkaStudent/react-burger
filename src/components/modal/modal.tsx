@@ -36,9 +36,5 @@ const Modal: FC<TModal> = ({ children, handleCloseOnClick }) => {
   );
 }
 
-// Modal.propTypes = {
-//   children: PropTypes.element.isRequired,
-//   handleCloseOnClick: PropTypes.func
-// }
 
 export default Modal;

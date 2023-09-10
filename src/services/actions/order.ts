@@ -4,11 +4,6 @@ import { POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from "../ty
 import { IIngredient } from "../types/ingredient";
 import { ICloseModal } from "./modal";
 
-
-// export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
-// export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
-// export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
-
 export interface IPostOrderRequest {
   readonly type: typeof POST_ORDER_REQUEST;
 }

@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useSelector } from "../../services/types/hooks";
-//import { useSelector } from "react-redux";
 import statsStyles from "./stats-feed.module.css";
 
 function StatsFeed() {

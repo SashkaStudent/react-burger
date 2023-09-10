@@ -1,4 +1,3 @@
-//import { getData } from "../../utils/api.js";
 import { getData } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../store/store-types.js";
 import {
@@ -11,12 +10,6 @@ import {
 } from "../types/action-constants";
 import { IIngredient, IIngredientRequest } from "../types/ingredient.js";
 import { ICloseModal } from "./modal.js";
-
-// export const CLICK_INGREDIENT = "CLICK_INGREDIENT";
-// export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
-// export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-// export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
-// export const SWITCH_TAB = 'SWITCH_TAB';
 
 export interface IClickIngredient {
   readonly type: typeof CLICK_INGREDIENT;

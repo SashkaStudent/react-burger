@@ -1,16 +1,13 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { ChangeEvent } from "react";
-//import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../services/types/action-constants";
+import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD } from "../services/types/action-constants";
 import { useDispatch, useSelector } from "../services/types/hooks";
-//import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD, TOGGLE_RESET_VISIBILITY } from "../services/actions/reset-password";
 import { postNewPassword } from "../utils/api";
 import pagesStyle from "./pages.module.css"
 
 function ResetPassword() {
-  //const getResetStore = store => store.reset;
-  const { code, password, visibility } = useSelector(store => store.reset);
+  const { code, password } = useSelector(store => store.reset);
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,10 +16,7 @@ function ResetPassword() {
   const onCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: CHANGE_RESET_CODE, code: e.target.value })
   }
-  // const onIconClick = e => {
-  //   dispatch({ type: TOGGLE_RESET_VISIBILITY })
 
-  // }
   const onSaveClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     postNewPassword(password, code).then(req => {

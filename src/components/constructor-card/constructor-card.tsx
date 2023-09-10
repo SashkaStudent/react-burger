@@ -3,11 +3,11 @@ import {
     DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
 import constructorCardStyles from "./constructor-card.module.css"
 import { FC } from "react";
 import { IIngredient } from "../../services/types/ingredient";
 import { DELETE_INGREDIENT, MOVE } from "../../services/types/action-constants";
+import { useDispatch } from "../../services/types/hooks";
 
 type TConstructorCard = {
   ingredient: IIngredient;

@@ -4,7 +4,6 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import HeaderNavLink from "../nav-link/header-nav-link";
 

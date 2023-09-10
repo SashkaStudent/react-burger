@@ -1,13 +1,11 @@
 import modalStyles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
 import { addLeadingZeros } from "../../utils/helpers";
-import { useSelector } from "react-redux";
-
+import { useSelector } from "../../services/types/hooks";
 
 function OrderDetails() {
 
-  const getOrderStore = store => store.order;
-  const {orderNumber} = useSelector(getOrderStore);
+  const {orderNumber} = useSelector(store => store.order);
 
   return (
     <>

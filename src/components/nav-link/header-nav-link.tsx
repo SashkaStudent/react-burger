@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import linkStyles from "./header-nav-link.module.css"
 
 type THeaderNavLink = {
-  children: JSX.Element;
+  children: JSX.Element[];
 }
 
 const HeaderNavLink: FC<THeaderNavLink> = ({children}) => {

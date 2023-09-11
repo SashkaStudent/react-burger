@@ -1,33 +1,16 @@
 import React from "react";
-import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import { postRegister } from "../utils/api";
 import pagesStyle from "./pages.module.css";
-import { useDispatch, useSelector } from "../services/types/hooks";
-import { CHANGE_REGISTER_EMAIL, CHANGE_REGISTER_NAME, CHANGE_REGISTER_PASSWORD } from "../services/types/action-constants";
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 function Register() {
-
-  const { email, password, valid, name } = useSelector(store => store.register);
-
-  const dispatch = useDispatch();
+  const {values, handleChange} = useFormAndValidation();
   const navigator = useNavigate();
-
-  const onEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_REGISTER_EMAIL, email: e.target.value, valid: e.currentTarget.validity.valid })
-
-  }
-  const onPasswordChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_REGISTER_PASSWORD, password: e.target.value })
-  }
-
-  const onNameChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_REGISTER_NAME, name: e.target.value })
-
-  }
   const onRegisterClick = (e:React.FormEvent) => {
     e.preventDefault();
-    postRegister(name, email, password).then(req => {
+    postRegister(values['name'], values['email'], values['password']).then(req => {
       localStorage.setItem("accessToken", req.accessToken);
       localStorage.setItem("refreshToken", req.refreshToken);
       navigator('/login');
@@ -43,26 +26,23 @@ function Register() {
         <Input
           type={'text'}
           placeholder={'Имя'}
-          onChange={onNameChange}
-          value={name}
+          onChange={handleChange}
+          value={values['name']??""}
           name={'name'}
           size={'default'}
           extraClass="ml-1"
         />
-        <Input
-          type={'email'}
+        <EmailInput
           placeholder={'E-mail'}
-          onChange={onEmailChange}
-          value={email}
+          onChange={handleChange}
+          value={values['email']??""}
           name={'email'}
           extraClass=""
-          errorText={'Некорректный e-mail'}
-          error={!valid}
         />
         <PasswordInput
           placeholder={'Пароль'}
-          onChange={onPasswordChange}
-          value={password}
+          onChange={handleChange}
+          value={values['password']??""}
           name={'password'}
           extraClass=""
         />

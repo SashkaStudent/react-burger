@@ -1,7 +1,6 @@
 import { postData } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../store/store-types";
 import { POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from "../types/action-constants";
-import { IIngredient } from "../types/ingredient";
 import { ICloseModal } from "./modal";
 
 export interface IPostOrderRequest {

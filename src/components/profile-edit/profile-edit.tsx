@@ -1,68 +1,58 @@
 import { Button, EmailInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { changeUserData, postLogoutUser } from "../../services/actions/user";
-import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_PROFILE_PASSWORD, CHANGE_USER } from "../../services/types/action-constants";
+import { changeUserData } from "../../services/actions/user";
+import { CHANGE_USER } from "../../services/types/action-constants";
 import profileEditStyles from "./profile-edit.module.css";
-import {ChangeEvent} from "react";
+import { useEffect} from "react";
 import { useDispatch, useSelector } from "../../services/types/hooks";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 function ProfileEdit() {
-
-  const {name, email, password, valid } = useSelector(store => store.profile);
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
 
-  const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_PROFILE_NAME, name: e.target.value });
-  }
-  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_PROFILE_EMAIL, email: e.target.value, valid: e.currentTarget.validity.valid })
-  }
-  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_PROFILE_PASSWORD, password: e.target.value })
-  }
+  const {values, handleChange, errors, isValid, setValues, resetForm} = useFormAndValidation();
 
-  const onLogout = (e: ChangeEvent<HTMLInputElement>) =>{
-    dispatch(postLogoutUser(localStorage.getItem("refreshToken")));
-  }
+  useEffect(()=> setValues({"name": user.name, "email": user.email}),[user]);
 
   const onSaveClick = () =>{
-    dispatch({ type: CHANGE_USER, data: { user: {name: name, email: email}} });
-    dispatch(changeUserData(localStorage.getItem("accessToken"), {name: name, email: email, password: password}));
+    dispatch({ type: CHANGE_USER, data: { user: {name: values['name'], email: values['email']}} });
+    dispatch(changeUserData(localStorage.getItem("accessToken"), 
+    {name: values['name'], email: values['email'], password: values['password']}));
   }
 
   const onCancelClick = () =>{
-    dispatch({ type: CHANGE_PROFILE_NAME, name: user.name });
-    dispatch({ type: CHANGE_PROFILE_EMAIL, email: user.email, valid: true })
+    resetForm({"name": user.name, "email": user.email, "password": ''});
    }
 
   return (
-    <div className={profileEditStyles.profileEdit}>
+    <form className={profileEditStyles.profileEdit}>
       <Input
         type="text"
-        onChange={onNameChange}
-        value={name}
-        name={'email'}
+        onChange={(e)=>{console.log(values, errors); handleChange(e)}}
+        value={values['name']??""}
+        name={'name'}
         icon={'EditIcon'}
         placeholder="Имя"
         errorText={'Ошибка'}
       />
       <EmailInput
         placeholder={'E-mail'}
-        onChange={onEmailChange}
-        value={email}
+        onChange={handleChange}
+        value={values['email']??""}
         name={'email'}
       />
       <Input
         type="password"
         placeholder={'Пароль'}
-        onChange={onPasswordChange}
-        value={password}
+        onChange={handleChange}
+        value={values['password']??""}
         name={'password'}
         icon={'EditIcon'}
+        errorText={errors['password']}
       />
       <Button htmlType="button" onClick={onSaveClick}>Сохранить</Button>
       <Button htmlType="button" onClick={onCancelClick}>Отмена</Button>
-    </div>
+    </form>
   );
 }
 

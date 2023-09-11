@@ -5,7 +5,7 @@ import {
   postLogout,
 } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../store/store-types";
-import { CHANGE_PROFILE_EMAIL, CHANGE_PROFILE_NAME, CHANGE_USER, POST_AUTH, POST_AUTH_FAILED, POST_AUTH_SUCCESS, POST_LOGOUT_USER } from "../types/action-constants";
+import { CHANGE_USER, POST_AUTH, POST_AUTH_FAILED, POST_AUTH_SUCCESS, POST_LOGOUT_USER } from "../types/action-constants";
 
 interface IPayload {
   user: IUser;
@@ -51,12 +51,6 @@ export const getLoginData: AppThunk = (email: string, password: string) => (disp
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
         dispatch(getUserSuccess(res));
-        dispatch({ type: CHANGE_PROFILE_NAME, name: res.user.name });
-        dispatch({
-          type: CHANGE_PROFILE_EMAIL,
-          email: res.user.email,
-          valid: true,
-        });
       })
       .catch((err) => dispatch(getUserDataFailed()));
   };
@@ -66,12 +60,6 @@ export const checkUserAuth:AppThunk = () => (dispatch: AppDispatch) => {
       fetchWithRefresh(localStorage.getItem("accessToken"))
         .then((res) => {
           dispatch(getUserSuccess(res));
-          dispatch({ type: CHANGE_PROFILE_NAME, name: res.user.name });
-          dispatch({
-            type: CHANGE_PROFILE_EMAIL,
-            email: res.user.email,
-            valid: true,
-          });
         })
         .catch((err) => {
           console.log(err);

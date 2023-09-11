@@ -1,4 +1,3 @@
-import { IIngredient } from "../services/types/ingredient";
 import { BASE_URL_API } from "./data";
 
 const handleRes = (res: Response) => {

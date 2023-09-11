@@ -3,20 +3,16 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { Link, useNavigate } from "react-router-dom";
 import { postPasswordReset } from "../utils/api";
 import pagesStyle from "./pages.module.css"
-import { CHANGE_FORGOT_EMAIL } from "../services/types/action-constants";
-import { useDispatch, useSelector } from "../services/types/hooks";
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 
 function ForgotPassword() {
-  const { email } = useSelector(store => store.forgot );
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_FORGOT_EMAIL, email: e.target.value })
-  }
+  const {values, handleChange, errors} = useFormAndValidation();
+
   const onResetClick = (e:React.FormEvent) => {
     e.preventDefault();
-    postPasswordReset(email)
+    postPasswordReset(values['email'])
       .then(req => {
         if (req.success) {
           navigate('/reset-password', { replace: true });
@@ -31,12 +27,12 @@ function ForgotPassword() {
       <form className={pagesStyle.form} onSubmit={onResetClick}>
         <Input
           type="email"
-          onChange={onEmailChange}
-          value={email}
+          onChange={handleChange}
+          value={values['email']??""}
           name={'email'}
           placeholder="E-mail"
           extraClass="mb-2"
-          errorText={'Ошибка'}
+          errorText={errors['email']??""}
         />
         <Button htmlType="submit" type="primary" size="medium" extraClass={pagesStyle.button}>
           Восстановить

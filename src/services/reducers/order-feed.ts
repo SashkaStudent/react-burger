@@ -6,7 +6,7 @@ import {
   WS_ORDER_FEED_MESSAGE,
   WS_ORDER_FEED_OPEN,
 } from "../types/action-constants";
-import { IOrder, IOrders } from "../types/order";
+import { IOrders } from "../types/order";
 
 type IOrderFeedState = {
   readonly status: string;

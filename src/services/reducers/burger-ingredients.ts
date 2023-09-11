@@ -7,7 +7,7 @@ import {
   GET_INGREDIENTS_SUCCESS,
   SWITCH_TAB,
 } from "../types/action-constants";
-import { IIngredient, IIngredientRequest } from "../types/ingredient";
+import { IIngredient } from "../types/ingredient";
 
 type TBurgerIngredientsState = {
   ingredients: IIngredient[];

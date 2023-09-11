@@ -1,28 +1,19 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CHANGE_RESET_CODE, CHANGE_RESET_PASSWORD } from "../services/types/action-constants";
-import { useDispatch, useSelector } from "../services/types/hooks";
 import { postNewPassword } from "../utils/api";
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 import pagesStyle from "./pages.module.css"
 
 function ResetPassword() {
-  const { code, password } = useSelector(store => store.reset);
-  const dispatch = useDispatch();
   const navigator = useNavigate();
-  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_RESET_PASSWORD, password: e.target.value })
-  }
-  const onCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: CHANGE_RESET_CODE, code: e.target.value })
-  }
+  const {values, handleChange, resetForm} = useFormAndValidation();
 
   const onSaveClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    postNewPassword(password, code).then(req => {
+    postNewPassword(values['password'], values['code']).then(req => {
       if (req.success) {
-        dispatch({ type: CHANGE_RESET_PASSWORD, password: "" })
-        dispatch({ type: CHANGE_RESET_CODE, code: "" })
+        resetForm();
         navigator('/login');
       }
     });
@@ -34,16 +25,16 @@ function ResetPassword() {
       <form className={pagesStyle.form}>
         <PasswordInput
           placeholder={'Введите новый пароль'}
-          onChange={onPasswordChange}
-          value={password}
+          onChange={handleChange}
+          value={values['password']??""}
           name={'password'}
           extraClass="mb-2"
         />
         <Input
           type={'text'}
           placeholder={'Введите код из письма'}
-          onChange={onCodeChange}
-          value={code}
+          onChange={handleChange}
+          value={values['code']??""}
           name={'code'}
           error={false}
           size={'default'}

@@ -1,12 +1,8 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { constructorReducer } from "../reducers/burger-constructor";
 import { ingredientsReducer } from "../reducers/burger-ingredients";
-import { forgotReducer } from "../reducers/forgot-password";
 import { loginReducer } from "../reducers/login";
 import { orderReducer } from "../reducers/order";
-import { registerReducer } from "../reducers/register";
-import { resetReducer } from "../reducers/reset-password";
-import { profileReducer } from "../reducers/profile";
 import ReduxThunk from "redux-thunk";
 import userReducer from "../reducers/user";
 import socketMiddleware from "../middleware/socketMiddleware";
@@ -37,11 +33,7 @@ const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   constructor: constructorReducer,
   order: orderReducer,
-  register: registerReducer,
   login: loginReducer,
-  forgot: forgotReducer,
-  reset: resetReducer,
-  profile: profileReducer,
   user: userReducer,
   orderFeed: orderFeedReducer,
   profileFeed: profileFeedReducer
